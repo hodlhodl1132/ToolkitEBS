@@ -1,0 +1,39 @@
+<?php
+
+namespace App\Http\Middleware;
+
+use Closure;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
+use Ahc\Jwt\JWT;
+use Exception;
+
+class VerifyTwitchJWT
+{
+    public function __construct()
+    {
+        
+    }
+
+    /**
+     * Handle an incoming request.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \Closure(\Illuminate\Http\Request): (\Illuminate\Http\Response|\Illuminate\Http\RedirectResponse)  $next
+     * @return \Illuminate\Http\Response|\Illuminate\Http\RedirectResponse
+     */
+    public function handle(Request $request, Closure $next)
+    {
+        $secret = base64_decode( env('TWITCH_CLIENT_SECRET') );
+        $jwt = new JWT($secret, 'HS256');
+        $header = $request->header('Authorization');
+        try {
+            $payload = $jwt->decode($header);
+        } catch (Exception $e) {
+            Log::debug($e->getMessage());
+            abort(500);
+        }
+
+        return $next($request);
+    }
+}
