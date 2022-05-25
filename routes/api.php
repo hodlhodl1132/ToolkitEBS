@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ClientHelloController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -18,6 +19,11 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::middleware('twitchjwt')->get('/hello', function() {
-    return 'hello';
-});
+// Route::middleware('twitchjwt')->get('/hello', function() {
+//     return 'hello';
+// });
+
+Route::middleware('twitchjwt')
+    ->controller(ClientHelloController::class)->group(function() {
+        Route::get('/hello', 'index');
+    });
