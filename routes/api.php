@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ClientHelloController;
+use App\Http\Controllers\JsonWebTokenController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -27,3 +28,8 @@ Route::middleware('twitchjwt')
     ->controller(ClientHelloController::class)->group(function() {
         Route::get('/hello', 'index');
     });
+
+Route::middleware('twitchjwt')
+->controller(JsonWebTokenController::class)->group(function() {
+    Route::get('/streamer/create', 'create');
+});
