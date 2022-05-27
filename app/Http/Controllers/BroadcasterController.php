@@ -10,6 +10,6 @@ class BroadcasterController extends Controller
 {
     public function index()
     {
-        ClientHello::dispatch('afldskasdf');
+        ClientHello::dispatch('test');
     }
 }

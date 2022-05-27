@@ -17,16 +17,16 @@ class ClientHello implements ShouldBroadcast
     /**
      * @var string
      */
-    private $token;
+    private $providerId;
 
     /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct(string $token)
+    public function __construct(string $providerId)
     {
-        $this->token = $token;
+        $this->providerId = $providerId;
     }
 
     /**
@@ -36,6 +36,27 @@ class ClientHello implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return new PrivateChannel('public');
+        return new PrivateChannel('test');
+        //return new PrivateChannel('private'.$this->providerId);
+    }
+
+    /**
+     * The event's broadcast name.
+     *
+     * @return string
+     */
+    public function broadcastAs()
+    {
+        return 'new-poll';
+    }
+
+    /**
+     * Get the data to broadcast.
+     *
+     * @return array
+     */
+    public function broadcastWith()
+    {
+        return ['message' => $this->providerId];
     }
 }

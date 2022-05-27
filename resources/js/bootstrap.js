@@ -24,17 +24,12 @@ window.Pusher = require('pusher-js');
 let laravelEcho = new Echo({
     broadcaster: 'pusher',
     key: process.env.MIX_PUSHER_APP_KEY,
-    wsHost: process.env.MIX_PUSHER_HOST,
-    wsPort: process.env.MIX_PUSHER_PORT,
-    wssPort: process.env.MIX_PUSHER_PORT,
-    forceTLS: false,
-    encrypted: true,
-    disableStats: true,
-    enabledTransports: ['ws', 'wss'],
+    cluster: process.env.MIX_PUSHER_APP_CLUSTER,
+    forceTLS: true,
+    options: {
+        'host': 'api-us3.pusher.com'
+    }
 });
 
 laravelEcho
-    .join('public')
-    .listen('public.message', ({message}) => {
-        console.log(message)
-    })
+    .channel('test')

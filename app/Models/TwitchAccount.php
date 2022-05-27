@@ -23,7 +23,6 @@ class TwitchAccount extends Model
 
     public function JsonWebToken($provider_user_id) : string
     {
-        Log::debug($provider_user_id);
         $jwt = JsonWebToken::where('provider_user_id', $provider_user_id)->first();
 
         if ($jwt == null) {
