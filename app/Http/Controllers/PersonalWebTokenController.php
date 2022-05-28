@@ -45,6 +45,7 @@ class PersonalWebTokenController extends Controller
     public function show(Request $request)
     {
         $secret = base64_decode(env('TWITCH_CLIENT_SECRET'));
+        Log::error("got secret: " . substr($secret, 6) . "...");
         $jwt = new JWT($secret, 'HS256');
         $payload = [];
         try {
