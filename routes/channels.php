@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Broadcast;
+use Illuminate\Support\Facades\Log;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,6 +14,8 @@ use Illuminate\Support\Facades\Broadcast;
 |
 */
 
-Broadcast::channel('private.{id}', function($id) {
-    return $id;
+Broadcast::channel('private.{id}', function($user) {
+    Log::debug('trying to authorize');
+    Log::debug($user->id);
+    return ['id' => $user->provider_id, 'name' => $user->name];
 });

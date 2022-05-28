@@ -2,7 +2,9 @@
 
 use App\Http\Controllers\ClientHelloController;
 use App\Http\Controllers\JsonWebTokenController;
+use App\Http\Controllers\PersonalWebTokenController;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Broadcast;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,20 +18,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
-
-// Route::middleware('twitchjwt')->get('/hello', function() {
-//     return 'hello';
-// });
-
 Route::middleware('twitchjwt')
     ->controller(ClientHelloController::class)->group(function() {
         Route::get('/hello', 'index');
     });
 
-Route::middleware('twitchjwt')
-->controller(JsonWebTokenController::class)->group(function() {
-    Route::get('/streamer/create', 'create');
-});
+Route::middleware('twitchjwt')->post('/tokens/create', [PersonalWebTokenController::class, 'show']);

@@ -5120,9 +5120,23 @@ var laravelEcho = new laravel_echo__WEBPACK_IMPORTED_MODULE_1__["default"]({
   forceTLS: true,
   options: {
     'host': 'api-us3.pusher.com'
+  },
+  authorizer: function authorizer(channel, options) {
+    return {
+      authorize: function authorize(socketId, callback) {
+        axios__WEBPACK_IMPORTED_MODULE_0___default().post('/api/broadcasting/auth', {
+          socket_id: socketId,
+          channel_name: channel.name
+        }).then(function (response) {
+          callback(false, response.data);
+        })["catch"](function (error) {
+          callback(true, error);
+        });
+      }
+    };
   }
 });
-laravelEcho.channel('test');
+laravelEcho["private"]('private.testid');
 
 /***/ }),
 

@@ -26,9 +26,9 @@ class VerifyTwitchJWT
     {
         $secret = base64_decode( env('TWITCH_CLIENT_SECRET') );
         $jwt = new JWT($secret, 'HS256');
-        $header = $request->header('Authorization');
+        $token = $request->bearerToken();
         try {
-            $payload = $jwt->decode($header);
+            $payload = $jwt->decode($token);
         } catch (Exception $e) {
             Log::debug($e->getMessage());
             abort(500);

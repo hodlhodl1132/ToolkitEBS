@@ -26,17 +26,7 @@ class TwitchAccount extends Model
         $jwt = JsonWebToken::where('provider_user_id', $provider_user_id)->first();
 
         if ($jwt == null) {
-            $jwtFactory = new JWT(env('EBS_STREAMER_SECRET'), 'HS256');
-            $token = $jwtFactory->encode([
-                'twitch_provider_id' => $provider_user_id,
-                'scopes' => ['broadcaster'],
-                'exp' => time() + (60 * 60 * 24 * 90)
-            ]);
-
-            $jwt = new JsonWebToken();
-            $jwt->provider_user_id = $provider_user_id;
-            $jwt->token = $token;
-            $jwt->save();
+            $jwt = new JsonWebToken($provider_user_id);
         }
 
         return $jwt->token;
