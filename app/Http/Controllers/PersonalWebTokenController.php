@@ -45,7 +45,6 @@ class PersonalWebTokenController extends Controller
     public function show(Request $request)
     {
         $secret = base64_decode(env('TWITCH_CLIENT_SECRET'));
-        Log::error("got secret: " . substr($secret, 6) . "...");
         $jwt = new JWT($secret, 'HS256');
         $payload = [];
         try {
@@ -65,11 +64,7 @@ class PersonalWebTokenController extends Controller
             $user->save();
         }
 
-        Log::debug("User Found: " . ($user == null ? "false" : "true"));
-
         $personalAccessToken = $user->createToken('auth_token')->plainTextToken;
-        Log::debug("token created");
-        Log::debug($personalAccessToken);
 
         return response()
             ->json([
