@@ -16,6 +16,7 @@ return new class extends Migration
         Schema::create('streams', function (Blueprint $table) {
             $table->id();
             $table->string('channel_id')->unique();
+            $table->string('channel_name')->unique();
             $table->timestamps();
         });
     }
