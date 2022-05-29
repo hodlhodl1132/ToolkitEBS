@@ -1,29 +1,29 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Pusher;
 
+use App\Http\Controllers\Controller;
 use App\Events\ClientHello;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 
-class ClientHelloController extends Controller
+class PusherSubscribedController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function subscription(Request $request)
     {
+        Log::alert($request->all());
         try {
-            Log::alert("Issuing Client Hello");
             //ClientHello::dispatch($request->header('Authorization'));
-        } catch (Exception $e)
-        {
+        } catch (Exception $e) {
             Log::error($e->getMessage());
         }
-        
+
         return 'success';
     }
 

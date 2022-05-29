@@ -34,7 +34,7 @@ let laravelEcho = new Echo({
             authorize: (socketId, callback) => {
                 axios.post('/api/broadcasting/auth', {
                     socket_id: socketId,
-                    channel_name: channel.name
+                    channel_name: "private.124055459"
                 })
                 .then(response => {
                     callback(false, response.data);

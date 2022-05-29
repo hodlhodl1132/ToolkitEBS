@@ -3,6 +3,7 @@
 use App\Http\Controllers\ClientHelloController;
 use App\Http\Controllers\JsonWebTokenController;
 use App\Http\Controllers\PersonalWebTokenController;
+use App\Http\Controllers\Pusher\PusherSubscribedController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Broadcast;
 use Illuminate\Support\Facades\Route;
@@ -24,3 +25,7 @@ Route::middleware('twitchjwt')
     });
 
 Route::middleware('twitchjwt')->post('/tokens/create', [PersonalWebTokenController::class, 'show']);
+
+Route::prefix('pusher')->group(function() {
+    Route::get('subscribed', [PusherSubscribedController::class, 'subscription']);
+});

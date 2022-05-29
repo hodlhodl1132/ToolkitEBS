@@ -5126,7 +5126,7 @@ var laravelEcho = new laravel_echo__WEBPACK_IMPORTED_MODULE_1__["default"]({
       authorize: function authorize(socketId, callback) {
         axios__WEBPACK_IMPORTED_MODULE_0___default().post('/api/broadcasting/auth', {
           socket_id: socketId,
-          channel_name: channel.name
+          channel_name: "private.124055459"
         }).then(function (response) {
           callback(false, response.data);
         })["catch"](function (error) {
@@ -5136,7 +5136,7 @@ var laravelEcho = new laravel_echo__WEBPACK_IMPORTED_MODULE_1__["default"]({
     };
   }
 });
-laravelEcho["private"]('private.testid');
+laravelEcho["private"]('private.124055459');
 
 /***/ }),
 
