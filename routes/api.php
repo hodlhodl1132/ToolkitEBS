@@ -27,5 +27,5 @@ Route::middleware('twitchjwt')
 Route::middleware('twitchjwt')->post('/tokens/create', [PersonalWebTokenController::class, 'show']);
 
 Route::prefix('pusher')->group(function() {
-    Route::get('subscribed', [PusherSubscribedController::class, 'subscription']);
+    Route::post('subscribed', [PusherSubscribedController::class, 'subscription']);
 });
