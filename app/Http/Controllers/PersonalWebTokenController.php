@@ -68,7 +68,8 @@ class PersonalWebTokenController extends Controller
 
         return response()
             ->json([
-                'token' => $personalAccessToken
+                'token' => $personalAccessToken,
+                'user_id' => $payload['user_id']
             ]);
     }
 
