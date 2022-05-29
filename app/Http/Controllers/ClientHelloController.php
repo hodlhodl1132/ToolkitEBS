@@ -16,16 +16,15 @@ class ClientHelloController extends Controller
      */
     public function index(Request $request)
     {
-        Log::debug($request->header('Authorization'));
         try {
+            Log::alert("Issuing Client Hello");
             ClientHello::dispatch($request->header('Authorization'));
         } catch (Exception $e)
         {
-            Log::debug($e->getMessage());
+            Log::error($e->getMessage());
         }
-        ClientHello::dispatch($request->header('Authorization'));
         
-        return 'hello';
+        return 'success';
     }
 
     /**
