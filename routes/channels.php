@@ -15,7 +15,5 @@ use Illuminate\Support\Facades\Log;
 */
 
 Broadcast::channel('private.{id}', function($user) {
-    Log::debug('trying to authorize');
-    Log::debug($user->id);
     return ['id' => $user->provider_id, 'name' => $user->name];
 });
