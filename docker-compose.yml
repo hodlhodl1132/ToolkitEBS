@@ -84,6 +84,12 @@ services:
             - '/dev/shm:/dev/shm'
         networks:
             - sail
+    memcached:
+        image: launcher.gcr.io/google/memcached1
+        ports:
+            - '11211:11211'
+        networks:
+            - sail
 networks:
     sail:
         driver: bridge
