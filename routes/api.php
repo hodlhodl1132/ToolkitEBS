@@ -2,7 +2,9 @@
 
 use App\Http\Controllers\ClientHelloController;
 use App\Http\Controllers\PersonalWebTokenController;
+use App\Http\Controllers\PollController;
 use App\Http\Controllers\Pusher\ChannelExistenceController;
+use App\Http\Controllers\Pusher\ClientEventsController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Broadcast;
 use Illuminate\Support\Facades\Route;
@@ -27,4 +29,21 @@ Route::middleware('twitchjwt')->post('/tokens/create', [PersonalWebTokenControll
 
 Route::prefix('pusher')->group(function() {
     Route::post('channel-existence', [ChannelExistenceController::class, 'update']);
+    Route::post('client-events', [ClientEventsController::class, 'update']);
 });
+
+Route::middleware('twitchjwt')
+    ->prefix('viewer')
+    ->group(function() {
+        Route::prefix('polls')->group(function() {
+            Route::get('index/{providerId}', [PollController::class, 'show']);
+        });
+    });
+
+Route::middleware('auth:sanctum')
+    ->prefix('broadcasting')
+    ->group(function() {
+        Route::prefix('polls')->group(function() {
+            Route::post('create', [PollController::class, 'store']);
+        });
+    });
