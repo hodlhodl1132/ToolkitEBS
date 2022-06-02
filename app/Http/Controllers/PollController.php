@@ -8,14 +8,9 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\ValidationException;
 use Laravel\Sanctum\PersonalAccessToken;
-use Spatie\ResponseCache\Facades\ResponseCache;
 
 class PollController extends Controller
 {
-    public function cache()
-    {
-        ResponseCache::selectCachedItems()->forUrls(env('APP_URL') . '/api/viewer/polls/index/124055459')->forget();
-    }
     /**
      * Display a listing of the resource.
      *
@@ -46,7 +41,6 @@ class PollController extends Controller
     {
         $user = $request->user();
         $poll = Poll::where('provider_id', $user->provider_id)->first();
-        
         if ($poll == null) {
             $validator = Validator::make($request->all(), [
                 'title' => 'required|max:100|string',
@@ -66,8 +60,6 @@ class PollController extends Controller
             } catch (ValidationException $e) {
                 Log::error($e->getMessage());
             }
-
-            ResponseCache::selectCachedItems()->forUrls(env('APP_URL') . '/api/viewer/polls/index/' . $user->provider_id)->forget();
 
             $poll = new Poll();
             $poll->provider_id = $user->provider_id;

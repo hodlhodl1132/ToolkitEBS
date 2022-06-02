@@ -32,10 +32,9 @@ Route::prefix('pusher')->group(function() {
     Route::post('client-events', [ClientEventsController::class, 'update']);
 });
 
-Route::middleware(['cache'])
+Route::middleware('twitchjwt')
     ->prefix('viewer')
     ->group(function() {
-        Route::delete('cache', [PollController::class, 'cache']);
         Route::prefix('polls')->group(function() {
             Route::get('index/{providerId}', [PollController::class, 'show']);
         });

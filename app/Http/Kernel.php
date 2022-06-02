@@ -65,7 +65,5 @@ class Kernel extends HttpKernel
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         'twitchjwt' => \App\Http\Middleware\VerifyTwitchJWT::class,
         'auth:sanctum' => \Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful::class,
-        'cache' => \Spatie\ResponseCache\Middlewares\CacheResponse::class,
-        'doNotCache' => \Spatie\ResponseCache\Middlewares\DoNotCacheResponse::class,
     ];
 }
