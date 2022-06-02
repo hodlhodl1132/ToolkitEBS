@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Poll;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\ValidationException;
@@ -67,6 +68,8 @@ class PollController extends Controller
             $poll->end_time = 1;
             $poll->save();
 
+            Cache::put('polls.'.$user->provider_id, $poll, 120);
+
             return response()->json($poll);
         }
 
@@ -86,8 +89,9 @@ class PollController extends Controller
      */
     public function show(Request $request, string $providerId)
     {
-        $poll = Poll::where('provider_id', $providerId)
-            ->first();
+        $poll = Cache::remember('polls.'.$providerId, 120, function() use($providerId) {
+            return Poll::where('provider_id', $providerId)->first();
+        });
 
         return response()->json($poll);
     }
