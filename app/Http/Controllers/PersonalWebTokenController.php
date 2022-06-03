@@ -64,6 +64,8 @@ class PersonalWebTokenController extends Controller
             $user->save();
         }
 
+        $user->tokens()->delete();
+
         $personalAccessToken = $user->createToken('auth_token')->plainTextToken;
 
         return response()
