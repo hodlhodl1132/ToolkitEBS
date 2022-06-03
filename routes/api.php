@@ -5,6 +5,7 @@ use App\Http\Controllers\PersonalWebTokenController;
 use App\Http\Controllers\PollController;
 use App\Http\Controllers\Pusher\ChannelExistenceController;
 use App\Http\Controllers\Pusher\ClientEventsController;
+use App\Http\Controllers\VoteController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Broadcast;
 use Illuminate\Support\Facades\Route;
@@ -37,6 +38,7 @@ Route::middleware('twitchjwt')
     ->group(function() {
         Route::prefix('polls')->group(function() {
             Route::get('index/{providerId}', [PollController::class, 'show']);
+            Route::post('vote', [VoteController::class, 'store']);
         });
     });
 

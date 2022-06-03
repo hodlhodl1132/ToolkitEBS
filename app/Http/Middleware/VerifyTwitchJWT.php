@@ -29,6 +29,9 @@ class VerifyTwitchJWT
         $token = $request->bearerToken();
         try {
             $payload = $jwt->decode($token);
+            $request->attributes->add([
+                "payload" => $payload
+            ]);
         } catch (Exception $e) {
             Log::debug($e->getMessage());
             abort(403);

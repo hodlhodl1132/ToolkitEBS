@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Poll;
+use App\Models\Vote;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Cache;
@@ -47,7 +48,7 @@ class PollController extends Controller
             $validator = Validator::make($request->all(), [
                 'title' => 'required|max:100|string',
                 'length' => 'required|integer|gte:1|lte:5',
-                'options.*.value' => 'required|string',
+                'options.*.value' => 'required|string|alpha_dash',
                 'options.*.label' => 'required_with:options.*.value|string|max:12'
             ]);
 
@@ -101,7 +102,7 @@ class PollController extends Controller
         });
 
         if ($poll == null) {
-            response(204);
+            return response('', 204);
         }
 
         return response()->json($poll);
@@ -148,6 +149,12 @@ class PollController extends Controller
         $poll->delete();
         Cache::forget('polls.' . $user->provider_id);
 
-        return response(200);
+        $votes = Vote::where('poll_id', $poll->id);
+        $voteData = $votes->get(['provider_id', 'value']);
+        $votes->delete();
+
+        return response()->json([
+            'votes' => $voteData
+        ]);
     }
 }
