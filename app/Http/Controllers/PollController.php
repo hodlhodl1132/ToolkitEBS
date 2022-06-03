@@ -70,6 +70,7 @@ class PollController extends Controller
             $poll->provider_id = $user->provider_id;
             $poll->title = $validated['title'];
             $poll->options = $validated['options'];
+            $poll->length = $validated['length'];
             $poll->end_time = intval(Carbon::now()->timestamp) + ($validated['length'] * 60);
             $poll->save();
 

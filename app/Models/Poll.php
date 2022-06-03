@@ -13,7 +13,8 @@ class Poll extends Model
         'provider_id',
         'end_time',
         'title',
-        'options'
+        'options',
+        'length'
     ];
 
     protected $casts = [
