@@ -45,5 +45,6 @@ Route::middleware('auth:sanctum')
     ->group(function() {
         Route::prefix('polls')->group(function() {
             Route::post('create', [PollController::class, 'store']);
+            Route::delete('delete', [PollController::class, 'destroy']);
         });
     });

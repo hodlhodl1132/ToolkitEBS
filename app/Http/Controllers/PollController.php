@@ -68,6 +68,7 @@ class PollController extends Controller
             $poll->end_time = 1;
             $poll->save();
 
+            Cache::forget('polls.'.$user->provider_id);
             Cache::put('polls.'.$user->provider_id, $poll, 120);
 
             return response()->json($poll);
@@ -92,6 +93,10 @@ class PollController extends Controller
         $poll = Cache::remember('polls.'.$providerId, 120, function() use($providerId) {
             return Poll::where('provider_id', $providerId)->first();
         });
+
+        if ($poll == null) {
+            response(204);
+        }
 
         return response()->json($poll);
     }
@@ -125,8 +130,18 @@ class PollController extends Controller
      * @param  \App\Models\Poll  $poll
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Poll $poll)
+    public function destroy(Request $request)
     {
-        //
+        $user = $request->user();
+        $poll = Poll::where('provider_id', $user->provider_id)->first();
+
+        if ($poll == null) {
+            return response(205);
+        }
+
+        $poll->delete();
+        Cache::forget('polls.' . $user->provider_id);
+
+        return response(200);
     }
 }
