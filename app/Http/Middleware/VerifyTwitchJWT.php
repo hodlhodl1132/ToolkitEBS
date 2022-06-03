@@ -31,7 +31,7 @@ class VerifyTwitchJWT
             $payload = $jwt->decode($token);
         } catch (Exception $e) {
             Log::debug($e->getMessage());
-            abort(500);
+            abort(403);
         }
 
         return $next($request);
