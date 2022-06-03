@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Poll;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
@@ -45,6 +46,7 @@ class PollController extends Controller
         if ($poll == null) {
             $validator = Validator::make($request->all(), [
                 'title' => 'required|max:100|string',
+                'length' => 'required|integer|gte:1|lte:5',
                 'options.*.value' => 'required|string',
                 'options.*.label' => 'required_with:options.*.value|string|max:12'
             ]);
@@ -62,10 +64,13 @@ class PollController extends Controller
                 Log::error($e->getMessage());
             }
 
+            $validated = $validator->validated();
+
             $poll = new Poll();
             $poll->provider_id = $user->provider_id;
-            $poll->poll_data = $validator->validated();
-            $poll->end_time = 1;
+            $poll->title = $validated['title'];
+            $poll->options = $validated['options'];
+            $poll->end_time = intval(Carbon::now()->timestamp) + ($validated['length'] * 60);
             $poll->save();
 
             Cache::forget('polls.'.$user->provider_id);

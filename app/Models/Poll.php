@@ -12,10 +12,11 @@ class Poll extends Model
     protected $fillable = [
         'provider_id',
         'end_time',
-        'poll_data'
+        'title',
+        'options'
     ];
 
     protected $casts = [
-        'poll_data' => 'array'
+        'options' => 'array'
     ];
 }
