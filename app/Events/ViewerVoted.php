@@ -69,7 +69,7 @@ class ViewerVoted implements ShouldBroadcast
     public function broadcastWith()
     {
         return [
-            'user_id' => $this->vote->provider_id,
+            'provider_id' => $this->vote->provider_id,
             'poll_id' => $this->vote->poll_id,
             'value' => $this->vote->value
         ];
