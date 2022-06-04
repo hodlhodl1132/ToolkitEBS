@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\ViewerVoted;
 use App\Models\Vote;
 use App\Models\Poll;
 use Illuminate\Http\Request;
@@ -90,6 +91,8 @@ class VoteController extends Controller
             $vote->poll_id = $poll->id;
             $vote->value = $value;
             $vote->save();
+
+            ViewerVoted::dispatch($channelId, $vote);
 
             return response()->json([
                 'success' => "Vote succeeded for $value",
