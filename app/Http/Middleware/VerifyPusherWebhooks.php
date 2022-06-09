@@ -21,6 +21,7 @@ class VerifyPusherWebhooks
     {
         $pusherKey = $request->header('X-Pusher-Key');
         $pusherSignature = $request->header('X-Pusher-Signature');
+        $payload = $request->all();
 
         if ($pusherKey == null || $pusherSignature == null) {
             return $request->response('', 403);
@@ -32,14 +33,13 @@ class VerifyPusherWebhooks
 
         Log::debug($pusherKey . " " . $pusherSignature);
 
-        $secret = base64_decode( env('PUSHER_APP_SECRET') );
-        $jwt = new JWT($secret, 'HS256');
         try {
-            $payload = $jwt->decode($pusherSignature);
-        } catch (Exception $e)
-        {
+            $sha = hash_hmac('sha256', json_encode($payload), env('PUSHER_APP_SECRET'));
+            if ($sha != $pusherSignature) {
+                return $request->response('', 403);
+            }
+        } catch (Exception $e) {
             Log::error($e->getMessage());
-            return response('', 403);
         }
 
         return $next($request);
