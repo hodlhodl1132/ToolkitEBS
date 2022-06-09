@@ -14,6 +14,6 @@ use Illuminate\Support\Facades\Log;
 |
 */
 
-Broadcast::channel('private.{id}', function($user) {
-    return ['id' => $user->provider_id, 'name' => $user->name];
+Broadcast::channel('private.{id}', function($user, $id) {
+    return $user->provider_id == $id;
 });
