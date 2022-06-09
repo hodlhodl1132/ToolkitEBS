@@ -65,5 +65,6 @@ class Kernel extends HttpKernel
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         'twitchjwt' => \App\Http\Middleware\VerifyTwitchJWT::class,
         'auth:sanctum' => \Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful::class,
+        'pusherjwt' => \App\Http\Middleware\VerifyPusherWebhooks::class,
     ];
 }

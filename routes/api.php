@@ -28,7 +28,7 @@ Route::middleware('twitchjwt')
 
 Route::middleware('twitchjwt')->post('/tokens/create', [PersonalWebTokenController::class, 'show']);
 
-Route::prefix('pusher')->group(function() {
+Route::middleware('pusherjwt')->prefix('pusher')->group(function() {
     Route::post('channel-existence', [ChannelExistenceController::class, 'update']);
     Route::post('client-events', [ClientEventsController::class, 'update']);
 });
