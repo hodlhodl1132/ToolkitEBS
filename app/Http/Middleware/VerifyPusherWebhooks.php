@@ -31,8 +31,6 @@ class VerifyPusherWebhooks
             return $request->response('', 403);
         }
 
-        Log::debug($pusherKey . " " . $pusherSignature);
-
         try {
             $sha = hash_hmac('sha256', json_encode($payload), env('PUSHER_APP_SECRET'));
             if ($sha != $pusherSignature) {
