@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BroadcasterController;
+use App\Http\Controllers\TwitchOAuthController;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,5 +22,10 @@ Route::get('/', function () {
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth'])->name('dashboard');
+
+Route::prefix('auth/twitch/oauth')->group(function() {
+    Route::get('redirect', [TwitchOAuthController::class, 'redirect'])->name('twitch.login');
+    Route::get('authorized', [TwitchOAuthController::class, 'authorized']);
+});
 
 require __DIR__.'/auth.php';

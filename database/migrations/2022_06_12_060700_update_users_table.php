@@ -15,6 +15,8 @@ return new class extends Migration
     {
         Schema::table('users', function (Blueprint $table) {
             $table->string('email')->unique();
+            $table->string('provider_token');
+            $table->string('refresh_token');
         });
     }
 
