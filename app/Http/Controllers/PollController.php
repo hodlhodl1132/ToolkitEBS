@@ -77,8 +77,7 @@ class PollController extends Controller
             $poll->end_time = intval(Carbon::now()->timestamp) + ($validated['length'] * 60);
             $poll->save();
 
-            $jsonResponse = response()->json($poll);
-            if (TwitchApi::sendExtensionPubSubMessage($user, $jsonResponse) != 204)
+            if (TwitchApi::sendExtensionPubSubMessage($user, $poll->toJson()) != 204)
             {
                 return response()->json([
                     'error' => 'Critical erroring while sending poll data to Twitch Services'
@@ -88,7 +87,7 @@ class PollController extends Controller
             Cache::forget('polls.'.$user->provider_id);
             Cache::put('polls.'.$user->provider_id, $poll, 120);
 
-            return $jsonResponse;
+            return response()->json($poll);
         }
 
         return response()->json(
