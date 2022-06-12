@@ -96,13 +96,15 @@ class VoteController extends Controller
 
             return response()->json([
                 'success' => "Vote succeeded for $value",
-                'voted' => true
+                'voted' => true,
+                'poll_id' => $poll->id
             ]);
         }
 
         return response()->json([
             'error' => 'You have already voted on this poll',
-            'voted' => true
+            'voted' => true,
+            'poll_id' => $poll->id
         ]);
     }
 
