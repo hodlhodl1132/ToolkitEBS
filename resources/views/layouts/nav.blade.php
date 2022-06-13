@@ -4,7 +4,7 @@
             ToolkitExt
         </a>
         <a href="{{ route('documentation.index') }}" class="item">Documentation</a>
-        <a href="#" class="item">Get Started</a>
+        <a href="{{ route('documentation.show', ['slug' => 'get_started']) }}" class="item">Get Started</a>
 
         <div class="right item">
             @guest

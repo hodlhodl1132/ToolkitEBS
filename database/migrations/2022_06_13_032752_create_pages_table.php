@@ -18,7 +18,8 @@ return new class extends Migration
             $table->text('content');
             $table->string('title');
             $table->string('category_id');
-            $table->string('last_modified_by');
+            $table->integer('last_modified_by');
+            $table->string('slug');
             $table->timestamps();
         });
     }

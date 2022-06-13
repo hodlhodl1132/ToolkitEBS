@@ -5,13 +5,39 @@
         </h2>
     </x-slot>
 
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 bg-white border-b border-gray-200">
-                    Welcome to the Documentation
+    @if (session('status'))
+        <div class="ui success message">
+            <i class="close icon"></i>
+              <div class="header">
+                {{ session('status') }}
+            </div>
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
+
+    <div class="container">
+        @can('pages.edit')
+        <a href="{{ route('documentation.create') }}">
+            <button class="ui right labeled icon button">
+                <i class="right file icon"></i>
+                New
+            </button>
+        </a>
+        @endcan
+
+        <div class="ui relaxed divided list">
+            @foreach ($pages as $page)
+            <div class="item">
+                <i class="large file alternate middle aligned icon"></i>
+                <div class="content">
+                <a href="{{ route('documentation.show', ['slug'=> $page->slug]) }}" class="header">{{ $page->title }}</a>
                 </div>
             </div>
+            @endforeach
         </div>
     </div>
 </x-app-layout>

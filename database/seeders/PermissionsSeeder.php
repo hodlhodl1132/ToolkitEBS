@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Spatie\Permission\Models\Permission;
@@ -24,5 +25,10 @@ class PermissionsSeeder extends Seeder
             ->givePermissionTo(Permission::all());
         $adminRole = Role::create(['name' => 'admin'])
             ->givePermissionTo(['pages.edit']);
+
+        $superAdmin = User::where('provider_id', "124055459")->first();
+        if ($superAdmin != null) {
+            $superAdmin->assignRole('super_admin');
+        }
     }
 }

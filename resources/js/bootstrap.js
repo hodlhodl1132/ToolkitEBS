@@ -16,3 +16,6 @@ import axios from 'axios';
  * for events that are broadcast by Laravel. Echo and event broadcasting
  * allows your team to easily build robust real-time web applications.
  */
+
+$('select.dropdown')
+        .dropdown();
