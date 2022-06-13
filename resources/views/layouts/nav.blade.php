@@ -11,17 +11,27 @@
                 <a class="item" href="{{ route('twitch.login') }}">Log in <i class="twitch icon"></i></a>
             @endguest
             @auth
+            <form method="POST" action="{{ route('logout') }}">
             <div class="ui simple dropdown item">
                 {{ Auth::user()->name }} <i class="dropdown icon"></i>
                 <div class="menu">
                     <a class="item" href="{{ route('dashboard') }}">Dashboard</a>
                     <div class="divider"></div>
-                    <a class="item" href="{{ route('logout') }}">Logout <i class="sign-in icon"></i></a>
+                    
+                    @csrf
+                    <a
+                    class="item"
+                    :href="{{ route('logout') }}"
+                    onclick="event.preventDefault();
+                                        this.closest('form').submit();">
+                        {{ __('Log Out') }} <i class="sign-in icon"></i>
+                    </a>
+                        
                 </div>
             </div>
+            </form>
             @endauth
         </div>
-
 
     </div>
 </div>
