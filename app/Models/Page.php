@@ -14,6 +14,7 @@ class Page extends Model
         'title',
         'category_id',
         'last_modified_by',
-        'slug'
+        'slug',
+        'deleted'
     ];
 }

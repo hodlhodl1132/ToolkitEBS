@@ -155,7 +155,8 @@ class PageController extends Controller
             return response()->redirectTo('/docs');
         }
 
-        $page->delete();
+        $page->deleted = true;
+        $page->save();
 
         return redirect('/docs')->with('status', $page->title . ' has been deleted.');
     }

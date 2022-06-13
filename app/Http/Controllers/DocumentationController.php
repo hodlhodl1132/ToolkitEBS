@@ -14,7 +14,7 @@ class DocumentationController extends Controller
      */
     public function index()
     {
-        $pages = Page::all();
+        $pages = Page::where('deleted', false)->get();
 
         return view('documentation.index', ['pages' => $pages]);
     }

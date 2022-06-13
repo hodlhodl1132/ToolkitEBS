@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('category_id');
             $table->integer('last_modified_by');
             $table->string('slug');
+            $table->boolean('deleted')->default(false);
             $table->timestamps();
         });
     }
