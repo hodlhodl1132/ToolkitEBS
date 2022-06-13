@@ -16,9 +16,10 @@ class DefaultPagesSeeder extends Seeder
      */
     public function run()
     {
+        $root = PageCategory::find(1);
         $setup = PageCategory::find(2);
 
-        if ($setup == null)
+        if ($setup == null || $root == null)
             return;
 
         DB::table('pages')->insert([
@@ -27,6 +28,22 @@ class DefaultPagesSeeder extends Seeder
             'category_id' => $setup->id,
             'last_modified_by' => 0,
             'slug' => 'get_started'
+        ]);
+
+        DB::table('pages')->insert([
+            'content' => 'Welcome',
+            'title' => 'Privacy Policy',
+            'category_id' => $root->id,
+            'last_modified_by' => 0,
+            'slug' => 'privacy_policy'
+        ]);
+
+        DB::table('pages')->insert([
+            'content' => 'Welcome',
+            'title' => 'Terms of Use',
+            'category_id' => $root->id,
+            'last_modified_by' => 0,
+            'slug' => 'terms_of_use'
         ]);
     }
 }

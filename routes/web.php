@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BroadcasterController;
 use App\Http\Controllers\DocumentationController;
 use App\Http\Controllers\PageController;
+use App\Http\Controllers\RootPageController;
 use App\Http\Controllers\TwitchOAuthController;
 
 /*
@@ -40,6 +41,11 @@ Route::prefix('docs')->group(function() {
         Route::post('/update/{slug}', [PageController::class, 'update'])->name('documentation.update');
         Route::middleware(['can:pages.delete'])->post('/destroy/{slug}', [PageController::class, 'destroy'])->name('documentation.delete');
     });
+});
+
+Route::prefix('pages')->group(function() {
+    Route::get('/{slug}', [RootPageController::class, 'show'])
+        ->name('view.page');
 });
 
 require __DIR__.'/auth.php';
