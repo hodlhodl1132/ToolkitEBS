@@ -19,6 +19,7 @@ class PermissionsSeeder extends Seeder
     {
         app()[\Spatie\Permission\PermissionRegistrar::class]->forgetCachedPermissions();
         Permission::create(['name' => 'pages.edit']);
+        Permission::create(['name' => 'pages.delete']);
         Permission::create(['name' => 'users.edit']);
 
         $superAdminRole = Role::create(['name' => 'super_admin'])
