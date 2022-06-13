@@ -16,15 +16,15 @@ class DefaultPagesSeeder extends Seeder
      */
     public function run()
     {
-        $root = PageCategory::find(1);
+        $setup = PageCategory::find(2);
 
-        if ($root == null)
+        if ($setup == null)
             return;
 
         DB::table('pages')->insert([
             'content' => 'Welcome',
             'title' => 'Get Started',
-            'category_id' => $root->id,
+            'category_id' => $setup->id,
             'last_modified_by' => 0,
             'slug' => 'get_started'
         ]);
