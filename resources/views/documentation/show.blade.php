@@ -13,6 +13,8 @@
                 Edit
             </button>
         </a>
+        @endcan
+        @can('pages.delete')
         <form method="POST" action="{{ route('documentation.delete', ['slug' => $page->slug]) }}">
         @csrf
         <a :href="{{ route('documentation.delete', ['slug' => $page->slug]) }}">

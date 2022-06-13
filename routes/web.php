@@ -38,7 +38,7 @@ Route::prefix('docs')->group(function() {
         Route::post('/store', [PageController::class, 'store'])->name('documentation.store');
         Route::get('/edit/{slug}', [PageController::class, 'edit'])->name('documentation.edit');
         Route::post('/update/{slug}', [PageController::class, 'update'])->name('documentation.update');
-        Route::post('/destroy/{slug}', [PageController::class, 'destroy'])->name('documentation.delete');
+        Route::middleware(['can:pages.delete'])->post('/destroy/{slug}', [PageController::class, 'destroy'])->name('documentation.delete');
     });
 });
 
