@@ -5,10 +5,20 @@
         </h2>
     </x-slot>
 
+    <div class="ui breadcrumb">
+        <a href="{{ route('home') }}" class="section">Home</a>
+        <div class="divider">/</div>
+        <a href="{{ route('documentation.index') }}" class="section">Documentation</a>
+        <div class="divider">/</div>
+        <a href="{{ route('documentation.index') }}" class="section">{{ ucfirst( $page_category->title ) }}</a>
+        <div class="divider">/</div>
+        <a href="{{ route('documentation.show', ['slug' => $page->slug, 'category_name' => $page_category->title]) }}" class="section">{{ $page->title }}</a>
+    </div>
+
     <div class="container">
         @can('pages.edit')
         <a href="{{ route('documentation.edit', ['slug' => $page->slug]) }}">
-            <button class="ui right labeled icon button">
+            <button class="ui grey right labeled icon button">
                 <i class="edit icon"></i>
                 Edit
             </button>
@@ -19,7 +29,7 @@
         @csrf
         <a :href="{{ route('documentation.delete', ['slug' => $page->slug]) }}">
             <button onclick="event.preventDefault();
-                        this.closest('form').submit();" class="ui right labeled icon button">
+                        this.closest('form').submit();" class="ui red right labeled icon button">
                 <i class="trash alternate icon"></i>
                 Delete
             </button>

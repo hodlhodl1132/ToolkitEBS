@@ -146,7 +146,7 @@
                 </a>
                 <a class="active item" href="{{ route('home') }}">Home</a>
                 <a class="item" href="{{ route('documentation.index') }}">Documentation</a>
-                <a class="item" href="{{ route('documentation.show', ['slug' => 'get_started']) }}">Get Started</a>
+                <a class="item" href="{{ route('documentation.show', ['slug' => 'get_started', 'category_name' => 'setup']) }}">Get Started</a>
                 <div class="right item">
                     @guest
                         <a class="ui inverted button" href="{{ route('twitch.login') }}">Log in <i class="twitch icon"></i></a>

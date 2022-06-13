@@ -5,6 +5,12 @@
         </h2>
     </x-slot>
 
+    <div class="ui breadcrumb">
+        <a href="{{ route('home') }}" class="section">Home</a>
+        <div class="divider">/</div>
+        <a href="{{ route('documentation.index') }}" class="section">Documentation</a>
+    </div>
+
     @if (session('status'))
         <div class="ui success message">
             <i class="close icon"></i>
@@ -22,22 +28,25 @@
     <div class="container">
         @can('pages.edit')
         <a href="{{ route('documentation.create') }}">
-            <button class="ui right labeled icon button">
+            <button class="ui primary right labeled icon button">
                 <i class="right file icon"></i>
                 New
             </button>
         </a>
         @endcan
 
+        @foreach ($categories as $category)
+        <h2 class="ui header">{{ ucfirst( $category->title ) }}</h2>
         <div class="ui relaxed divided list">
-            @foreach ($pages as $page)
+            @foreach ($category->pages()->where('deleted', false)->get() as $page)
             <div class="item">
                 <i class="large file alternate middle aligned icon"></i>
                 <div class="content">
-                <a href="{{ route('documentation.show', ['slug'=> $page->slug]) }}" class="header">{{ $page->title }}</a>
+                <a href="{{ route('documentation.show', ['slug'=> $page->slug, 'category_name' => $category->title]) }}" class="header">{{ $page->title }}</a>
                 </div>
             </div>
             @endforeach
         </div>
+        @endforeach
     </div>
 </x-app-layout>

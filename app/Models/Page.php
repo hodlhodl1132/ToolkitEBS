@@ -17,4 +17,14 @@ class Page extends Model
         'slug',
         'deleted'
     ];
+
+    /**
+     * Get the page category associated with the page
+     * 
+     * @return \App\Models\PageCategory
+     */
+    public function pageCategory()
+    {
+        return $this->hasOne(PageCategory::class, 'id', 'category_id');
+    }
 }

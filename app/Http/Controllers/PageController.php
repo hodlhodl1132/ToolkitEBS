@@ -42,7 +42,7 @@ class PageController extends Controller
     {
         $user = Auth::user();
         $validator = Validator::make($request->all(), [
-            'title' => 'required|string|min:10|max:60',
+            'title' => 'required|string|min:6|max:60',
             'content' => 'required|string',
             'slug' => 'required|string|alpha_dash|unique:App\Models\Page,slug'
         ]);
@@ -60,11 +60,11 @@ class PageController extends Controller
         $page->title = $validated['title'];
         $page->content = $validated['content'];
         $page->last_modified_by = $user->id;
-        $page->category_id = 1;
+        $page->category_id = 2;
         $page->slug = $validated['slug'];
         $page->save();
 
-        return view('documentation.show', ['page' => $page]);
+        return view('documentation.show', ['page' => $page, 'page_category' => $page->pageCategory]);
     }
 
     /**
@@ -73,7 +73,7 @@ class PageController extends Controller
      * @param  string $slug
      * @return \Illuminate\Http\Response
      */
-    public function show(string $slug)
+    public function show(string $page_category, string $slug)
     {
         $page = Page::where('slug', $slug)->first();
         
@@ -81,7 +81,17 @@ class PageController extends Controller
             return response()->redirectTo('/docs');
         }
 
-        return view('documentation.show', ['page' => $page]);
+        $pageCategory = $page->pageCategory;
+        if ($pageCategory == null)
+        {
+            Log::emergency("Attempting to display page with no page category. Page ID: " . $page->id);
+            return response('', 500);
+        }
+
+        return view('documentation.show', [
+            'page' => $page,
+            'page_category' => $pageCategory
+        ]);
     }
 
     /**
@@ -92,6 +102,7 @@ class PageController extends Controller
      */
     public function edit(string $slug)
     {
+        Log::debug('here');
         $page = Page::where('slug', $slug)->first();
 
         if ($page == null) {

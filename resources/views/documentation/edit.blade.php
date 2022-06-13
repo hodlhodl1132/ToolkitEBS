@@ -45,7 +45,7 @@
                 <label>Text</label>
                 <textarea id="new-page-editor" name="content">{!! html_entity_decode( old('content', $page->content) ) !!}</textarea>
             </div>
-            <button class="ui button" tabindex="0">{{ __('Save Page') }}</button>
+            <button class="ui primary button" tabindex="0">{{ __('Save Page') }}</button>
         </div>
     </div>
     </form>

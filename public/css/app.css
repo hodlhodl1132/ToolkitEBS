@@ -11,4 +11,9 @@
 
 header.container {
     margin-top: 5em;
+    margin-bottom: 1em;
+}
+
+.ui.breadcrumb {
+    margin-bottom: 20px;
 }

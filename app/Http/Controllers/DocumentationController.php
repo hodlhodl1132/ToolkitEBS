@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Page;
+use App\Models\PageCategory;
 use Illuminate\Http\Request;
 
 class DocumentationController extends Controller
@@ -14,8 +15,11 @@ class DocumentationController extends Controller
      */
     public function index()
     {
-        $pages = Page::where('deleted', false)->get();
+        $categories = PageCategory::where('id', '>', 1)
+            ->get();
 
-        return view('documentation.index', ['pages' => $pages]);
+        return view('documentation.index', [
+            'categories' => $categories
+        ]);
     }
 }

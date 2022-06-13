@@ -32,7 +32,7 @@ Route::prefix('auth/twitch/oauth')->group(function() {
 
 Route::prefix('docs')->group(function() {
     Route::get('/', [DocumentationController::class, 'index'])->name('documentation.index');
-    Route::get('/page/{slug}', [PageController::class, 'show'])->name('documentation.show');
+    Route::get('/page/{category_name}/{slug}', [PageController::class, 'show'])->name('documentation.show');
     Route::group(['middleware' => ['can:pages.edit']], function() {
         Route::get('/create', [PageController::class, 'create'])->name('documentation.create');
         Route::post('/store', [PageController::class, 'store'])->name('documentation.store');
