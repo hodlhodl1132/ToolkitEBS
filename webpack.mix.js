@@ -1,4 +1,6 @@
 const mix = require('laravel-mix');
+// const tailwindcss = require('tailwindcss');
+// const semanticui = require('semantic-ui-css');
 
 /*
  |--------------------------------------------------------------------------
@@ -13,6 +15,8 @@ const mix = require('laravel-mix');
 
 mix.js('resources/js/app.js', 'public/js').postCss('resources/css/app.css', 'public/css', [
     require('postcss-import'),
-    require('tailwindcss'),
     require('autoprefixer'),
-]);
+])
+    .copyDirectory('semantic/dist/themes/','public/css/themes')
+    .copy('semantic/dist/semantic.min.css', 'public/css/semantic.min.css')
+    .copy('semantic/dist/semantic.min.js', 'public/js/semantic.min.js')

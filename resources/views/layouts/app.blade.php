@@ -11,26 +11,21 @@
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap">
 
         <!-- Styles -->
+        <link rel="stylesheet" href="{{ asset('css/semantic.min.css') }}">
         <link rel="stylesheet" href="{{ asset('css/app.css') }}">
 
         <!-- Scripts -->
+        <script src="{{ asset('js/semantic.min.js') }}" defer></script>
         <script src="{{ asset('js/app.js') }}" defer></script>
     </head>
     <body class="font-sans antialiased">
-        <div class="min-h-screen bg-gray-100">
-            @include('layouts.navigation')
-
-            <!-- Page Heading -->
-            <header class="bg-white shadow">
-                <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-                    {{ $header }}
-                </div>
-            </header>
-
+        @include('layouts.nav')
+        <header class="ui container">
+            <h1 class="ui header">{{ $header }}</h1>
+        </header>
+        <main class="ui container">
             <!-- Page Content -->
-            <main>
-                {{ $slot }}
-            </main>
-        </div>
+            {{ $slot }}
+        </main>
     </body>
 </html>
