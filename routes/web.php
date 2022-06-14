@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BroadcasterController;
 use App\Http\Controllers\DocumentationController;
 use App\Http\Controllers\PageController;
+use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\RootPageController;
 use App\Http\Controllers\TwitchOAuthController;
 use App\Http\Controllers\UserController;
@@ -51,14 +52,18 @@ Route::prefix('pages')->group(function() {
 
 Route::prefix('admin')->group(function() {
     Route::prefix('users')->group(function() {
-        Route::get('/', [UserController::class, 'index'])
-            ->name('admin.users.view');
         Route::middleware(['can:admin.users.view'])
             ->group(function() {
                 Route::get('/', [UserController::class, 'index'])
                     ->name('admin.users.index');
                 Route::get('/{id}', [UserController::class, 'show'])
                     ->name('admin.users.show');
+            });
+        Route::middleware(['can:admin.users.edit'])
+            ->prefix('permissions')
+            ->group(function() {
+                Route::post('store', [PermissionController::class, 'store'])->name('permission.store');
+                Route::post('destroy', [PermissionController::class, 'destroy'])->name('permission.delete');
             });
     }); 
 });

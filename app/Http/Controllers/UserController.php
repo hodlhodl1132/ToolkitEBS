@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Spatie\Permission\Models\Permission;
 
 class UserController extends Controller
 {
@@ -24,7 +25,22 @@ class UserController extends Controller
      */
     public function show(int $id)
     {
+        /**
+         * @var \App\Models\User
+         */
         $user = User::find($id);
+        
+        $allPermissions = Permission::all();
+        $userPermissions = $user->getAllPermissions();
+        $permissions = [];
+
+        foreach ($allPermissions as $permission) {
+            if ($userPermissions->find($permission->id) == null)
+            {
+                array_push($permissions, $permission);
+            }
+        }
+
 
         if ($user == null)
         {
@@ -32,7 +48,8 @@ class UserController extends Controller
         }
 
         return view('users.show', [
-            'user' => $user
+            'user' => $user,
+            'permissions' => $permissions
         ]);
     }
 }
