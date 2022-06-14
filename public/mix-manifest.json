@@ -1,6 +1,7 @@
 {
     "/js/app.js": "/js/app.js",
     "/css/app.css": "/css/app.css",
+    "/images/polls_preview.jpg": "/images/polls_preview.jpg",
     "/js/tinymce/.npmignore": "/js/tinymce/.npmignore",
     "/js/tinymce/CHANGELOG.md": "/js/tinymce/CHANGELOG.md",
     "/js/tinymce/README.md": "/js/tinymce/README.md",

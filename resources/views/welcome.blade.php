@@ -181,7 +181,19 @@
 
         </div>
 
-    
+<div class="ui vertical stripe segment">
+    <div class="ui middle aligned stackable grid container">
+      <div class="row">
+        <div class="eight wide column">
+          <h3 class="ui header">Event Polls</h3>
+          <p>Viewers can vote on the next Event! A huge list of supply drops, raids, funny situations, and more! With more events being added all the time.</p>
+        </div>
+        <div class="six wide right floated column">
+            <img src="{{ asset('images/polls_preview.jpg') }}">
+        </div>
+      </div>
+    </div>
+  </div>
 
 
         <div class="ui inverted vertical footer segment">

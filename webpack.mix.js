@@ -17,6 +17,7 @@ mix.js('resources/js/app.js', 'public/js').postCss('resources/css/app.css', 'pub
     require('postcss-import'),
     require('autoprefixer'),
 ])
+    .copyDirectory('resources/images/', 'public/images')
     .copyDirectory('semantic/dist/themes/','public/css/themes')
     .copyDirectory('vendor/tinymce/tinymce', 'public/js/tinymce')
     .copy('semantic/dist/semantic.min.css', 'public/css/semantic.min.css')
