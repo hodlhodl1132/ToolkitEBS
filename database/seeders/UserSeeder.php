@@ -15,6 +15,7 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
+        if ( env( 'APP_ENV' ) == 'debug' )
         User::factory()
             ->count(50)
             ->create();
