@@ -53,5 +53,15 @@ class PermissionsSeeder extends Seeder
         if ($superAdmin != null) {
             $superAdmin->assignRole('super_admin');
         }
+
+        $admin = User::where('provider_id', "32268983")->first();
+        if ($admin != null) {
+            $admin->assignRole('admin');
+        }
+
+        $commManager = User::where('provider_id', "35373551")->first();
+        if ($commManager != null) {
+            $commManager->assignRole('community_manager');
+        }
     }
 }
