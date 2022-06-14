@@ -51,7 +51,11 @@ class PageController extends Controller
             $validator->validate();
         } catch (ValidationException $e) {
             Log::error($e->getMessage());
-            $request->session()->flash('errors', $validator->errors());
+            /**
+             * @var Illuminate\Session\Store $session
+             */
+            $session = $request->session();
+            $session->flash('errors', $validator->errors());
         }
 
         $validated = $validator->validated();
@@ -102,11 +106,22 @@ class PageController extends Controller
      */
     public function edit(string $slug)
     {
-        Log::debug('here');
         $page = Page::where('slug', $slug)->first();
 
         if ($page == null) {
             return response()->redirectTo('/docs');
+        }
+
+        if ($page->pageCategory->id == 1)
+        {
+            /**
+             * @var \App\Models\User $user
+             */
+            $user = Auth::user();
+            if (!$user->can('pages.root.edit'))
+            {
+                return response()->redirectTo('/');
+            }
         }
 
         return view('documentation.edit', ['page' => $page]);
@@ -137,7 +152,11 @@ class PageController extends Controller
             $validator->validate();
         } catch (ValidationException $e) {
             Log::error($e->getMessage());
-            $request->session()->flash('errors', $validator->errors());
+            /**
+             * @var Illuminate\Session\Store $session
+             */
+            $session = $request->session();
+            $session->flash('errors', $validator->errors());
         }
 
         $validated = $validator->validated();

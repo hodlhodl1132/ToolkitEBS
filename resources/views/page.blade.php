@@ -12,7 +12,7 @@
     </div>
 
     <div class="container">
-        @can('pages.edit')
+        @can('pages.root.edit')
         <a href="{{ route('documentation.edit', ['slug' => $page->slug]) }}">
             <button class="ui grey right labeled icon button">
                 <i class="edit icon"></i>
@@ -20,7 +20,7 @@
             </button>
         </a>
         @endcan
-        @can('pages.delete')
+        @can('pages.root.delete')
         <form method="POST" action="{{ route('documentation.delete', ['slug' => $page->slug]) }}">
         @csrf
         <a :href="{{ route('documentation.delete', ['slug' => $page->slug]) }}">
