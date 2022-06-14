@@ -15,6 +15,15 @@ header.container {
 .ui.breadcrumb {
     margin-bottom: 20px;
 }
+main.ui.container {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
 .permissions-container {
     margin-top: 20px;
+}
+
+.ui.vertical.footer.segment {
+    padding: 5em 0em;
+    margin-top: 3em;
 }
