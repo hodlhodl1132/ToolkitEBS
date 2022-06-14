@@ -16,6 +16,9 @@
                 {{ Auth::user()->name }} <i class="dropdown icon"></i>
                 <div class="menu">
                     <a class="item" href="{{ route('dashboard') }}">Dashboard</a>
+                    @can('pages.root.edit')
+                        <a class="item" href="{{ route('admin.users.view') }}">Users</a>
+                    @endcan
                     <div class="divider"></div>
                     
                     @csrf

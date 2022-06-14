@@ -6,6 +6,7 @@ use App\Http\Controllers\DocumentationController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\RootPageController;
 use App\Http\Controllers\TwitchOAuthController;
+use App\Http\Controllers\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -46,6 +47,14 @@ Route::prefix('docs')->group(function() {
 Route::prefix('pages')->group(function() {
     Route::get('/{slug}', [RootPageController::class, 'show'])
         ->name('view.page');
+});
+
+Route::prefix('admin')->group(function() {
+    Route::prefix('users')->group(function() {
+        Route::middleware(['can:admin.users.view'])
+            ->get('/', [UserController::class, 'index'])
+            ->name('admin.users.view');
+    }); 
 });
 
 require __DIR__.'/auth.php';
