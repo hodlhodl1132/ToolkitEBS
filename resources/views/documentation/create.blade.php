@@ -4,7 +4,8 @@
         tinymce.init({
             selector: 'textarea#new-page-editor', // Replace this CSS selector to match the placeholder element for TinyMCE
             plugins: 'code table lists',
-            toolbar: 'undo redo | blocks | bold italic | alignleft aligncenter alignright | indent outdent | bullist numlist | code | table'
+            toolbar: 'undo redo | blocks | bold italic | alignleft aligncenter alignright | indent outdent | bullist numlist | code | table',
+            extended_valid_elements: '#i[class]'
         });
     </script>
     <x-slot name="header">
