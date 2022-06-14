@@ -33,7 +33,7 @@ class VerifyTwitchJWT
                 "payload" => $payload
             ]);
         } catch (Exception $e) {
-            Log::debug($e->getMessage());
+            Log::error($e->getMessage());
             abort(403);
         }
 

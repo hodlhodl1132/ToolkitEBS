@@ -83,7 +83,6 @@ class VoteController extends Controller
             }
 
             $validated = $validator->validated();
-            Log::debug($validated);
             $value = $validated['value'];
 
             $vote = new Vote();
