@@ -23,14 +23,16 @@
         <script src="{{ asset('js/app.js') }}" defer></script>
     </head>
     <body class="font-sans antialiased">
-        @include('layouts.nav')
-        <header class="ui container">
-            <h1 class="ui header">{{ $header }}</h1>
-        </header>
-        <main class="ui container">
-            <!-- Page Content -->
-            {{ $slot }}
-        </main>
+        <div id="page-container">
+            @include('layouts.nav')
+            <header class="ui container">
+                <h1 class="ui header">{{ $header }}</h1>
+            </header>
+            <main class="ui container">
+                <!-- Page Content -->
+                {{ $slot }}
+            </main>
+        </div>
 
         @include('layouts.footer')
     </body>

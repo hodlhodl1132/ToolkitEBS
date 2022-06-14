@@ -27,3 +27,23 @@ main.ui.container {
     padding: 5em 0em;
     margin-top: 3em;
 }
+
+#page-container {
+    position: relative;
+}
+
+@media only screen and (min-width: 768px) {
+
+    #page-container {
+        min-height: 100vh;
+    }
+
+}
+
+@media only screen and (max-width: 767px) {
+
+    #page-container {
+        min-height: 50vh;
+    }
+
+}
