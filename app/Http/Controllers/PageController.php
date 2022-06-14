@@ -166,7 +166,7 @@ class PageController extends Controller
         $page->last_modified_by = $user->id;
         $page->save();
 
-        return view('documentation.show', ['page' => $page]);
+        return view('documentation.show', ['page' =>$page, 'page_category' => $page->pageCategory]);
     }
 
     /**
