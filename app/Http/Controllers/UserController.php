@@ -18,4 +18,21 @@ class UserController extends Controller
             'users' => $users
         ]);
     }
+
+    /**
+     * Display the resource
+     */
+    public function show(int $id)
+    {
+        $user = User::find($id);
+
+        if ($user == null)
+        {
+            return response()->redirectToRoute('admin.users.index');
+        }
+
+        return view('users.show', [
+            'user' => $user
+        ]);
+    }
 }

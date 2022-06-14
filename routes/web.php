@@ -51,9 +51,15 @@ Route::prefix('pages')->group(function() {
 
 Route::prefix('admin')->group(function() {
     Route::prefix('users')->group(function() {
-        Route::middleware(['can:admin.users.view'])
-            ->get('/', [UserController::class, 'index'])
+        Route::get('/', [UserController::class, 'index'])
             ->name('admin.users.view');
+        Route::middleware(['can:admin.users.view'])
+            ->group(function() {
+                Route::get('/', [UserController::class, 'index'])
+                    ->name('admin.users.index');
+                Route::get('/{id}', [UserController::class, 'show'])
+                    ->name('admin.users.show');
+            });
     }); 
 });
 
