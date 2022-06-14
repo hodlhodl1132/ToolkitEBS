@@ -12,6 +12,7 @@
 
         <!-- Styles -->
         <link rel="stylesheet" href="{{ asset('css/semantic.min.css') }}">
+        <link rel="stylesheet" href="{{ asset('css/sweetalert2.min.css') }}">
         <link rel="stylesheet" href="{{ asset('css/app.css') }}">
 
         <!-- Scripts -->
@@ -20,6 +21,7 @@
             integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
             crossorigin="anonymous"></script>
         <script src="{{ asset('js/semantic.min.js') }}" defer></script>
+        <script src="{{ asset('js/sweetalert2.min.js') }}" defer></script>
         <script src="{{ asset('js/app.js') }}" defer></script>
     </head>
     <body class="font-sans antialiased">

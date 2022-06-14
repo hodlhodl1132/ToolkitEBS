@@ -13,5 +13,7 @@
     "/js/tinymce/tinymce.js": "/js/tinymce/tinymce.js",
     "/js/tinymce/tinymce.min.js": "/js/tinymce/tinymce.min.js",
     "/css/semantic.min.css": "/css/semantic.min.css",
-    "/js/semantic.min.js": "/js/semantic.min.js"
+    "/js/semantic.min.js": "/js/semantic.min.js",
+    "/js/sweetalert2.min.js": "/js/sweetalert2.min.js",
+    "/css/sweetalert2.min.css": "/css/sweetalert2.min.css"
 }
