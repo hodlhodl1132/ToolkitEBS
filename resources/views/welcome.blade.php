@@ -198,6 +198,7 @@
 
         </div>
 
+        @include('cookie-consent::index')
         @include('layouts.footer')
 
     </body>
