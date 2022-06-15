@@ -21,11 +21,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('twitchjwt')
-    ->controller(ClientHelloController::class)->group(function() {
-        Route::get('/hello', 'index');
-    });
-
 Route::middleware('twitchjwt')->post('/tokens/create', [PersonalWebTokenController::class, 'show']);
 
 Route::middleware('pusherjwt')->prefix('pusher')->group(function() {
