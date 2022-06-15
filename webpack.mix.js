@@ -21,6 +21,5 @@ mix.js('resources/js/app.js', 'public/js').postCss('resources/css/app.css', 'pub
     .copyDirectory('semantic/dist/themes/','public/css/themes')
     .copyDirectory('vendor/tinymce/tinymce', 'public/js/tinymce')
     .copy('semantic/dist/semantic.min.css', 'public/css/semantic.min.css')
-    .copy('semantic/dist/semantic.min.js', 'public/js/semantic.min.js')
     .copy('node_modules/sweetalert2/dist/sweetalert2.min.js', 'public/js/sweetalert2.min.js')
     .copy('node_modules/sweetalert2/dist/sweetalert2.min.css', 'public/css/sweetalert2.min.css')

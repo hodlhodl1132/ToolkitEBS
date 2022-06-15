@@ -21,3 +21,5 @@
     </div>
     </div>
 </div>
+
+@include('cookie-consent::index')
