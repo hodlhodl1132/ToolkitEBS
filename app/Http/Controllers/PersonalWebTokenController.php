@@ -23,7 +23,7 @@ class PersonalWebTokenController extends Controller
         $user->tokens()->delete();
         $token = $user->createToken('auth_token');
 
-        return ['token' => $token->plainTextToken];
+        return ['token' => $token->plainTextToken . '.' . $user->provider_id];
     }
 
     /**
