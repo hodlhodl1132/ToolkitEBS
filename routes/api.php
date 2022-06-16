@@ -5,6 +5,7 @@ use App\Http\Controllers\PersonalWebTokenController;
 use App\Http\Controllers\PollController;
 use App\Http\Controllers\Pusher\ChannelExistenceController;
 use App\Http\Controllers\Pusher\ClientEventsController;
+use App\Http\Controllers\StreamController;
 use App\Http\Controllers\VoteController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Broadcast;
@@ -45,3 +46,5 @@ Route::middleware('auth:sanctum')
             Route::delete('delete', [PollController::class, 'destroy']);
         });
     });
+
+Route::get('streams', [StreamController::class, 'index']);
