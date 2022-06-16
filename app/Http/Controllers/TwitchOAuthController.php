@@ -46,6 +46,6 @@ class TwitchOAuthController extends Controller
 
         Auth::login($user);
 
-        return redirect('/dashboard');
+        return response()->redirectToRoute('dashboard');
     }
 }

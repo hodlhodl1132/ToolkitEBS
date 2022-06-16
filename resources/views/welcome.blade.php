@@ -126,17 +126,6 @@
         </div>
         </div>
 
-        <!-- Sidebar Menu -->
-        <div class="ui vertical inverted sidebar menu">
-        <a class="active item">Home</a>
-        <a class="item">Work</a>
-        <a class="item">Company</a>
-        <a class="item">Careers</a>
-        <a class="item">Login</a>
-        <a class="item">Signup</a>
-        </div>
-
-
         <!-- Page Contents -->
         <div class="pusher">
             <div class="ui inverted vertical masthead center aligned segment">

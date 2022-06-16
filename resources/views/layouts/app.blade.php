@@ -25,7 +25,7 @@
         <script src="{{ asset('js/app.js') }}" defer></script>
     </head>
     <body class="font-sans antialiased">
-        <div id="page-container">
+        <div id="page-container" class="pusher">
             @include('layouts.nav')
             <header class="ui container">
                 <h1 class="ui header">{{ $header }}</h1>
@@ -34,9 +34,8 @@
                 <!-- Page Content -->
                 {{ $slot }}
             </main>
+            @include('cookie-consent::index')
+            @include('layouts.footer')
         </div>
-
-        @include('cookie-consent::index')
-        @include('layouts.footer')
     </body>
 </html>

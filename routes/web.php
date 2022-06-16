@@ -5,7 +5,9 @@ use App\Http\Controllers\BroadcasterController;
 use App\Http\Controllers\DocumentationController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\PermissionController;
+use App\Http\Controllers\PersonalWebTokenController;
 use App\Http\Controllers\RootPageController;
+use App\Http\Controllers\SettingsController;
 use App\Http\Controllers\TwitchOAuthController;
 use App\Http\Controllers\UserController;
 
@@ -24,9 +26,11 @@ Route::get('/', function () {
     return view('welcome');
 })->name('home');
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth'])->name('dashboard');
+Route::middleware('auth')
+    ->prefix('streamer')
+    ->group(function() {
+        Route::get('/', [SettingsController::class, 'index'])->name('dashboard');
+    });
 
 Route::prefix('auth/twitch/oauth')->group(function() {
     Route::get('redirect', [TwitchOAuthController::class, 'redirect'])->name('twitch.login');
@@ -67,5 +71,11 @@ Route::prefix('admin')->group(function() {
             });
     }); 
 });
+
+Route::middleware('auth')
+    ->prefix('tokens')
+    ->group(function() {
+        Route::post('/create/onsite', [PersonalWebTokenController::class, 'requestToken']);
+    });
 
 require __DIR__.'/auth.php';

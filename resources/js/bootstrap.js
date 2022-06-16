@@ -20,3 +20,6 @@ import Swal from 'sweetalert2';
 
 $('select.dropdown')
         .dropdown();
+
+$('.menu .item')
+        .tab();
