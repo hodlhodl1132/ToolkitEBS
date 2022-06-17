@@ -34,8 +34,8 @@
                 Delete
             </button>
         </a>
-        @endcan
         </form>
+        @endcan
 
         {!! html_entity_decode( $page->content ) !!}
     </div>

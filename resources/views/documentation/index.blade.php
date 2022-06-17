@@ -33,6 +33,12 @@
                 New
             </button>
         </a>
+        <a href="{{ route('pagecategories.index') }}">
+            <button class="ui secondary right labeled icon button">
+                <i class="right folder icon"></i>
+                Categories
+            </button>
+        </a>
         @endcan
 
         @foreach ($categories as $category)

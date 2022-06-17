@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BroadcasterController;
 use App\Http\Controllers\DocumentationController;
+use App\Http\Controllers\PageCategoryController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\PersonalWebTokenController;
@@ -46,6 +47,17 @@ Route::prefix('docs')->group(function() {
         Route::get('/edit/{slug}', [PageController::class, 'edit'])->name('documentation.edit');
         Route::post('/update/{slug}', [PageController::class, 'update'])->name('documentation.update');
         Route::middleware(['can:pages.delete'])->post('/destroy/{slug}', [PageController::class, 'destroy'])->name('documentation.delete');
+        Route::prefix('categories')
+            ->group(function() {
+                Route::get('/', [PageCategoryController::class, 'index'])->name('pagecategories.index');
+                Route::get('/create', [PageCategoryController::class, 'create'])->name('pagecategories.create');
+                Route::post('/store', [PageCategoryController::class, 'store'])->name('pagecategories.store');
+                Route::get('/edit/{id}', [PageCategoryController::class, 'edit'])->name('pagecategories.edit');
+                Route::post('/update/{id}', [PageCategoryController::class, 'update'])->name('pagecategories.update');
+                Route::middleware(['can:pages.delete'])
+                    ->post('/destroy/{id}', [PageCategoryController::class, 'destroy'])
+                    ->name('pagecategories.delete');
+            });
     });
 });
 
