@@ -153,6 +153,7 @@ class PageController extends Controller
         $validator = Validator::make($request->all(), [
             'title' => 'required|string|min:10|max:60',
             'content' => 'required|string',
+            'page_category' => 'required|integer|exists:page_categories,id'
         ]);
 
         try {
@@ -170,6 +171,7 @@ class PageController extends Controller
 
         $page->title = $validated['title'];
         $page->content = $validated['content'];
+        $page->category_id = $validated['page_category'];
         $page->last_modified_by = $user->id;
         $page->save();
 
