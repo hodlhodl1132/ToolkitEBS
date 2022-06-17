@@ -16,7 +16,9 @@ class TwitchOAuthController extends Controller
      */
 
     public function redirect() {
-        return Socialite::driver('twitch')->redirect();
+        return Socialite::driver('twitch')
+            ->scopes(['moderation:read'])
+            ->redirect();
     }
 
     /**
