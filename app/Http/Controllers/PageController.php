@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Page;
+use App\Models\PageCategory;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -29,7 +30,9 @@ class PageController extends Controller
      */
     public function create()
     {
-        return view('documentation.create');
+        return view('documentation.create', [
+            'pageCategories' => PageCategory::all()
+        ]);
     }
 
     /**
@@ -44,7 +47,8 @@ class PageController extends Controller
         $validator = Validator::make($request->all(), [
             'title' => 'required|string|min:6|max:60',
             'content' => 'required|string',
-            'slug' => 'required|string|alpha_dash|unique:App\Models\Page,slug'
+            'slug' => 'required|string|alpha_dash|unique:App\Models\Page,slug',
+            'page_category' => 'required|integer|exists:page_categories,id'
         ]);
 
         try {
@@ -64,7 +68,7 @@ class PageController extends Controller
         $page->title = $validated['title'];
         $page->content = $validated['content'];
         $page->last_modified_by = $user->id;
-        $page->category_id = 2;
+        $page->category_id = $validated['page_category'];
         $page->slug = $validated['slug'];
         $page->save();
 
@@ -124,7 +128,10 @@ class PageController extends Controller
             }
         }
 
-        return view('documentation.edit', ['page' => $page]);
+        return view('documentation.edit', [
+            'page' => $page,
+            'pageCategories' => PageCategory::all()
+        ]);
     }
 
     /**

@@ -42,7 +42,10 @@
             </div>
             <div class="field">
                 <label>Category</label>
-                <select class="ui search dropdown">
+                <select class="ui search dropdown" name="page_category">
+                    @foreach ($pageCategories as $category)
+                        <option value="{{ $category->id }}">{{ $category->title }}</option>
+                    @endforeach
                 </select>
             </div>
             <div class="field">
