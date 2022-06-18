@@ -29,11 +29,6 @@ class PermissionController extends Controller
          */
         $session = $request->session();
 
-        if (!$user->hasPermissionTo('admin.users.edit'))
-        {
-            return response('', 500);
-        }
-
         $validator = Validator::make($request->all(), [
             'id' => 'required|integer',
             'user_id' => 'required|integer'
@@ -52,7 +47,16 @@ class PermissionController extends Controller
          * @var \App\Models\User $targetedUser
          */
         $targetedUser = User::find($validated['user_id']);
+        /**
+         * @var Permission
+         */
         $permission = Permission::find($validated['id']);
+        $permissionName = $permission->name;
+
+        if (!$user->hasPermissionTo('admin.users.edit'))
+        {
+            return response('', 403);
+        }
 
         if ($permission == null || $targetedUser == null)
         {
@@ -84,10 +88,6 @@ class PermissionController extends Controller
          */
         $session = $request->session();
 
-        if (!$user->hasPermissionTo('admin.users.edit')) {
-            return response('', 500);
-        }
-
         $validator = Validator::make($request->all(), [
             'id' => 'required|integer',
             'user_id' => 'required|integer'
@@ -106,10 +106,18 @@ class PermissionController extends Controller
          * @var \App\Models\User $targetedUser
          */
         $targetedUser = User::find($validated['user_id']);
+        /**
+         * @var Permission
+         */
         $permission = Permission::find($validated['id']);
+        $permissionName = $permission->name;
 
         if ($permission == null || $targetedUser == null) {
             $session->flash('errors', 'There has been a critical error.');
+        }
+
+        if (!$user->hasPermissionTo('admin.users.edit')) {
+            return response('', 403);
         }
 
         if ($targetedUser->hasPermissionTo($permission))

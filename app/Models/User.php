@@ -7,7 +7,9 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Log;
 use Laravel\Sanctum\HasApiTokens;
+use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
@@ -49,5 +51,34 @@ class User extends Authenticatable
     public function personalAccessToken()
     {
         return $this->hasOne(PersonalAccessToken::class);
+    }
+
+    public function hasWildcardChannelPermission(Permission $permission)
+    {
+        if (!preg_match('/\d+$/', $permission->name, $matches))
+            return false;
+
+        $providerId = $matches[0];
+
+        if (!intval($providerId))
+            return false;
+
+        if ($this->provider_id == $providerId)
+            return true;
+
+        return $this->hasPermissionTo($permission);
+    }
+
+    public function isWildcardPermissionOwner(Permission $permission)
+    {
+        if (!preg_match('/\d+$/', $permission->name, $matches))
+            return false;
+        
+        $providerId = $matches[0];
+
+        if (!intval($providerId))
+            return false;
+
+        return $this->provider_id == $providerId;
     }
 }

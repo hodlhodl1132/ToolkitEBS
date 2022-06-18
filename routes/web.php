@@ -9,6 +9,7 @@ use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\PersonalWebTokenController;
 use App\Http\Controllers\RootPageController;
 use App\Http\Controllers\SettingsController;
+use App\Http\Controllers\TwitchApiController;
 use App\Http\Controllers\TwitchOAuthController;
 use App\Http\Controllers\UserController;
 
@@ -35,6 +36,9 @@ Route::middleware('auth')
     ->prefix('streamer')
     ->group(function() {
         Route::get('/', [SettingsController::class, 'index'])->name('dashboard');
+        Route::get('/moderators/get', [TwitchApiController::class, 'getModerators'])->name('twitchapi.getmoderators');
+        Route::post('/moderators/add', [SettingsController::class, 'storeModerator'])->name('dashboard.user.add');
+        Route::post('/moderators/delete', [SettingsController::class, 'removeModerator'])->name('dashboard.user.remove');
     });
 
 Route::prefix('auth/twitch/oauth')->group(function() {
@@ -91,7 +95,7 @@ Route::prefix('admin')->group(function() {
 Route::middleware('auth')
     ->prefix('tokens')
     ->group(function() {
-        Route::post('/create/onsite', [PersonalWebTokenController::class, 'requestToken']);
+        Route::post('/create/onsite', [PersonalWebTokenController::class, 'requestToken'])->name('tokens.create');
     });
 
 require __DIR__.'/auth.php';
