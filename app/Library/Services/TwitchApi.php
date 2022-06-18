@@ -34,6 +34,34 @@ class TwitchApi {
         return $token;
     }
 
+    private static function refreshUserProviderToken(User $user)
+    {       
+        try {
+            $guzzleClient = new Client();
+            $response = $guzzleClient->request(
+                'POST',
+                'https://id.twitch.tv/oauth2/token', [
+                    'form_params' => [
+                        'client_id' => env( 'TWITCH_CLIENT_ID' ),
+                        'client_secret' => env( 'TWITCH_OAUTH_SECRET' ),
+                        'grant_type' => 'refresh_token',
+                        'refresh_token' => $user->refresh_token
+                    ]
+                ]
+            );
+            
+            $body = $response->getBody();
+            $body = json_decode($body, true);
+
+            $user->provider_token = $body['access_token'];
+            $user->refresh_token = $body['refresh_token'];
+            $user->save();
+            
+        } catch (GuzzleException $e) {
+            Log::error($e->getMessage());
+        }
+    }
+
     /**
      * Send a message through a broadcasters pubsub
      * 
@@ -78,10 +106,10 @@ class TwitchApi {
         return $statusCode;
     }
 
-    private static function sendRequest(string $endpoint, string $bearerToken) : ?ResponseInterface 
+    private static function sendGetRequest(string $endpoint, User $user, int $attempts = 0) : ?ResponseInterface 
     {
         $headers = [
-            'Authorization' => 'Bearer ' . $bearerToken,
+            'Authorization' => 'Bearer ' . $user->provider_token,
             'Client-Id' => env('TWITCH_CLIENT_ID'),
             'Content-Type' => 'application/json'
         ];
@@ -98,20 +126,14 @@ class TwitchApi {
             );
         } catch (GuzzleException $e) {
             Log::error($e->getMessage());
+            if ($attempts == 0)
+            {
+                TwitchApi::refreshUserProviderToken($user);
+                return TwitchApi::sendGetRequest($endpoint, $user, 1);
+            }
         }
 
-        switch ($response->getStatusCode()) {
-            case 200:
-                return $response;
-
-            case 401:
-
-                break;
-            
-            default:
-                Log::debug('Unimplemented Status Code: ' . $response->getStatusCode());
-                return null;
-        }
+        return $response;
     }
 
     /**
@@ -130,7 +152,7 @@ class TwitchApi {
         if ($user == null)
             return response('', 500);
 
-        if ($user->provider_id != $providerId && $user->hasPermissionTo('settings.edit.'.$providerId))
+        if ($user->provider_id != $providerId && !$user->hasPermissionTo('settings.edit.'.$providerId))
             return response('', 403);
 
         $broadcasterUser = User::where('provider_id', $providerId)->first();
@@ -138,17 +160,14 @@ class TwitchApi {
         if ($broadcasterUser == null)
             return response('', 500);
 
-        $bearerToken = $broadcasterUser->provider_token;
-
-        $response = TwitchApi::sendRequest(
+        $response = TwitchApi::sendGetRequest(
                 'moderation/moderators?broadcaster_id='.$providerId,
-                $bearerToken
+                $broadcasterUser
         );
 
         if ($response->getBody() != null)
         {
             $moderators = [];
-            Log::debug($response->getBody());
             $body = $response->getBody();
             $body = json_decode($body, true);
             foreach ($body['data'] as $userData) {
