@@ -28,6 +28,7 @@ class PermissionsSeeder extends Seeder
         Permission::create(['name' => 'admin.dashboard.livestats']);
         Permission::create(['name' => 'admin.users.view']);
         Permission::create(['name' => 'admin.users.edit']);
+        Permission::create(['name' => 'settings.edit.*']);
 
         $superAdminRole = Role::create(['name' => 'super_admin'])
             ->givePermissionTo(Permission::all());

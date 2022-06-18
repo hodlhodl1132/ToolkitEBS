@@ -37,11 +37,11 @@ class TwitchOAuthController extends Controller
 
         if ($user == null) {
             $user = new User();
-            $user->name = $twitchUser->name;
             $user->provider_id = $twitchUser->id;
-            $user->email = $twitchUser->email;
         }
 
+        $user->name = $twitchUser->name;
+        $user->email = $twitchUser->email;
         $user->provider_token = $token;
         $user->refresh_token = $refreshToken;
         $user->save();
