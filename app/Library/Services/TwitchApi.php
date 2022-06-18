@@ -16,6 +16,7 @@ class TwitchApi {
      * Provides a signed JWT for API Authentication
      * 
      * @param \App\Models\User $user
+     * @param array $args
      * @return string
      */
     private static function signedToken(User $user, array $args)
@@ -34,6 +35,11 @@ class TwitchApi {
         return $token;
     }
 
+    /**
+     * Attempts to provide a refreshed access token
+     * 
+     * @param \App\Models\User $user
+     */
     private static function refreshUserProviderToken(User $user)
     {       
         try {
@@ -56,7 +62,7 @@ class TwitchApi {
             $user->provider_token = $body['access_token'];
             $user->refresh_token = $body['refresh_token'];
             $user->save();
-            
+
         } catch (GuzzleException $e) {
             Log::error($e->getMessage());
         }
@@ -106,6 +112,14 @@ class TwitchApi {
         return $statusCode;
     }
 
+    /**
+     * Send a get request to the Helix API
+     * 
+     * @param string $endpoint
+     * @param \App\Models\User $user
+     * @param int $attempts
+     * @return ?ResponseInterface
+     */
     private static function sendGetRequest(string $endpoint, User $user, int $attempts = 0) : ?ResponseInterface 
     {
         $headers = [
