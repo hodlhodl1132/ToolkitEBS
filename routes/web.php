@@ -83,6 +83,8 @@ Route::prefix('admin')->group(function() {
                     ->name('admin.users.index');
                 Route::get('/{id}', [UserController::class, 'show'])
                     ->name('admin.users.show');
+                Route::post('/search', [UserController::class, 'search'])
+                    ->name('admin.users.search');
             });
         Route::middleware(['can:admin.users.edit'])
             ->prefix('permissions')

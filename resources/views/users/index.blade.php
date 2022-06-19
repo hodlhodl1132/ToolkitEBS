@@ -5,9 +5,16 @@
         </h2>
     </x-slot>
 
+    @if ($errors->any())
+        @include('components.display-errors')
+    @endif
+
     @include('users.components.user-search')
 
     @include('users.components.user-table')
 
-    {{ $users->links() }}
+    @if (count($users))
+        {{ $users->links() }}
+    @endif
+    
 </x-app-layout>

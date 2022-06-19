@@ -1,9 +1,10 @@
-<form class="ui form" method="POST">
+<form class="ui form" method="POST" action="{{ route('admin.users.search') }}">
+    @csrf
     <div class="field">
         <div class="fields">
             <div class="six wide field">
                 <div class="ui left icon input">
-                    <input type="text" placeholder="Search users...">
+                    <input name="search" type="text" placeholder="Search users...">
                     <i class="users icon"></i>
                 </div>
             </div>
@@ -13,9 +14,3 @@
         </div>
     </div>
 </form>
-
-<script>
-    $(document).ready(function() {
-        
-    })
-</script>
