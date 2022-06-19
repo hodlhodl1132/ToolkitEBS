@@ -1,4 +1,4 @@
-<div class="ui grid">
+<div class="ui grid stackable">
     <div class="eight wide column">
         <h2 class="ui header">Broadcaster Key</h2>
         <p>You will need to create a new key every 90 days.</p>
