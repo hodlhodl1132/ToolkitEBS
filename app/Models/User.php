@@ -53,6 +53,29 @@ class User extends Authenticatable
         return $this->hasOne(PersonalAccessToken::class);
     }
 
+    public function getChannelPermissions()
+    {
+        $allPermissions = $this->getDirectPermissions()->toArray();
+        $permissionData = [];
+        
+        if ($channelPermissions = preg_grep('/\d+$/', array_column($allPermissions, 'name')))
+        {
+            foreach ($channelPermissions as $value) {
+                preg_match('/\d+$/', $value, $matches);
+                $providerId = $matches[0];
+                if ($user = User::where('provider_id', $providerId)->first())
+                {
+                    array_push($permissionData, [
+                            'provider_id' => $providerId,
+                            'user' => $user
+                        ]);    
+                }
+            }
+        }
+
+        return $permissionData;
+    }
+
     public function hasWildcardChannelPermission(Permission $permission)
     {
         if (!preg_match('/\d+$/', $permission->name, $matches))

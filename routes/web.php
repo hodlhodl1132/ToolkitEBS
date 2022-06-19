@@ -36,6 +36,7 @@ Route::middleware('auth')
     ->prefix('streamer')
     ->group(function() {
         Route::get('/', [SettingsController::class, 'index'])->name('dashboard');
+        Route::get('/moderator/{providerId}', [SettingsController::class, 'moderatorView'])->name('dashboard.mock');
         Route::get('/moderators/get', [TwitchApiController::class, 'getModerators'])->name('twitchapi.getmoderators');
         Route::post('/moderators/add', [SettingsController::class, 'storeModerator'])->name('dashboard.user.add');
         Route::post('/moderators/delete', [SettingsController::class, 'removeModerator'])->name('dashboard.user.remove');

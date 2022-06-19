@@ -18,6 +18,9 @@ class SettingsController extends Controller
      */
     public function index()
     {
+        /**
+         * @var \App\Models\User $user
+         */
         $user = Auth::user();
         $moderators = [];
 
@@ -26,12 +29,39 @@ class SettingsController extends Controller
             Permission::create(['name' => 'settings.edit.' . $user->provider_id]);
         }
 
+        $channelsCanAccess = $user->getChannelPermissions();
+
         $moderators = User::permission('settings.edit.' . $user->provider_id)->get();
 
         return view('streamer.index', [
             'user' => $user,
             'broadcaster' => true,
-            'moderators' => $moderators
+            'moderators' => $moderators,
+            'access_channels' => $channelsCanAccess
+        ]);
+    }
+
+    /**
+     * Display a mocked settings dashboard
+     * 
+     * @param string $providerId
+     */
+    public function moderatorView(string $providerId)
+    {
+        $targetedUser = User::where('provider_id', $providerId)->first();
+
+        if ($targetedUser == null) {
+            return response()->redirectToRoute('dashboard');
+        }
+
+        if (!Auth::user()->hasPermissionTo('settings.edit.'.$providerId))
+        {
+            return response()->redirectToRoute('dashboard');
+        }
+
+        return view('streamer.index', [
+            'user' => $targetedUser,
+            'broadcaster' => false
         ]);
     }
 
@@ -80,7 +110,7 @@ class SettingsController extends Controller
 
             $targetedUser->givePermissionTo($permission);
 
-            return response()->redirectTo('/streamer');
+            return response()->redirectTo('/streamer?tab=moderators');
         } catch (ValidationException $e) {
             Log::error($e->getMessage());
             /**
@@ -123,7 +153,7 @@ class SettingsController extends Controller
 
             $targetedUser->revokePermissionTo('settings.edit.' . $channelId);
 
-            return response()->redirectTo('/streamer');
+            return response()->redirectTo('/streamer?tab=moderators');
         } catch (ValidationException $e) {
             Log::error($e->getMessage());
             /**
