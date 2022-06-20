@@ -38,10 +38,10 @@ class PollSettingsController extends Controller
             $isBroadcaster = $user->id == $targetedUser->id;
             if (!$isBroadcaster) {
                 $permission = Permission::where('name', 'settings.edit.' . $providerId)->first();
-                Log::debug('here');
+                
                 if ($permission == null)
                     return response('', 500);
-                Log::debug('here');
+
                 if ($user->hasWildcardChannelPermission($permission)) {
                 } else {
                     return response('', 403);
