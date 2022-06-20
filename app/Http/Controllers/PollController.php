@@ -152,7 +152,7 @@ class PollController extends Controller
         $poll = Poll::where('provider_id', $user->provider_id)->first();
 
         if ($poll == null) {
-            return response(205);
+            return response('', 205);
         }
 
         $poll->delete();
