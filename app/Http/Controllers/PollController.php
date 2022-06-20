@@ -50,8 +50,8 @@ class PollController extends Controller
                 'title' => 'required|max:100|string',
                 'length' => 'required|integer|gte:1|lte:5',
                 'options.*.value' => 'required|string|alpha_dash',
-                'options.*.label' => 'required_with:options.*.value|string|max:16',
-                'options.*.tooltip' => 'required_with:options.*.value|string|max:100'
+                'options.*.label' => 'required_with:options.*.value|string|max:64',
+                //'options.*.tooltip' => 'required_with:options.*.value|string|max:100'
             ]);
 
             try {
