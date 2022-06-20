@@ -44,7 +44,7 @@ class VoteController extends Controller
     {
         $payload = $request->get('payload');
         $channelId = $payload['channel_id'];
-        $providerId = $payload['opaque_user_id'];
+        $providerId = $payload['user_id'];
         $poll = Cache::remember('polls.'.$channelId, 120, function() use ($channelId) {
             return Poll::where('provider_id', $channelId)->first();
         });
