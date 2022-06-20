@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\PersonalWebTokenController;
 use App\Http\Controllers\PollController;
+use App\Http\Controllers\PollSettingsController;
 use App\Http\Controllers\Pusher\ChannelExistenceController;
 use App\Http\Controllers\Pusher\ClientEventsController;
 use App\Http\Controllers\StreamController;
@@ -43,6 +44,11 @@ Route::middleware('auth:sanctum')
             Route::post('create', [PollController::class, 'store']);
             Route::delete('delete', [PollController::class, 'destroy']);
         });
+    });
+
+Route::prefix('settings')
+    ->group(function() {
+        Route::get('polls/{providerId}', [PollSettingsController::class, 'show']);
     });
 
 Route::get('streams', [StreamController::class, 'index']);

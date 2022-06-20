@@ -38,7 +38,7 @@ class PollSettingsController extends Controller
             $isBroadcaster = $user->id == $targetedUser->id;
             if (!$isBroadcaster) {
                 $permission = Permission::where('name', 'settings.edit.' . $providerId)->first();
-                
+
                 if ($permission == null)
                     return response('', 500);
 
@@ -72,5 +72,15 @@ class PollSettingsController extends Controller
         } catch (Exception $e) {
             Log::error($e->getMessage());
         }
+    }
+
+    /**
+     * Show the requested resource
+     * 
+     * @param string $providerId
+     */
+    public function show(string $providerId)
+    {
+        return PollSettings::where('provider_id', $providerId)->first();
     }
 }
