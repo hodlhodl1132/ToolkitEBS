@@ -2,7 +2,9 @@
 <div class="ui grid stackable">
     <div class="four wide column">
         <div class="ui form">
-            <form>
+            <form method="POST" action="{{ route('dashboard.savesettings') }}">
+                @csrf
+                <input type="hidden" name="provider_id" value="{{ $user->provider_id }}">
                 <div class="field">
                     <label>{{ __("Poll Duration (minutes):") }} <span id="poll_duration_label">2</span></label>
                     <input type="hidden" value="3" name="poll_duration">

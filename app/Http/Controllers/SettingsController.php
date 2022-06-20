@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Library\Services\TwitchApi;
 use App\Models\User;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;

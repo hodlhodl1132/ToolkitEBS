@@ -7,6 +7,7 @@ use App\Http\Controllers\PageCategoryController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\PersonalWebTokenController;
+use App\Http\Controllers\PollSettingsController;
 use App\Http\Controllers\RootPageController;
 use App\Http\Controllers\SettingsController;
 use App\Http\Controllers\TwitchApiController;
@@ -40,6 +41,7 @@ Route::middleware('auth')
         Route::get('/moderators/get', [TwitchApiController::class, 'getModerators'])->name('twitchapi.getmoderators');
         Route::post('/moderators/add', [SettingsController::class, 'storeModerator'])->name('dashboard.user.add');
         Route::post('/moderators/delete', [SettingsController::class, 'removeModerator'])->name('dashboard.user.remove');
+        Route::post('/settings', [PollSettingsController::class, 'store'])->name('dashboard.savesettings');
     });
 
 Route::prefix('auth/twitch/oauth')->group(function() {
