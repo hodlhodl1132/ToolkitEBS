@@ -60,8 +60,8 @@ class PollSettingsController extends Controller
 
             if ($isBroadcaster)
                 return Redirect::route('dashboard', ['tab' => 'polls']);
-            return Redirect::route('dashboard.mock', ['tab' => 'polls']);
-            
+            return Redirect::route('dashboard.mock', ['tab' => 'polls', 'providerId' => $providerId]);
+
         } catch (ValidationException $e) {
             Log::error($e->getMessage());
             /**

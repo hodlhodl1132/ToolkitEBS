@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Library\Services\TwitchApi;
+use App\Models\PollSettings;
 use App\Models\User;
 use Exception;
 use Illuminate\Http\Request;
@@ -30,6 +31,14 @@ class SettingsController extends Controller
             Permission::create(['name' => 'settings.edit.' . $user->provider_id]);
         }
 
+        if (!$pollSettings = PollSettings::where('provider_id', $user->provider_id)->first())
+        {
+            $pollSettings = new PollSettings();
+            $pollSettings->provider_id = $user->provider_id;
+            $pollSettings->poll_duration = 2;
+            $pollSettings->save();
+        }
+
         $channelsCanAccess = $user->getChannelPermissions();
 
         $moderators = User::permission('settings.edit.' . $user->provider_id)->get();
@@ -38,7 +47,8 @@ class SettingsController extends Controller
             'user' => $user,
             'broadcaster' => true,
             'moderators' => $moderators,
-            'access_channels' => $channelsCanAccess
+            'access_channels' => $channelsCanAccess,
+            'poll_settings' => $pollSettings
         ]);
     }
 
@@ -55,6 +65,18 @@ class SettingsController extends Controller
             return response()->redirectToRoute('dashboard');
         }
 
+        if (!$pollSettings = PollSettings::where('provider_id', $targetedUser->provider_id)->first()) {
+            $pollSettings = new PollSettings();
+            $pollSettings->provider_id = $targetedUser->provider_id;
+            $pollSettings->poll_duration = 2;
+            $pollSettings->save();
+        }
+
+        if ($pollSettings == null) {
+            return response()->redirectToRoute('dashboard');
+        }
+        
+
         if (!Auth::user()->hasPermissionTo('settings.edit.'.$providerId))
         {
             return response()->redirectToRoute('dashboard');
@@ -62,7 +84,8 @@ class SettingsController extends Controller
 
         return view('streamer.index', [
             'user' => $targetedUser,
-            'broadcaster' => false
+            'broadcaster' => false,
+            'poll_settings' => $pollSettings
         ]);
     }
 

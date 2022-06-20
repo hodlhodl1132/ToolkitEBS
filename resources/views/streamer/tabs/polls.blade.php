@@ -7,7 +7,7 @@
                 <input type="hidden" name="provider_id" value="{{ $user->provider_id }}">
                 <div class="field">
                     <label>{{ __("Poll Duration (minutes):") }} <span id="poll_duration_label">2</span></label>
-                    <input type="hidden" value="3" name="poll_duration">
+                    <input type="hidden" value="{{ $poll_settings->poll_duration }}" name="poll_duration">
                     <div id="poll_duration_slider"></div>
                 </div>
                 <button class="ui primary button" tabindex="0">{{ __('Save Settings') }}</button>
