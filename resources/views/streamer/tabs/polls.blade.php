@@ -15,6 +15,8 @@
 
 </div>
 
+{{-- Scripts / Styles --}}
+
 <link rel="stylesheet" href="{{ asset('css/jquery-ui.min.css') }}">
 <style>
     #poll_duration_slider {

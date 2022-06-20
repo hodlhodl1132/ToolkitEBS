@@ -121,6 +121,11 @@ class SettingsController extends Controller
         }
     }
 
+    /**
+     * Remove moderator permission from channel
+     * 
+     * @param \Illuminate\Http\Request $request
+     */
     public function removeModerator(Request $request)
     {
         try {
