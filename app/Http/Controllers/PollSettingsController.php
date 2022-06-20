@@ -81,6 +81,16 @@ class PollSettingsController extends Controller
      */
     public function show(string $providerId)
     {
-        return PollSettings::where('provider_id', $providerId)->first();
+        $pollSettings = PollSettings::where('provider_id', $providerId)->first();
+        
+        if ($pollSettings != null)
+        {
+            return [
+                'provider_id' => $pollSettings->provider_id,
+                'poll_duration' => $pollSettings->poll_duration
+            ];
+        }
+
+        return [];
     }
 }
