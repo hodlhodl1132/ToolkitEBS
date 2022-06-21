@@ -140,18 +140,23 @@ class TwitchApi {
             'target' => ['broadcast']
         ];
 
+        $statusCode = 0;
+
         try {
             $guzzleClient = new Client();
             $response = $guzzleClient->post(
             'https://api.twitch.tv/helix/extensions/pubsub',
             ['headers' => $headers, 'body' => json_encode($body) ]);
+            $statusCode = $response->getStatusCode();
         } catch (GuzzleException $e) {
             Log::error($e->getMessage());
             if ($attempts < 3) {
                 TwitchApi::refreshUserProviderToken($user);
-                TwitchApi::sendExtensionPubSubMessage($user, $data, $attempts + 1);
+                return TwitchApi::sendExtensionPubSubMessage($user, $data, $attempts + 1);
             }
         }
+
+        return $statusCode;
     }
 
     /**
