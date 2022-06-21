@@ -68,7 +68,7 @@ class PollSettingsUpdate
     public function broadcastWith()
     {
         return [
-            'provider_id' => $this->vote->provider_id,
+            'provider_id' => $this->provider_id,
             'duration' => $this->pollSettings->duration,
             'interval' => $this->pollSettings->interval
         ];
