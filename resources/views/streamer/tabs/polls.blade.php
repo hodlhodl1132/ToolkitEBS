@@ -66,5 +66,6 @@
             }
         });
         $("#poll_interval_label").text($('input[name="interval"]').val())
+        $("#poll_duration_label").text($('input[name="duration"]').val())
     })
 </script>
