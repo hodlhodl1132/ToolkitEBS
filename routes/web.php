@@ -10,6 +10,7 @@ use App\Http\Controllers\PersonalWebTokenController;
 use App\Http\Controllers\PollSettingsController;
 use App\Http\Controllers\RootPageController;
 use App\Http\Controllers\SettingsController;
+use App\Http\Controllers\StreamController;
 use App\Http\Controllers\TwitchApiController;
 use App\Http\Controllers\TwitchOAuthController;
 use App\Http\Controllers\UserController;
@@ -102,5 +103,7 @@ Route::middleware('auth')
     ->group(function() {
         Route::post('/create/onsite', [PersonalWebTokenController::class, 'requestToken'])->name('tokens.create');
     });
+
+Route::get('streams', [StreamController::class, 'index'])->named('streams');
 
 require __DIR__.'/auth.php';

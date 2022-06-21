@@ -1,5 +1,7 @@
 <?php
 
+use App\Library\Services\TwitchApi;
+use App\Models\Stream;
 use Illuminate\Foundation\Inspiring;
 use Illuminate\Support\Facades\Artisan;
 

@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Library\Services\TwitchApi;
 use App\Models\Stream;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class StreamController extends Controller
 {
@@ -16,7 +18,7 @@ class StreamController extends Controller
     {
         $streams = Stream::all();
 
-        return response()->json($streams);
+        return view('streams', compact('streams'));
     }
 
     /**

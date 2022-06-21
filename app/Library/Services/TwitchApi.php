@@ -2,6 +2,7 @@
 
 namespace App\Library\Services;
 use Ahc\Jwt\JWT;
+use App\Models\Stream;
 use App\Models\User;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
@@ -33,6 +34,47 @@ class TwitchApi {
         $token = $jwt->encode(array_merge($defaults, $args));
 
         return $token;
+    }
+
+    /**
+     * Generate an app access token
+     * 
+     * @return string
+     */
+    public static function appAccessToken()
+    {
+        $secret = base64_decode( env( 'TWITCH_OAUTH_SECRET' ) );
+
+        $clientId = env( 'TWITCH_CLIENT_ID' );
+
+        $headers = [
+            'Content-Type' => 'application/json'
+        ];
+
+        $body = [
+            'client_id' => $clientId,
+            'client_secret' => $secret,
+            'grant_type' => 'client_credentials'
+        ];
+
+        try {
+            $guzzleClient = new Client();
+            $response = $guzzleClient->request(
+                'POST',
+                'https://id.twitch.tv/oauth2/token',
+                [
+                    'form_params' => [
+                        'client_id' => env('TWITCH_CLIENT_ID'),
+                        'client_secret' => env('TWITCH_OAUTH_SECRET'),
+                        'grant_type' => 'client_credentials'
+                    ]
+                ]
+            );
+
+           return json_decode($response->getBody())->access_token; 
+        } catch (GuzzleException $e) {
+            Log::error($e->getMessage());
+        }
     }
 
     /**
@@ -104,7 +146,6 @@ class TwitchApi {
             $response = $guzzleClient->post(
             'https://api.twitch.tv/helix/extensions/pubsub',
             ['headers' => $headers, 'body' => json_encode($body) ]);
-            $statusCode = $response->getStatusCode();
         } catch (GuzzleException $e) {
             Log::error($e->getMessage());
         }
@@ -202,5 +243,50 @@ class TwitchApi {
         }
 
         return [];
+    }
+
+    /**
+     * Get current streams live with Toolkit
+     * 
+     * @return ?object $data
+     */
+    public static function getStreams()
+    {
+        $streams = Stream::all()->toArray();
+        
+        if (count($streams) == 0)
+            return null;
+
+        $providerIds = array_column($streams, 'channel_id');
+
+        $paramQuery = '';
+
+        foreach($providerIds as $providerId) {
+            $paramQuery .= 'user_id='.$providerId.'&';
+        }
+
+        $paramQuery = substr($paramQuery, 0, -1);
+
+        Log::debug($paramQuery);
+
+        $token = TwitchApi::appAccessToken();
+
+        $headers = [
+            'Authorization' => 'Bearer ' . $token,
+            'Client-Id' => env('TWITCH_CLIENT_ID'),
+            'Content-Type' => 'application/json'
+        ];
+
+        try {
+            $guzzleClient = new Client();
+            $response = $guzzleClient->get(
+                env('TWITCH_HELIX_URI') . 'streams?'.$paramQuery,
+                ['headers' => $headers, 'query' => $paramQuery]
+            );
+
+            return json_decode($response->getBody());
+        } catch (GuzzleException $e) {
+            Log::error($e->getMessage());
+        }
     }
 }
