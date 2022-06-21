@@ -185,6 +185,17 @@
                     </div>
                 </div>
             </div>
+
+            <div class="ui vertical stripe segment">
+                <div class="ui middle aligned stackable grid container">
+                    <div class="six wide column">
+                        <h3 class="ui header">Currently Live</h3>
+                    </div>
+                    <div class="twelve wide column">
+                        @include('components.live-streams')
+                    </div>
+                </div>
+            </div>
         </div>
 
         @include('cookie-consent::index')

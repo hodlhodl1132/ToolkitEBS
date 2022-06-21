@@ -14,6 +14,7 @@ use App\Http\Controllers\StreamController;
 use App\Http\Controllers\TwitchApiController;
 use App\Http\Controllers\TwitchOAuthController;
 use App\Http\Controllers\UserController;
+use App\Models\Stream;
 
 /*
 |--------------------------------------------------------------------------
@@ -27,7 +28,8 @@ use App\Http\Controllers\UserController;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    $streams = Stream::all();
+    return view('welcome', compact('streams'));
 })->name('home');
 
 Route::get('/login', function() {
