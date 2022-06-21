@@ -10,7 +10,6 @@ use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
-use Illuminate\Support\Facades\Log;
 
 class PollSettingsUpdate implements ShouldBroadcast
 {
@@ -48,7 +47,7 @@ class PollSettingsUpdate implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return new PrivateChannel('private.' . $this->providerId);
+        return new PrivateChannel('private.'.$this->providerId);
     }
 
     /**
@@ -58,7 +57,7 @@ class PollSettingsUpdate implements ShouldBroadcast
      */
     public function broadcastAs()
     {
-        return 'poll-settings-update';
+        return 'pollsettings-update';
     }
 
     /**
@@ -69,7 +68,7 @@ class PollSettingsUpdate implements ShouldBroadcast
     public function broadcastWith()
     {
         return [
-            'provider_id' => $this->provider_id,
+            'provider_id' => $this->providerId,
             'duration' => $this->pollSettings->duration,
             'interval' => $this->pollSettings->interval
         ];
