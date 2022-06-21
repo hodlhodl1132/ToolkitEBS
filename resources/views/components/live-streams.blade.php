@@ -1,5 +1,6 @@
 <div class="ui cards">
     @foreach ($streams as $stream)
+        @if ($stream->user_name != null)
         <div class="card">
             <div class="blurring dimmable image">
                 <div class="ui dimmer">
@@ -28,5 +29,6 @@
                 </a>
             </div>
         </div>
+        @endif
     @endforeach
 </div>
