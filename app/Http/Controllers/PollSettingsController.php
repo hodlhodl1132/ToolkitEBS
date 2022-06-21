@@ -24,8 +24,10 @@ class PollSettingsController extends Controller
         try {
             $validator = Validator::make($request->all(), [
                 'provider_id' => 'required|integer|exists:users,provider_id',
-                'poll_duration' => 'required|integer|min:1|max:5'
+                'duration' => 'required|integer|min:1|max:5',
+                'interval' => 'required|integer|min:1|max:30'
             ]);
+
             $validator->validate();
             $validated = $validator->validated();
             $providerId = $validated['provider_id'];
@@ -42,10 +44,8 @@ class PollSettingsController extends Controller
                 if ($permission == null)
                     return response('', 500);
 
-                if ($user->hasWildcardChannelPermission($permission)) {
-                } else {
+                if (!$user->hasWildcardChannelPermission($permission))
                     return response('', 403);
-                }
             }
 
             $pollSettings = PollSettings::where('provider_id', $providerId)->first();
@@ -55,7 +55,8 @@ class PollSettingsController extends Controller
                 $pollSettings->provider_id = $providerId;
             }
 
-            $pollSettings->poll_duration = $validated['poll_duration'];
+            $pollSettings->duration = $validated['duration'];
+            $pollSettings->interval = $validated['interval'];
             $pollSettings->save();
 
             if ($isBroadcaster)
@@ -85,12 +86,9 @@ class PollSettingsController extends Controller
         
         if ($pollSettings != null)
         {
-            return [
-                'provider_id' => $pollSettings->provider_id,
-                'poll_duration' => $pollSettings->poll_duration
-            ];
+            return $pollSettings->toArray();
         }
 
-        return [];
+        return (new PollSettings())->toArray();
     }
 }

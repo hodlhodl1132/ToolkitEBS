@@ -35,7 +35,6 @@ class SettingsController extends Controller
         {
             $pollSettings = new PollSettings();
             $pollSettings->provider_id = $user->provider_id;
-            $pollSettings->poll_duration = 2;
             $pollSettings->save();
         }
 
@@ -65,10 +64,10 @@ class SettingsController extends Controller
             return response()->redirectToRoute('dashboard');
         }
 
-        if (!$pollSettings = PollSettings::where('provider_id', $targetedUser->provider_id)->first()) {
+        if (!$pollSettings = PollSettings::where('provider_id', $targetedUser->provider_id)->first())
+        {
             $pollSettings = new PollSettings();
             $pollSettings->provider_id = $targetedUser->provider_id;
-            $pollSettings->poll_duration = 2;
             $pollSettings->save();
         }
 
