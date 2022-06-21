@@ -115,8 +115,9 @@ class TwitchApi {
      * 
      * @param \App\Models\User $user
      * @param string $data
+     * @return void
      */
-    public static function sendExtensionPubSubMessage(User $user, string $data)
+    public static function sendExtensionPubSubMessage(User $user, string $data, int $attempts = 0)
     {
         $args = [
             'channel_id' => $user->provider_id,
@@ -139,8 +140,6 @@ class TwitchApi {
             'target' => ['broadcast']
         ];
 
-        $statusCode = 500;
-
         try {
             $guzzleClient = new Client();
             $response = $guzzleClient->post(
@@ -148,9 +147,11 @@ class TwitchApi {
             ['headers' => $headers, 'body' => json_encode($body) ]);
         } catch (GuzzleException $e) {
             Log::error($e->getMessage());
+            if ($attempts < 3) {
+                TwitchApi::refreshUserProviderToken($user);
+                TwitchApi::sendExtensionPubSubMessage($user, $data, $attempts + 1);
+            }
         }
-
-        return $statusCode;
     }
 
     /**
