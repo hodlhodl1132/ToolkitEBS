@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\PollSettingsUpdate;
 use App\Models\PollSettings;
 use App\Models\User;
 use Exception;
@@ -58,6 +59,8 @@ class PollSettingsController extends Controller
             $pollSettings->duration = $validated['duration'];
             $pollSettings->interval = $validated['interval'];
             $pollSettings->save();
+
+            PollSettingsUpdate::dispatch($providerId, $pollSettings);
 
             if ($isBroadcaster)
                 return Redirect::route('dashboard', ['tab' => 'polls']);
