@@ -36,6 +36,7 @@ class UpdateStreams extends Command
             $this->error('No live streams to get from Twitch API');
             return 1;
         }
+        $this->info('Got ' . count($liveStreams->data) . ' live streams from Twitch API');
         foreach ($liveStreams->data as $liveStream) {
             $this->info('Updating stream: ' . $liveStream->user_name);
             $stream = Stream::where('channel_id', $liveStream->user_id)->first();
