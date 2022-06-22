@@ -46,3 +46,25 @@
         </table>
     </div>
 </div>
+
+<script>
+    $.ajax({
+        type: 'GET',
+        url: '{{ route('twitchapi.getmoderators') }}',
+        headers : {'X-CSRF-TOKEN': $('input[name="_token"]').attr('value')},
+        success: (response) => {
+            if (response.moderators !== 'undefined')
+            {
+                response.moderators.forEach(moderator => {
+                    $('select[name="provider_id"]').append(
+                        '<option value="' +
+                        moderator.provider_id +
+                        '">' +
+                        moderator.user_name +
+                        '</option>'
+                    )
+                });
+            }
+        }
+    })
+</script>

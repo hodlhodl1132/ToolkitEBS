@@ -25,3 +25,4 @@ mix.js('resources/js/app.js', 'public/js').postCss('resources/css/app.css', 'pub
     .copy('node_modules/sweetalert2/dist/sweetalert2.min.css', 'public/css/sweetalert2.min.css')
     .copy('resources/css/jquery-ui.min.css', 'public/css/jquery-ui.min.css')
     .copy('resources/js/jquery-ui.min.js', 'public/js/jquery-ui.min.js')
+    .copy('node_modules/toastify-js/src/toastify.css', 'public/css/toastify.css')

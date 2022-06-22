@@ -11,6 +11,41 @@
         </p>
         <p>
             <button onclick="getBroadcasterKey()" class="ui button red">New Broadcaster Key</button>
+            <button onclick="copyToClipboard()" class="ui right labeled icon button green">
+                <i class="right copy icon"></i>
+                Copy
+            </button>
         </p>
     </div>
 </div>
+<link rel="stylesheet" href="{{ asset('css/toastify.css') }}"> 
+<script>
+    function copyToClipboard() {
+        navigator.clipboard.writeText(document.getElementsByName('broadcaster-key')[0].value);
+        window.Toastify({
+            text: 'Copied to clipboard',
+            duration: 3000,
+            close: true,
+            gravity: 'center',
+            position: 'center',
+            backgroundColor: '#016936',
+            textColor: '#ffffff',
+            className: 'toast'
+        }).showToast();
+    }
+
+    function getBroadcasterKey()
+    {
+        $.ajax({
+            type: 'POST',
+            url: '{{ route('tokens.create') }}',
+            headers : {'X-CSRF-TOKEN': $('input[name="_token"]').attr('value')},
+            success: (response) => {
+                if (response.token !== 'undefined')
+                {
+                    $('input[name="broadcaster-key"]').attr('value', response.token)
+                }
+            }
+        })
+    }
+</script>

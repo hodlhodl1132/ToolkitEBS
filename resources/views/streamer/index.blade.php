@@ -46,8 +46,4 @@
     </div> {{-- End of Tab Segments --}}
 
     @include('streamer.scripts.main')
-
-    @if ($broadcaster)
-        @include('streamer.scripts.broadcaster-scripts')
-    @endif
 </x-app-layout>
