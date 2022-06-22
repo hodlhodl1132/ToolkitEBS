@@ -21,12 +21,26 @@
 <link rel="stylesheet" href="{{ asset('css/toastify.css') }}"> 
 <script>
     function copyToClipboard() {
-        navigator.clipboard.writeText(document.getElementsByName('broadcaster-key')[0].value);
+        var val = $('input[name="broadcaster-key"]').val();
+        if (val === '') {
+            window.Toastify({
+                text: 'Nothing to Copy! Request a Key First!',
+                duration: 3000,
+                close: true,
+                gravity: 'top',
+                position: 'center',
+                backgroundColor: '#B03060',
+                textColor: '#000000',
+                className: 'toast'
+            }).showToast();
+            return
+        }
+        navigator.clipboard.writeText();
         window.Toastify({
             text: 'Copied to clipboard',
             duration: 3000,
             close: true,
-            gravity: 'center',
+            gravity: 'top',
             position: 'center',
             backgroundColor: '#016936',
             textColor: '#ffffff',
