@@ -47,3 +47,19 @@ main.ui.container {
     }
 
 }
+
+#live-button {
+    animation: livebutton 3s ease-in-out infinite;
+}
+
+@keyframes livebutton {
+    0% {
+        color: rgba(219, 40, 40, 1);
+    }
+    50% {
+        color: rgba(219, 40, 40, 0);
+    }
+    100% {
+        color: rgba(219, 40, 40, 1);
+    }
+}

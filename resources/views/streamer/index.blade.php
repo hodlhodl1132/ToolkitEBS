@@ -14,6 +14,8 @@
         @include('streamer.components.mock-message')
     @endif
 
+    @include('streamer.components.stats-header')
+
     <div class="tabs"> {{-- Start of Tab Segments --}}
 
         <div class="ui top attached tabular menu">

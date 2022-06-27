@@ -106,6 +106,6 @@ Route::middleware('auth')
         Route::post('/create/onsite', [PersonalWebTokenController::class, 'requestToken'])->name('tokens.create');
     });
 
-Route::get('streams', [StreamController::class, 'index'])->named('streams');
+Route::get('streams', [StreamController::class, 'index'])->name('streams');
 
 require __DIR__.'/auth.php';

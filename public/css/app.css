@@ -51,3 +51,32 @@ main.ui.container {
     }
 
 }
+
+#live-button {
+    -webkit-animation: livebutton 3s ease-in-out infinite;
+            animation: livebutton 3s ease-in-out infinite;
+}
+
+@-webkit-keyframes livebutton {
+    0% {
+        color: rgba(219, 40, 40, 1);
+    }
+    50% {
+        color: rgba(219, 40, 40, 0);
+    }
+    100% {
+        color: rgba(219, 40, 40, 1);
+    }
+}
+
+@keyframes livebutton {
+    0% {
+        color: rgba(219, 40, 40, 1);
+    }
+    50% {
+        color: rgba(219, 40, 40, 0);
+    }
+    100% {
+        color: rgba(219, 40, 40, 1);
+    }
+}

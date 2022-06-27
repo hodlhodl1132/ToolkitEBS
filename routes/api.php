@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Stream;
 use App\Http\Controllers\PersonalWebTokenController;
 use App\Http\Controllers\PollController;
 use App\Http\Controllers\PollSettingsController;
@@ -51,6 +52,6 @@ Route::prefix('settings')
         Route::get('polls/{providerId}', [PollSettingsController::class, 'show']);
     });
 
-Route::get('streams', [StreamController::class, 'index']);
+Route::post('streams', [StreamController::class, 'show'])->name('api.streams');
 
 Route::get('moderators', [TwitchApiController::class, 'index'])->middleware('auth:sanctum');

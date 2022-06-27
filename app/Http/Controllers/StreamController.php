@@ -6,6 +6,8 @@ use App\Library\Services\TwitchApi;
 use App\Models\Stream;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\ValidationException;
 
 class StreamController extends Controller
 {
@@ -35,12 +37,32 @@ class StreamController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Stream  $stream
-     * @return \Illuminate\Http\Response
+     * @param  \Illuminate\Http\Request $request
+     * @return \App\Models\Stream
      */
-    public function show(Stream $stream)
+    public function show(Request $request)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'provider_id' => 'required|integer'
+        ]);
+
+        try {
+            $validator->validate();
+        } catch (ValidationException $e) {
+            Log::error($e->getMessage());
+            return response('', 500);
+        }
+
+        $validated = $validator->validated();
+        $providerId = $validated['provider_id'];
+
+        $stream = Stream::where('channel_id', $providerId)->first();
+
+        if ($stream !== null) {
+            return $stream;
+        } else {
+            return ['status' => 'offline'];
+        }
     }
 
     /**
