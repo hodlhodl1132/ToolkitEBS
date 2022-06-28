@@ -4,12 +4,12 @@ namespace App\Collections;
 
 use Illuminate\Database\Eloquent\Collection;
 
-class ActiveIncidentDefs extends Collection
+class EnabledIncidentDefs extends Collection
 {
-    public function availableIncidentDefs(array $models = [])
+    public function enabledIncidentDefs(array $models = [])
     {
         return $this->filter(function ($model) {
-            return $model->is_active;
+            return $model->enabled;
         });
     }
 }
