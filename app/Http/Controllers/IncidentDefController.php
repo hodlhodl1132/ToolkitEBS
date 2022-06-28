@@ -36,10 +36,25 @@ class IncidentDefController extends Controller
          */
          $user = $request->user();
 
+         /**
+          * Prevent users from updating incident defs that are not part of their mod pack
+          */
+        if (count($validated) > 250) {
+            return response()->json(['error' => 'Too many incident definitions'], 400);
+        }
+
         /**
          * @var \Illuminate\Database\Eloquent\Collection $currentIncidentDefs
          */
          $currentIncidentDefs = $user->incidentDefs;
+
+        /**
+         * Prevent users from uploading more than 500 incident definitions
+         */
+         if (count($validated) + count($currentIncidentDefs) > 500) {
+             return response()->json(['error' => 'Too many incident definitions'], 400);
+         }
+
          if (count($currentIncidentDefs))
             $currentIncidentDefs->toQuery()->update(['is_active' => false]);
 
