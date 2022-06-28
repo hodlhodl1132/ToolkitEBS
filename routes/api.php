@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\IncidentDefController;
 use App\Models\Stream;
 use App\Http\Controllers\PersonalWebTokenController;
 use App\Http\Controllers\PollController;
@@ -55,3 +56,12 @@ Route::prefix('settings')
 Route::post('streams', [StreamController::class, 'show'])->name('api.streams');
 
 Route::get('moderators', [TwitchApiController::class, 'index'])->middleware('auth:sanctum');
+
+Route::prefix('initialize')
+    ->middleware(['auth:sanctum'])
+    ->group(function() {
+        Route::prefix('incident-defs')->group(function() {
+            Route::post('update', [IncidentDefController::class, 'update']);
+        });
+    });
+    

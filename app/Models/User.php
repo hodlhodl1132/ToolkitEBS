@@ -49,9 +49,20 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    /**
+     * Get the personal access token for the user.
+     */
     public function personalAccessToken()
     {
         return $this->hasOne(PersonalAccessToken::class);
+    }
+
+    /**
+     * Get the incidentDefs for the user.
+     */
+    public function incidentDefs()
+    {
+        return $this->hasMany(IncidentDef::class);
     }
 
     public function getChannelPermissions()
