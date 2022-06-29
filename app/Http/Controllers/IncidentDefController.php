@@ -10,6 +10,21 @@ use Illuminate\Validation\ValidationException;
 
 class IncidentDefController extends Controller
 {
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index($providerId) {
+        /**
+         * @var User $user
+         */
+        $user = User::where('provider_id', $providerId)->firstOrFail();
+        $incidentDefs = $user->incidentDefs;
+        return response()->json($incidentDefs->where('is_active', true)->toArray());
+    }
+
     /**
      * Update the resources
      * 

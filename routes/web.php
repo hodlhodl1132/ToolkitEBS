@@ -3,10 +3,12 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BroadcasterController;
 use App\Http\Controllers\DocumentationController;
+use App\Http\Controllers\IncidentDefController;
 use App\Http\Controllers\PageCategoryController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\PersonalWebTokenController;
+use App\Http\Controllers\PollController;
 use App\Http\Controllers\PollSettingsController;
 use App\Http\Controllers\RootPageController;
 use App\Http\Controllers\SettingsController;
@@ -45,6 +47,8 @@ Route::middleware('auth')
         Route::post('/moderators/add', [SettingsController::class, 'storeModerator'])->name('dashboard.user.add');
         Route::post('/moderators/delete', [SettingsController::class, 'removeModerator'])->name('dashboard.user.remove');
         Route::post('/settings', [PollSettingsController::class, 'store'])->name('dashboard.savesettings');
+        Route::get('/incident-defs/{providerId}', [IncidentDefController::class, 'index']);
+        Route::get('/polls/active-poll/{providerId}', [PollController::class, 'show']);
     });
 
 Route::prefix('auth/twitch/oauth')->group(function() {
