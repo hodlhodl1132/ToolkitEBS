@@ -1,6 +1,6 @@
 <script>
     $(document).ready(function () {
-        let broadcasterLive = false
+        const Alpine = window.Alpine
         const providerId = $('input[name="provider_id"]').val();
 
         // Change default tab when url param is set
@@ -16,8 +16,22 @@
             $('.menu .item').tab()
         }
 
+        Alpine.store('broadcaster_live', {
+            live: false,
+            get() {
+                return this.live ? "Live" : "Offline"
+            },
+            set(value) {
+                this.live = value
+            },
+            start() {
+                $('.live-status').attr('x-text', '$store.broadcaster_live.get()')
+            }
+        })
+
         // query live streams every minute
         getLiveStreams()
+        Alpine.store('broadcaster_live').start()
 
         setTimeout(() => {
             getLiveStreams()
@@ -48,14 +62,12 @@
         }
 
         function setOffline() {
-            broadcasterLive = false
-            $('.live-status').html('Offline')
+            Alpine.store('broadcaster_live').set(false)
             $('#live-button').css('display', 'none')
         }
 
         function setOnline() {
-            broadcasterLive = true
-            $('.live-status').html('Live')
+            Alpine.store('broadcaster_live').set(true)
             $('#live-button').css('display', 'inline-block')
         }
     })

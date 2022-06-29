@@ -1,5 +1,6 @@
 <x-app-layout>
-
+    @include('streamer.scripts.main')
+    
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
             {{ $user->name . " Settings" }}
@@ -46,6 +47,4 @@
         </div>
 
     </div> {{-- End of Tab Segments --}}
-
-    @include('streamer.scripts.main')
 </x-app-layout>
