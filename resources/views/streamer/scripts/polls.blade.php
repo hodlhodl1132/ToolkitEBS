@@ -158,15 +158,6 @@
             form.remove()
         })
 
-        // Disabled buttons when offline
-
-
-        function disablePollButtons(input) {
-            console.log(input, 'value')
-        }
-
-        disablePollButtons($('input[name="broadcaster_live"]').val())
-
         Alpine.store('active_poll', {
             poll: null,
             store(poll) {

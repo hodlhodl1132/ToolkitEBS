@@ -33,9 +33,9 @@
         getLiveStreams()
         Alpine.store('broadcaster_live').start()
 
-        setTimeout(() => {
+        setInterval(() => {
             getLiveStreams()
-        }, 60 * 1000)
+        }, 10 * 1000)
 
         // query streams
         function getLiveStreams() {
@@ -60,6 +60,8 @@
             else 
                 setOnline()
         }
+
+        const event = new Event('broadcaster_live')
 
         function setOffline() {
             Alpine.store('broadcaster_live').set(false)
