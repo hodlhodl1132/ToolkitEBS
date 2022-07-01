@@ -1,7 +1,7 @@
 <script>
     $(document).ready(function () {
         const Alpine = window.Alpine
-        const providerId = $('input[name="provider_id"]').val();
+        const providerId = $('input[name="dashboard_provider_id"]').val();
 
         // Change default tab when url param is set
         const queryString = window.location.search

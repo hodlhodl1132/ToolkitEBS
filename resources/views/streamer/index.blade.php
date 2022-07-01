@@ -7,6 +7,8 @@
         </h2>
     </x-slot>
 
+    <input name="dashboard_provider_id" type="hidden" value="{{ $user->provider_id }}">
+
     @if ($errors->any())
         @include('components.display-errors')
     @endif
