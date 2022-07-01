@@ -6,8 +6,8 @@
         </div>
         <div class="three wide column right floated">
             <div class="ui buttons">
-                <button id="open-polls-button" class="ui basic black button">{{ __("Queue Poll") }}</button>
-                <button class="ui icon basic button blue refresh-active-poll">
+                <button id="open-polls-button" class="ui basic black button" data-tooltip="Create and queue a new poll">{{ __("Queue Poll") }}</button>
+                <button class="ui icon basic button blue refresh-active-poll" data-tooltip="Check for active polls">
                     <i class="refresh icon"></i>
                 </button>
             </div>
