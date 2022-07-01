@@ -5116,6 +5116,63 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
 $('select.dropdown').dropdown();
 
+window.ErrorToast = function (message) {
+  Toastify({
+    text: message,
+    duration: 3000,
+    close: true,
+    gravity: "top",
+    // `top` or `bottom`
+    position: 'center',
+    // `left`, `center` or `right`
+    style: {
+      background: "#B03060"
+    },
+    stopOnFocus: true,
+    // Prevents dismissing of toast on hover
+    onClick: function onClick() {// Optional callbacks
+    }
+  }).showToast();
+};
+
+window.InfoToast = function (message) {
+  Toastify({
+    text: message,
+    duration: 3000,
+    close: true,
+    gravity: "top",
+    // `top` or `bottom`
+    position: 'right',
+    // `left`, `center` or `right`
+    style: {
+      background: "#00bcd4"
+    },
+    stopOnFocus: true,
+    // Prevents dismissing of toast on hover
+    onClick: function onClick() {// Optional callbacks
+    }
+  }).showToast();
+};
+
+window.AlertToast = function (message) {
+  Toastify({
+    text: message,
+    duration: 3000,
+    close: true,
+    gravity: "top",
+    // `top` or `bottom`
+    position: 'right',
+    // `left`, `center` or `right`
+    style: {
+      background: "#ff9800"
+    },
+    stopOnFocus: true,
+    // Prevents dismissing of toast on hover
+    onClick: function onClick() {// Optional callbacks
+    }
+  }).showToast();
+};
+
 /***/ }),
 
 /***/ "./node_modules/lodash/lodash.js":

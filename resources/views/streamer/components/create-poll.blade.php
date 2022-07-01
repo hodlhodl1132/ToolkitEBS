@@ -1,52 +1,49 @@
-<h2 class="ui header">{{ __('Create Poll') }}</h2>
+<div class="header">{{ __('Create Poll') }}</div>
 
-<div id="poll-form" class="container">
+<div id="poll-form" class="scrolling content">
 
-<form id="poll-details" class="ui form">
-    <div class="three fields">
-        <div class="field">
-            <label>{{ __('Poll Name') }}</label>
-            <input type="text" placeholder="What event should happen next?">
+    <form id="poll-details" class="ui form">
+        <div class="two fields">
+            <div class="field">
+                <label>{{ __('Title') }}</label>
+                <input type="text" placeholder="What event should happen next?">
+            </div>
+
         </div>
-    </div>
-</form>
+    </form>
 
-<h3 class="ui header">{{ __('Poll Options') }}</h3>
-
-<div id="incident-cards" class="ui cards">
-</div>
-
-<form id="incident-options-form" class="ui form">
-    <div class="three fields">
+    <h3 class="ui header">{{ __('Poll Options') }}</h3>
+    <div class="ui form">
         <div class="field">
-            <div class="ui selection dropdown">
-                <input type="hidden" name="gender">
-                <i class="dropdown icon"></i>
-                <div class="default text">Available Incidents</div>
+            <label>{{ __('Add Poll Options') }}</label>
+            <div id="incident-dropdown" class="ui floating labeled icon dropdown basic button">
+                <i class="plus icon"></i>
+                <span class="text">{{ __('Available Options') }}</span>
                 <div class="menu incident-menu">
                 </div>
             </div>
         </div>
-
-        <div class="field">
-            <button id="add-incident-button" class="ui button orange">Add Incident</button>
-        </div>
     </div>
-</form>
 
+    <div id="incident-cards" class="ui cards">
+    </div>
 </div>
 
+<div class="actions">
+    <button class="ui button blue" id="submit-poll-button">{{ __('Submit Poll') }}</button>
+</div>
 
 
 <style>
 #poll-form {
     padding: 20px;
+    min-height: 40vh;
 }
 #poll-details {
     margin-bottom: 3em;
 }
 #incident-cards {
-    margin-bottom: 1em;
+    margin-top: 1em;
 }
 .configure-incident-button:hover,
 .remove-incident-button:hover {

@@ -21,3 +21,54 @@ import Swal from 'sweetalert2';
 
 $('select.dropdown')
         .dropdown();
+
+window.ErrorToast = (message) => {
+        Toastify({
+                text: message,
+                duration: 3000,
+                close: true,
+                gravity: "top", // `top` or `bottom`
+                position: 'center', // `left`, `center` or `right`
+                style: {
+                        background: "#B03060"
+                },
+                stopOnFocus: true, // Prevents dismissing of toast on hover
+                onClick: function () {
+                // Optional callbacks
+                }
+        }).showToast();
+}
+
+window.InfoToast = (message) => {
+        Toastify({
+                text: message,
+                duration: 3000,
+                close: true,
+                gravity: "top", // `top` or `bottom`
+                position: 'right', // `left`, `center` or `right`
+                style: {
+                        background: "#00bcd4"
+                },
+                stopOnFocus: true, // Prevents dismissing of toast on hover
+                onClick: function () {
+                // Optional callbacks
+                }
+        }).showToast();
+}
+
+window.AlertToast = (message) => {
+        Toastify({
+                text: message,
+                duration: 3000,
+                close: true,
+                gravity: "top", // `top` or `bottom`
+                position: 'right', // `left`, `center` or `right`
+                style: {
+                        background: "#ff9800"
+                },
+                stopOnFocus: true, // Prevents dismissing of toast on hover
+                onClick: function () {
+                // Optional callbacks
+                }
+        }).showToast();
+}

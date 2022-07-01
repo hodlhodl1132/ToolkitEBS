@@ -30,6 +30,7 @@
         Alpine.store('incident_defs', {
             items: [],
             options: [],
+            length: 0,
 
             store(items) {
                 this.items = items
@@ -37,12 +38,21 @@
             addOption(option) {
                 let id = (+new Date).toString(36)
                 this.options[id] = Object.assign({}, option)
+                this.length++
                 return id
+            },
+            removeOption(id) {
+                this.length--
+                delete this.options[id]
             },
         });
 
         $('#open-polls-button').on('click', function() {
-            $('.ui.modal').modal('show')
+            $('.ui.modal')
+                .modal({
+                    closable: true,
+                })
+                .modal('show')
 
             if (Alpine.store('incident_defs').items.length === 0) {
                 $.ajax({
@@ -59,17 +69,25 @@
                                 '<div class="item" data-value="' + [key] + '">' + incident_defs[key].label + '</div>'
                             )
                         })
-                        $('.ui.dropdown').dropdown()
+                        $('.ui.dropdown').dropdown({
+                            onChange: function(value, text, $selectedItem) {
+                                addPollOption(value, text, $selectedItem)
+                            }
+                        })
                     }
                 })
             }
         })
 
-        // Add a poll option
-        $('#add-incident-button').on('click', function(event) {
-            event.preventDefault()
-            let incident_id = $(this).closest('.ui.form').find('.ui.dropdown').dropdown('get value')
-            let incident_def = Alpine.store('incident_defs').items[incident_id]
+        function addPollOption(value, text, $selectedItem) {
+
+            if (Alpine.store('incident_defs').length >= 2) {
+                
+                window.ErrorToast('You can only add two options to a poll')
+                return
+            }
+
+            let incident_def = Alpine.store('incident_defs').items[value]
             let option_id = Alpine.store('incident_defs').addOption(incident_def)
             let option_html = 
             '<div class="card">' +
@@ -82,19 +100,26 @@
                 '</div>' +
             '</div>'
             $('#incident-cards').append(option_html)
-        })
+        }
 
         // Remove an incident from the poll
-        $('.cards').on('click', '.remove-incident-button', function(event) {
+        $('.cards').on('click', '.remove-incident-button', async function(event) {
             event.preventDefault()
-            $(this).closest('.card').remove()
+            let card = $(this).closest('.card')
+            let option_id = card.find('input[name="option_id"]').val()
+            await card.remove()
+            Alpine.store('incident_defs').removeOption(option_id)
         })
 
         // Configure an incident
         $('.cards').on('click', '.configure-incident-button', function(event) {
             event.preventDefault()
-            $(this).closest('.card').css('width', '600px')
-            let option_id = $(this).closest('.card').find('input[name="option_id"]').val()
+            let card = $(this).closest('.card')
+            if (card.find('.ui.form').length !== 0) {
+                return
+            }
+            card.css('width', '600px')
+            let option_id = card.find('input[name="option_id"]').val()
             let incident_html = 
             '<div class="ui form incident-form">' +
                 '<div class="fields">' +

@@ -6,8 +6,8 @@
         </div>
         <div class="three wide column right floated">
             <div class="ui buttons">
-                <button id="open-polls-button" class="ui basic button blue">{{ __("Queue Poll") }}</button>
-                <button class="ui icon basic button green refresh-active-poll">
+                <button id="open-polls-button" class="ui basic black button">{{ __("Queue Poll") }}</button>
+                <button class="ui icon basic button blue refresh-active-poll">
                     <i class="refresh icon"></i>
                 </button>
             </div>
@@ -57,7 +57,7 @@
 
 </div>
 
-<div class="ui modal">
+<div class="ui longer modal scrolling">
     <i class="close icon"></i>
     @include('streamer.components.create-poll')
 </div>
