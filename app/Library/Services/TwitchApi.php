@@ -273,8 +273,6 @@ class TwitchApi {
 
         $paramQuery = substr($paramQuery, 0, -1);
 
-        Log::debug($paramQuery);
-
         $token = TwitchApi::appAccessToken();
 
         $headers = [

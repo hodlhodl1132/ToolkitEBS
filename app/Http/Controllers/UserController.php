@@ -17,7 +17,6 @@ class UserController extends Controller
      */
     public function index(Request $request)
     {
-        Log::debug($request->method);
         if ($request->method == "POST")
         {
 
