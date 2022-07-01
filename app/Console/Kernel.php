@@ -19,7 +19,7 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->job('sanctum:prune-expired --hours=24')->everyFifteenMinutes();
+        $schedule->command('sanctum:prune-expired --hours=24')->everyFifteenMinutes();
         $schedule->command('stream:refresh')->everyFiveMinutes();
     }
 
