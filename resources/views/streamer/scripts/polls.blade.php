@@ -48,6 +48,11 @@
         });
 
         $('#open-polls-button').on('click', function() {
+            if (!Alpine.store('broadcaster_live').live)
+            {
+                window.ErrorToast('You must be live to open a poll.')
+                return;
+            }
             $('.ui.modal')
                 .modal({
                     closable: true,
@@ -152,6 +157,15 @@
             $(this).closest('.card').css('width', '290px')
             form.remove()
         })
+
+        // Disabled buttons when offline
+
+
+        function disablePollButtons(input) {
+            console.log(input, 'value')
+        }
+
+        disablePollButtons($('input[name="broadcaster_live"]').val())
 
         Alpine.store('active_poll', {
             poll: null,
