@@ -39,7 +39,7 @@ class IncidentDefController extends Controller
                 '*.mod_id' => 'required_with:*.def_name|string|max:255',
                 '*.label' => 'required_with:*.def_name|string|max:255',
                 '*.letter_label' => 'required_with:*.def_name|string|max:255',
-                '*.letter_text' => 'required_with:*.def_name|string|max:255'
+                '*.letter_text' => 'required_with:*.def_name|string|max:510'
             ]);
         } catch (ValidationException $e) {
             Log::error($e->getMessage());
