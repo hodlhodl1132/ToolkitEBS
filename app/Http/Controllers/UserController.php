@@ -17,44 +17,31 @@ class UserController extends Controller
      */
     public function index(Request $request)
     {
-        if ($request->method == "POST")
-        {
-
-        } else {
-            $users = User::paginate(10);  
-        }
-
         return view('users.index', [
-            'users' => $users
+            'users' => User::paginate(10)
         ]);
     }
 
     public function search(Request $request)
     {
-        $users = [];
         try {
-            $validator = Validator::make($request->all(), [
+            $validated = $request->validate([
                 'search' => 'required|string|min:3|max:30'
             ]);
-            $validator->validate();
-            $validated = $validator->validated();
+
             $users = User::search($validated['search'])
                 ->paginate(10);
+
+            return view('users.index', [
+                'users' => $users
+            ]);
+            
         } catch (ValidationException $e) {
             Log::error($e->getMessage());
-        } catch (Exception $e) {
-            Log::error($e->getMessage());
+            return view('users.index', [
+                'users' => User::paginate(10)
+            ])->withErrors($e->getMessage());
         }
-
-        /**
-         * @var Illuminate\Session\Store $session
-         */
-        $session = $request->session();
-        $session->flash('errors', $validator->errors());
-
-        return view('users.index', [
-            'users' => $users
-        ]);
     }
 
     /**
@@ -66,6 +53,10 @@ class UserController extends Controller
          * @var \App\Models\User
          */
         $user = User::find($id);
+
+        if ($user == null) {
+            return response()->redirectToRoute('admin.users.index');
+        }
         
         $allPermissions = Permission::all();
         $userPermissions = $user->getAllPermissions();
@@ -76,12 +67,6 @@ class UserController extends Controller
             {
                 array_push($permissions, $permission);
             }
-        }
-
-
-        if ($user == null)
-        {
-            return response()->redirectToRoute('admin.users.index');
         }
 
         return view('users.show', [
