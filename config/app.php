@@ -188,6 +188,7 @@ return [
 
         \SocialiteProviders\Manager\ServiceProvider::class,
         Spatie\Permission\PermissionServiceProvider::class,
+        Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
 
         /*
          * Application Service Providers...

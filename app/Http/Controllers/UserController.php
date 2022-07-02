@@ -38,9 +38,9 @@ class UserController extends Controller
             
         } catch (ValidationException $e) {
             Log::error($e->getMessage());
-            return view('users.index', [
-                'users' => User::paginate(10)
-            ])->withErrors($e->getMessage());
+            return redirect()
+                ->route('admin.users.index')
+                ->withErrors($e->getMessage());
         }
     }
 
