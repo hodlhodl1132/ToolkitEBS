@@ -35,7 +35,7 @@
 
         setInterval(() => {
             getLiveStreams()
-        }, 10 * 1000)
+        }, 60 * 1000)
 
         // query streams
         function getLiveStreams() {
