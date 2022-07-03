@@ -19,8 +19,7 @@ class IncidentDef extends Model
         'def_name',
         'mod_id',
         'label',
-        'letter_label',
-        'letter_text',
+        'description',
         'enabled',
         'is_active',
     ];

@@ -101,7 +101,7 @@
                     '<i class="right floated cog icon configure-incident-button"></i>' +
                     '<i class="right floated trash icon remove-incident-button"></i>' +
                     `<div class="header" x-text="$store.incident_defs.options.${option_id}.label"></div>` +
-                    `<div class="description" x-text="$store.incident_defs.options.${option_id}.letter_text"></div>` +
+                    `<div class="description" x-text="$store.incident_defs.options.${option_id}.description"></div>` +
                 '</div>' +
             '</div>'
             $('#incident-cards').append(option_html)
@@ -127,23 +127,11 @@
             let option_id = card.find('input[name="option_id"]').val()
             let incident_html = 
             '<div class="ui form incident-form">' +
-                '<div class="fields">' +
-                    '<div class="eight wide field">' +
-                        '<label>' + '{{ __("Label") }}' + '</label>' +
-                        `<input x-model="$store.incident_defs.options.${option_id}.label" type="text" name="incident_def_label">` +
-                    '</div>' +
-                    '<div class="eight wide field">' +
-                        '<label>' + '{{ __("Letter Label") }}' + '</label>' +
-                        `<input type="text" x-model="$store.incident_defs.options.${option_id}.letter_label">` +
-                    '</div>' +
-                '</div>' +
-                '<div class="fields">' +
-                    '<div class="eight wide field">' +
-                        '<label>' + '{{ __("Letter Text") }}' + '</label>' +
-                        `<textarea x-model="$store.incident_defs.options.${option_id}.letter_text" rows="2"></textarea>` +
-                    '</div>' +
-                '</div>' +
                 '<div class="field">' +
+                    '<label>' + '{{ __("Option Label") }}' + '</label>' +
+                    `<input x-model="$store.incident_defs.options.${option_id}.label" type="text" name="incident_def_label">` +
+                '</div>' +
+                '<div class="field submit-field">' +
                     '<button class="ui button primary save-incident-button" type="submit">' + '{{ __("Save") }}' + '</button>' +
                 '</div>' +
             '</div>'

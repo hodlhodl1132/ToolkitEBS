@@ -69,6 +69,9 @@
     #poll_duration_slider {
         margin-top: 1em;
     }
+    .incident-form .submit-field {
+        padding-top: .5em;
+    }
 </style>
 <script src="{{ asset('js/jquery-ui.min.js') }}" defer></script>
 @include('streamer.scripts.polls')

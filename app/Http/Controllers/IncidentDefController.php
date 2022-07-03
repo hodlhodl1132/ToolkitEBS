@@ -38,8 +38,7 @@ class IncidentDefController extends Controller
                 '*.def_name' => 'required|string|max:255',
                 '*.mod_id' => 'required_with:*.def_name|string|max:255',
                 '*.label' => 'required_with:*.def_name|string|max:255',
-                '*.letter_label' => 'required_with:*.def_name|string|max:255',
-                '*.letter_text' => 'required_with:*.def_name|string|max:510'
+                '*.description' => 'string|max:510',
             ]);
         } catch (ValidationException $e) {
             Log::error($e->getMessage());
@@ -82,15 +81,13 @@ class IncidentDefController extends Controller
             if ($def !== null) {
                 $def->is_active = true;
                 $def->label = $incidentDef['label'];
-                $def->letter_label = $incidentDef['letter_label'];
-                $def->letter_text = $incidentDef['letter_text'];
+                $def->description = $incidentDef['description'];
             } else {
                 $currentIncidentDefs->add(new IncidentDef([
                     'def_name' => $incidentDef['def_name'],
                     'mod_id' => $incidentDef['mod_id'],
                     'label' => $incidentDef['label'],
-                    'letter_label' => $incidentDef['letter_label'],
-                    'letter_text' => $incidentDef['letter_text'],
+                    'description' => $incidentDef['description'],
                     'enabled' => true,
                     'is_active' => true,
                 ]));
