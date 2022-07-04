@@ -84,7 +84,7 @@
                 Alpine.store('poll_settings').settings = e
             })
             .listen('queuedpoll-created', (e) => {
-                console.log('poll queue updated', e)
+
             })
             
     })

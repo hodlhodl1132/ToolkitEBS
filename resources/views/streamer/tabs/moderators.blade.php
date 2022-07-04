@@ -3,7 +3,7 @@
         <p>Here you may give your channel moderators access to your channel settings within the toolkit ext.</p>
     </div>
 
-    <div class="eight wide column">
+    <div class="sixteen wide column">
         <h3 class="ui header">Add Moderators to ToolkitExt</h3>
         <p>
             <form class="ui form" method="POST" action="{{ route('dashboard.user.add') }}">
@@ -18,7 +18,7 @@
         </p>
     </div>
 
-    <div class="eight wide column">
+    <div class="sixteen wide column">
         <h3 class="ui header">Remove Moderators from ToolkitExt</h3>
         <table class="ui table celled unstackable">
             <thead>

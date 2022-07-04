@@ -18,7 +18,6 @@ $(document).ready(() => {
 
     function updatePollSettings(pollSettings)
     {
-        console.log(pollSettings, 'updated poll settings')
         if (pollSettings.provider_id === undefined)
         {
             retrievePollSettings()

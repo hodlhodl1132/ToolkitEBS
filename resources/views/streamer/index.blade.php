@@ -19,23 +19,23 @@
 
     @include('streamer.components.stats-header')
 
-    <div class="ui grid">
-        <div class="four wide column">
+    <div class="ui grid stackable">
+        <div class="three wide column">
             @include('streamer.components.navigation')
         </div>
-        <div class="twelve wide stretched column">
+        <div class="thirteen wide stretched column">
             <div class="tabs"> {{-- Start of Tab Segments --}}
 
                 @if ($broadcaster) {{-- Broadcaster Only Tabs --}}
-                <div class="ui tab segment" data-tab="broadcaster-key">
+                <div class="ui tab" data-tab="broadcaster-key">
                     @include('streamer.tabs.broadcaster-key')
                 </div>
 
-                <div class="ui tab segment" data-tab="moderators">
+                <div class="ui tab" data-tab="moderators">
                     @include('streamer.tabs.moderators')
                 </div>
 
-                <div class="ui tab segment" data-tab="channels">
+                <div class="ui tab" data-tab="channels">
                     @include('streamer.tabs.channels')
                 </div>
                 @endif
