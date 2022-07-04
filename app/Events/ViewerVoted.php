@@ -48,7 +48,7 @@ class ViewerVoted implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return new PrivateChannel('private.'.$this->providerId);
+        return new PresenceChannel('private.'.$this->providerId);
     }
 
     /**

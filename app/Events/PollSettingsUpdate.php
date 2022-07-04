@@ -47,17 +47,7 @@ class PollSettingsUpdate implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return new PrivateChannel('private.'.$this->providerId);
-    }
-
-    /**
-     * the event's broadcast name
-     * 
-     * @return string
-     */
-    public function broadcastAs()
-    {
-        return 'pollsettings-update';
+        return new PresenceChannel('private.'.$this->providerId);
     }
 
     /**

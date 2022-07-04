@@ -72,5 +72,20 @@
             Alpine.store('broadcaster_live').set(true)
             $('#live-button').css('display', 'inline-block')
         }
+
+        // Global store
+
+        Alpine.store('poll_settings', {
+            settings: {}
+        })
+
+        Echo.join(`private.${providerId}`)
+            .listen('PollSettingsUpdate', (e) => {
+                Alpine.store('poll_settings').settings = e
+            })
+            .listen('queuedpoll-created', (e) => {
+                console.log('poll queue updated', e)
+            })
+            
     })
 </script>

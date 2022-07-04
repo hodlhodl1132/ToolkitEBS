@@ -5120,6 +5120,12 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
  */
 
 window.Pusher = (pusher_js__WEBPACK_IMPORTED_MODULE_3___default());
+window.Echo = new laravel_echo__WEBPACK_IMPORTED_MODULE_2__["default"]({
+  broadcaster: 'pusher',
+  key: "290b2ad8d139f7d58165",
+  cluster: "us3",
+  forceTls: true
+});
 $('select.dropdown').dropdown();
 
 window.ErrorToast = function (message) {

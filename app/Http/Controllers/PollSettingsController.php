@@ -62,9 +62,11 @@ class PollSettingsController extends Controller
 
             PollSettingsUpdate::dispatch($providerId, $pollSettings);
 
-            if ($isBroadcaster)
-                return Redirect::route('dashboard', ['tab' => 'polls']);
-            return Redirect::route('dashboard.mock', ['tab' => 'polls', 'providerId' => $providerId]);
+            return response()
+                ->json([
+                    'success' => true,
+                    'message' => 'Settings updated successfully'
+                ]);
 
         } catch (ValidationException $e) {
             Log::error($e->getMessage());

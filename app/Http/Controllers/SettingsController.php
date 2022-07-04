@@ -46,8 +46,7 @@ class SettingsController extends Controller
             'user' => $user,
             'broadcaster' => true,
             'moderators' => $moderators,
-            'access_channels' => $channelsCanAccess,
-            'poll_settings' => $pollSettings
+            'access_channels' => $channelsCanAccess
         ]);
     }
 
@@ -83,8 +82,7 @@ class SettingsController extends Controller
 
         return view('streamer.index', [
             'user' => $targetedUser,
-            'broadcaster' => false,
-            'poll_settings' => $pollSettings
+            'broadcaster' => false
         ]);
     }
 

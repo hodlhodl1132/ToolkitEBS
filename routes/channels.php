@@ -15,5 +15,19 @@ use Illuminate\Support\Facades\Log;
 */
 
 Broadcast::channel('private.{id}', function($user, $id) {
-    return $user->provider_id == $id;
+    if ($user->provider_id == $id) {
+        return [
+            'id' => $user->id,
+            'name' => 'broadcaster'
+        ];
+    }
+
+    if ($user->hasPermissionTo('settings.edit.'.$id)) {
+        return [
+            'id' => $user->id,
+            'name' => 'moderator.'.$user->id
+        ];
+    }
+
+    return false;
 });

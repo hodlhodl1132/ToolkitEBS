@@ -21,6 +21,12 @@ import Pusher from 'pusher-js';
  * allows your team to easily build robust real-time web applications.
  */
 window.Pusher = Pusher;
+window.Echo = new Echo({
+        broadcaster: 'pusher',
+        key: process.env.MIX_PUSHER_APP_KEY,
+        cluster: process.env.MIX_PUSHER_APP_CLUSTER,
+        forceTls: true
+})
 
 $('select.dropdown')
         .dropdown();
