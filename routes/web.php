@@ -10,6 +10,7 @@ use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\PersonalWebTokenController;
 use App\Http\Controllers\PollController;
 use App\Http\Controllers\PollSettingsController;
+use App\Http\Controllers\QueuedPollController;
 use App\Http\Controllers\RootPageController;
 use App\Http\Controllers\SettingsController;
 use App\Http\Controllers\StreamController;
@@ -49,6 +50,7 @@ Route::middleware('auth')
         Route::post('/settings', [PollSettingsController::class, 'store'])->name('dashboard.savesettings');
         Route::get('/incident-defs/{providerId}', [IncidentDefController::class, 'index']);
         Route::get('/polls/active-poll/{providerId}', [PollController::class, 'show']);
+        Route::post('/polls/queue/store', [QueuedPollController::class, 'store']);
     });
 
 Route::prefix('auth/twitch/oauth')->group(function() {

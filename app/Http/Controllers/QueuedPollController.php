@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\QueuedPollCreated;
 use App\Models\QueuedPoll;
 use Exception;
 use Illuminate\Http\Request as HttpRequest;
@@ -22,7 +23,7 @@ class QueuedPollController extends Controller
     {
         try {
             $validated = $request->validate([
-                'title' => 'required|max:100|string',
+                'title' => 'nullable|max:100|string',
                 'provider_id' => 'required|integer',
                 'options' => 'required|array|size:2',
                 'options.*.def_name' => 'required|string|max:64',
@@ -35,13 +36,19 @@ class QueuedPollController extends Controller
                 throw new AccessDeniedHttpException('You do not have permission to create polls for this stream.');
             }
 
+            if (count($validated['options']) > 10) {
+                throw new Exception('Too many options');
+            }
+
             $queuedPoll = new QueuedPoll();
-            $queuedPoll->title = $validated['title'];
+            $queuedPoll->title = $validated['title'] ?? null;
             $queuedPoll->options = $validated['options'];
             $queuedPoll->length = 2;
             $queuedPoll->created_by_id = $user->id;
             $queuedPoll->provider_id = $validated['provider_id'];
             $queuedPoll->save();
+
+            QueuedPollCreated::dispatch($queuedPoll);
 
             return response()->json($queuedPoll, 201);
         } catch (ValidationException $e) {

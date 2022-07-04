@@ -146,6 +146,38 @@
             form.remove()
         })
 
+        // Submit the poll
+        $('#submit-poll-button').on('click', function(event) {
+            event.preventDefault()
+            var proxyOptions = {...Alpine.store('incident_defs').options}
+            var options = []
+            for (let i = 0; i < Alpine.store('incident_defs').length; i++) {
+                const option = proxyOptions[Object.keys(proxyOptions)[i]]
+                options.push({
+                    def_name: option.def_name,
+                    mod_id: option.mod_id,
+                    label: option.label,
+                    description: option.description,
+                })
+            }
+            $.ajax({
+                type: 'POST',
+                url: '/streamer/polls/queue/store',
+                data: {
+                    'title': $('input[name="title"]').val(),
+                    'provider_id': $('input[name="dashboard_provider_id"]').val(),
+                    'options': options,
+                },
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                success: function (response) {
+                    window.SuccessToast('Poll created successfully')
+                    $('.ui.modal').modal('hide')
+                }
+            })
+        })
+
         Alpine.store('active_poll', {
             poll: null,
             store(poll) {
