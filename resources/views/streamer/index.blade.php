@@ -19,34 +19,33 @@
 
     @include('streamer.components.stats-header')
 
-    <div class="tabs"> {{-- Start of Tab Segments --}}
-
-        <div class="ui top attached tabular menu">
-            @if ($broadcaster)
-                <a class="item" data-tab="broadcaster-key">Broadcaster Key</a>
-                <a class="item" data-tab="moderators">Moderators</a>
-                <a class="item" data-tab="channels">Channels</a>
-            @endif
-            <a class="item" data-tab="polls">Polls</a>
+    <div class="ui grid">
+        <div class="four wide column">
+            @include('streamer.components.navigation')
         </div>
+        <div class="twelve wide stretched column">
+            <div class="tabs"> {{-- Start of Tab Segments --}}
 
-        @if ($broadcaster) {{-- Broadcaster Only Tabs --}}
-        <div class="ui bottom attached tab segment" data-tab="broadcaster-key">
-            @include('streamer.tabs.broadcaster-key')
+                @if ($broadcaster) {{-- Broadcaster Only Tabs --}}
+                <div class="ui tab segment" data-tab="broadcaster-key">
+                    @include('streamer.tabs.broadcaster-key')
+                </div>
+
+                <div class="ui tab segment" data-tab="moderators">
+                    @include('streamer.tabs.moderators')
+                </div>
+
+                <div class="ui tab segment" data-tab="channels">
+                    @include('streamer.tabs.channels')
+                </div>
+                @endif
+
+                <div class="ui tab" data-tab="polls">
+                    @include('streamer.tabs.polls')
+                </div>
+
+            </div> {{-- End of Tab Segments --}}
         </div>
+    </div>
 
-        <div class="ui bottom attached tab segment" data-tab="moderators">
-            @include('streamer.tabs.moderators')
-        </div>
-
-        <div class="ui bottom attached tab segment" data-tab="channels">
-            @include('streamer.tabs.channels')
-        </div>
-        @endif
-
-        <div class="ui bottom attached tab segment" data-tab="polls">
-            @include('streamer.tabs.polls')
-        </div>
-
-    </div> {{-- End of Tab Segments --}}
 </x-app-layout>

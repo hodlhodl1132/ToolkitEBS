@@ -13,11 +13,14 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
 import axios from 'axios';
 import Swal from 'sweetalert2';
+import Echo from 'laravel-echo';
+import Pusher from 'pusher-js';
 /**
  * Echo exposes an expressive API for subscribing to channels and listening
  * for events that are broadcast by Laravel. Echo and event broadcasting
  * allows your team to easily build robust real-time web applications.
  */
+window.Pusher = Pusher;
 
 $('select.dropdown')
         .dropdown();

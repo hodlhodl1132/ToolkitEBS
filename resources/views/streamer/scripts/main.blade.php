@@ -12,7 +12,7 @@
             $('.menu .item').tab('change tab', tab)
         } else {
             $('.menu > .item:first-of-type').addClass('active')
-            $('div.tabs > div:nth-child(2)').addClass('active')
+            $('div.tabs > div:nth-child(1)').addClass('active')
             $('.menu .item').tab()
         }
 

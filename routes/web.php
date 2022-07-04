@@ -39,6 +39,8 @@ Route::get('/login', function() {
     return view('auth.login');
 })->name('login');
 
+Broadcast::routes();
+
 Route::middleware('auth')
     ->prefix('streamer')
     ->group(function() {
