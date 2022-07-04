@@ -47,7 +47,6 @@ Route::middleware('auth:sanctum')
             Route::post('create', [PollController::class, 'store']);
             Route::delete('delete', [PollController::class, 'destroy']);
             Route::prefix('queue')->group(function() {
-                Route::post('store', [QueuedPollController::class, 'store']);
                 Route::delete('delete/{queuedPoll}', [QueuedPollController::class, 'destroy']);
                 Route::post('update/{queuedPoll}', [QueuedPollController::class, 'update']);
             });
