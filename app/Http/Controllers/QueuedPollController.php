@@ -86,10 +86,13 @@ class QueuedPollController extends Controller
             $queuedPoll->validation_error = $validated['validation_error'];
             $queuedPoll->save();
 
-            return response()->json([], 200);
+            return response()->json([
+                'success' => 'Poll validated successfully.',
+            ], 200);
         } catch (ValidationException $e) {
             return response()->json([
-                'error' => $e->validator->errors()->first(),
+                'error' => 'There was an error validating the poll',
+                'message' => $e->validator->errors(),
             ], 400);
         } catch (AccessDeniedHttpException $e) {
             return response()->json([
