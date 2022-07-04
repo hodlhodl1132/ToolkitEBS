@@ -7,6 +7,7 @@ use App\Http\Controllers\PollController;
 use App\Http\Controllers\PollSettingsController;
 use App\Http\Controllers\Pusher\ChannelExistenceController;
 use App\Http\Controllers\Pusher\ClientEventsController;
+use App\Http\Controllers\QueuedPollController;
 use App\Http\Controllers\StreamController;
 use App\Http\Controllers\TwitchApiController;
 use App\Http\Controllers\VoteController;
@@ -45,6 +46,11 @@ Route::middleware('auth:sanctum')
         Route::prefix('polls')->group(function() {
             Route::post('create', [PollController::class, 'store']);
             Route::delete('delete', [PollController::class, 'destroy']);
+            Route::prefix('queue')->group(function() {
+                Route::post('store', [QueuedPollController::class, 'store']);
+                Route::delete('delete/{queuedPoll}', [QueuedPollController::class, 'destroy']);
+                Route::post('update/{queuedPoll}', [QueuedPollController::class, 'update']);
+            });
         });
     });
 
