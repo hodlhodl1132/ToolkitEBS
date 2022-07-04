@@ -82,10 +82,6 @@
         Echo.join(`private.${providerId}`)
             .listen('PollSettingsUpdate', (e) => {
                 Alpine.store('poll_settings').settings = e
-            })
-            .listen('queuedpoll-created', (e) => {
-
-            })
-            
+            })            
     })
 </script>
