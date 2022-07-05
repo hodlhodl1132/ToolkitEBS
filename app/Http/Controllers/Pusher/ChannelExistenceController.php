@@ -20,6 +20,7 @@ class ChannelExistenceController extends Controller
      */
     public function update(Request $request)
     {
+        Log::alert($request->all());
         try {
             $validator = Validator::make($request->all(), [
                 'time_ms' => 'required|Numeric',
