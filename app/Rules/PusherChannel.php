@@ -25,8 +25,7 @@ class PusherChannel implements Rule
      */
     public function passes($attribute, $value)
     {
-        $numeric = substr($value, 16);
-        return is_numeric($numeric);
+        return is_numeric(substr($value, 19));
     }
 
     /**
