@@ -79,7 +79,7 @@
             settings: {}
         })
 
-        Echo.join(`private.${providerId}`)
+        Echo.private(`dashboard.${providerId}`)
             .listen('PollSettingsUpdate', (e) => {
                 Alpine.store('poll_settings').settings = e
             })            

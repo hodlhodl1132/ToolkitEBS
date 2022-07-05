@@ -39,7 +39,10 @@ class QueuedPollCreated implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return new PresenceChannel('private.'.$this->queuedPoll->provider_id);
+        return [
+            new PrivateChannel('gameclient.' . $this->providerId),
+            new PrivateChannel('dashboard.' . $this->providerId)
+        ];
     }
 
     /**

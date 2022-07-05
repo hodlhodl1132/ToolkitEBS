@@ -47,7 +47,10 @@ class PollSettingsUpdate implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return new PresenceChannel('private.'.$this->providerId);
+        return [
+            new PrivateChannel('gameclient.'.$this->providerId),
+            new PrivateChannel('dashboard.'.$this->providerId)
+        ];
     }
 
     /**

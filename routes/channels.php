@@ -14,18 +14,14 @@ use Illuminate\Support\Facades\Log;
 |
 */
 
-Broadcast::channel('private.{id}', function($user, $id) {
+Broadcast::channel('gameclient.{id}', function($user, $id) {
+    return $user->provider_id == $id;
+});
+
+Broadcast::channel('dashboard.{id}', function($user, $id) {
     if ($user->provider_id == $id) {
-        return [
-            'name' => 'broadcaster'
-        ];
+        return true;
     }
 
-    if ($user->hasPermissionTo('settings.edit.'.$id)) {
-        return [
-            'name' => 'moderator.'.$user->id
-        ];
-    }
-
-    return false;
+    return $user->hasPermissionTo('settings.edit.'.$id);
 });
