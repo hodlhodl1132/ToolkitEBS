@@ -25,7 +25,13 @@ class PusherChannel implements Rule
      */
     public function passes($attribute, $value)
     {
-        return is_numeric(substr($value, 19));
+        if (str_contains($value, 'gameclient.')) {
+            return is_numeric(substr($value, 19));
+        }
+        if (str_contains($value, 'dashboard.')) {
+            return is_numeric(substr($value, 18));
+        }
+        return false;
     }
 
     /**

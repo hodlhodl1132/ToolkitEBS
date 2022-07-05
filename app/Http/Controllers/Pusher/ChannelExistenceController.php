@@ -20,7 +20,6 @@ class ChannelExistenceController extends Controller
      */
     public function update(Request $request)
     {
-        Log::alert($request->all());
         try {
             $validator = Validator::make($request->all(), [
                 'time_ms' => 'required|Numeric',
@@ -44,7 +43,7 @@ class ChannelExistenceController extends Controller
         $events = $request->all()['events'];
 
         foreach ($events as $index => $event) {
-            $channel_id = substr($event['channel'], 16);
+            $channel_id = substr($event['channel'], 19);
             $channel_name = $event['channel'];
             if (!str_contains($channel_name, 'gameclient'))
             {
