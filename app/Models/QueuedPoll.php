@@ -54,4 +54,9 @@ class QueuedPoll extends Model
     {
         return $this->belongsTo(User::class, 'provider_id', 'provider_id');
     }
+
+    public function prunable()
+    {
+        return static::where('created_at', '<=', now()->subHour(16));
+    }
 }
