@@ -53,17 +53,7 @@ class ViewerVoted implements ShouldBroadcast
             new PrivateChannel('dashboard.' . $this->providerId)
         ];
     }
-
-    /**
-     * the event's broadcast name
-     * 
-     * @return string
-     */
-    public function broadcastAs()
-    {
-        return 'viewer-voted';
-    }
-
+    
     /**
      * Get the data to broadcast
      * 
