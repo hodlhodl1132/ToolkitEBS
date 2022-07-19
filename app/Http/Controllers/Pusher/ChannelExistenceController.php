@@ -42,30 +42,34 @@ class ChannelExistenceController extends Controller
 
         $events = $request->all()['events'];
 
+        $this->parseEvents($events);
+
+        return 'success';
+    }
+
+    /**
+     * Process the request
+     */
+    public function parseEvents(array $events)
+    {
         foreach ($events as $index => $event) {
             $channel_id = substr($event['channel'], 19);
             $channel_name = $event['channel'];
-            if (!str_contains($channel_name, 'gameclient'))
-            {
+            // if the channel is not gameclient than we ignore it
+            if (!str_contains($channel_name, 'gameclient')) {
                 continue;
             }
             $stream = Stream::where('channel_name', $channel_name)->first();
-            if ($stream == null &&
-                $event['name'] == 'channel_occupied')
-            {
-                
+            if ($stream == null && $event['name'] == 'channel_occupied') {
+
                 $stream = new Stream();
                 $stream->channel_name = $channel_name;
                 $stream->channel_id = $channel_id;
                 $stream->save();
-            } else if ($stream != null &&
-                        $event['name'] == 'channel_vacated')
-            {
-                $stream->delete();
+            } else if ($stream != null && $event['name'] == 'channel_vacated') {
+                $stream->pruneStream();
             }
         }
-
-        return 'success';
     }
 
     /**

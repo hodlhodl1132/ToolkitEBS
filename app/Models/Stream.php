@@ -40,4 +40,19 @@ class Stream extends Model
         $thumbnail_url = str_replace('{height}', '180', $thumbnail_url);
         return $thumbnail_url;
     }
+
+    /**
+     * Clean up stream related resources
+     */
+    public function pruneStream()
+    {
+        $activePoll = Poll::where('provider_id', $this->channel_id)->first();
+        if ($activePoll !== null) {
+            $votes = Vote::where('poll_id', $activePoll->id)->get();
+            foreach ($votes as $vote) {
+                $vote->delete();
+            }
+            $activePoll->delete();
+        }
+    }
 }
