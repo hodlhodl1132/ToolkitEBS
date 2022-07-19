@@ -8,11 +8,24 @@ use Exception;
 use Illuminate\Http\Request as HttpRequest;
 use Illuminate\Validation\ValidationException;
 use Log;
-use Request;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 
 class QueuedPollController extends Controller
 {
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index(HttpRequest $request, string $providerId)
+    {
+        if (!$request->user()->hasPermissionTo('settings.edit.'.$providerId)) {
+            throw new AccessDeniedHttpException();
+        }
+
+        return QueuedPoll::where('provider_id', $providerId)->paginate(10);  
+    }
+
     /**
      * Store a newly created resource in storage.
      *
