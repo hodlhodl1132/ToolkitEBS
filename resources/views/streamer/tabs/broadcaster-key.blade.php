@@ -35,7 +35,7 @@
             }).showToast();
             return
         }
-        navigator.clipboard.writeText();
+        navigator.clipboard.writeText(val);
         window.Toastify({
             text: 'Copied to clipboard',
             duration: 3000,
