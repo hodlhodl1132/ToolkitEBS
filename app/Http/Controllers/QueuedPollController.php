@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Events\QueuedPollCreated;
 use App\Models\QueuedPoll;
+use Auth;
 use Exception;
 use Illuminate\Http\Request as HttpRequest;
 use Illuminate\Validation\ValidationException;
@@ -17,9 +18,10 @@ class QueuedPollController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(HttpRequest $request, string $providerId)
+    public function index(string $providerId)
     {
-        if (!$request->user()->hasPermissionTo('settings.edit.'.$providerId)) {
+        $user = Auth::user();
+        if (!$user->hasPermissionTo('settings.edit.'.$providerId)) {
             throw new AccessDeniedHttpException();
         }
 
@@ -36,7 +38,7 @@ class QueuedPollController extends Controller
     {
         try {
             $validated = $request->validate([
-                'title' => 'nullable|max:100|string',
+                'title' => 'max:100|string',
                 'provider_id' => 'required|integer',
                 'options' => 'required|array|size:2',
                 'options.*.def_name' => 'required|string|max:64',
@@ -54,7 +56,7 @@ class QueuedPollController extends Controller
             }
 
             $queuedPoll = new QueuedPoll();
-            $queuedPoll->title = $validated['title'] ?? null;
+            $queuedPoll->title = $validated['title'] ?? 'What event should happen next?';
             $queuedPoll->options = $validated['options'];
             $queuedPoll->length = 2;
             $queuedPoll->created_by_id = $user->id;
@@ -135,13 +137,22 @@ class QueuedPollController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function destroy(HttpRequest $request, QueuedPoll $queuedPoll) {
-        if ($request->user()->id != $queuedPoll->streamUser()->first()->id) {
-            return response()->json([
-                'error' => 'You do not have permission to delete this poll.',
-            ], 403);
-        }
+        try {
+            $user = $request->user();
+            if (!$user->hasPermissionTo('settings.edit.' . $queuedPoll->provider_id)) {
+                return response()->json([
+                    'error' => 'You do not have permission to delete this poll.',
+                ], 403);
+            }
 
-        $queuedPoll->delete();
+            $queuedPoll->delete();
+        } catch (Exception $e) {
+            Log::error($e->getMessage());
+            return response()->json([
+                'error' => 'There was an error deleting the poll',
+                'data' => $e->getMessage()
+            ], 500);
+        }
         
         return response()->json(
             [

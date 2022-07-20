@@ -54,9 +54,9 @@ Route::middleware('auth:sanctum')
         });
     });
 
-Route::prefix('settings')
+Route::prefix('settings/polls')
     ->group(function() {
-        Route::get('polls/{providerId}', [PollSettingsController::class, 'show']);
+        Route::get('{providerId}', [PollSettingsController::class, 'show']); 
     });
 
 Route::post('streams', [StreamController::class, 'show'])->name('api.streams');

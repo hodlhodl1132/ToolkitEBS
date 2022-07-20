@@ -34,7 +34,7 @@ class QueuedPoll extends Model
         'options' => 'array',
         'created_by_id' => 'integer'
     ];
-    
+
     /**
      * Get the user that created the poll
      * 
@@ -58,5 +58,13 @@ class QueuedPoll extends Model
     public function prunable()
     {
         return static::where('created_at', '<=', now()->subHour(16));
+    }
+
+    /**
+     * Get a human readable version of the created_at attribute
+     */
+    public function getCreatedAtAttribute($value)
+    {
+        return \Carbon\Carbon::parse($value)->format('Y-m-d H:i:s');
     }
 }

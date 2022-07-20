@@ -1,8 +1,7 @@
 <h2 class="ui header">{{ __("Polls Dashboard") }}</h2>
 
 <div class="ui grid stackable padded">
-    <div class="twelve wide column">
-        <h3 class="ui header">{{ __("Poll Management") }}</h3>
+    <div class="thirteen wide column">
     </div>
     <div class="three wide column right floated">
         <div class="ui buttons">
@@ -13,9 +12,11 @@
         </div>
     </div>
 
-    <div id="active-poll-container" class="sixteen wide column">
+    <div id="active-poll-container" class="six wide column">
     </div>
 </div>
+
+@include('streamer.components.poll-queue')
 
 <h3 class="ui header">{{ __("Poll Settings") }}</h3>
 
@@ -54,6 +55,7 @@
     </div>
 </div>
 @include('streamer.scripts.poll-settings')
+@include('streamer.scripts.poll-queue')
 
 </div>
 

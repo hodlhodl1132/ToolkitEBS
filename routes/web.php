@@ -51,8 +51,16 @@ Route::middleware('auth')
         Route::post('/moderators/delete', [SettingsController::class, 'removeModerator'])->name('dashboard.user.remove');
         Route::post('/settings', [PollSettingsController::class, 'store'])->name('dashboard.savesettings');
         Route::get('/incident-defs/{providerId}', [IncidentDefController::class, 'index']);
-        Route::get('/polls/active-poll/{providerId}', [PollController::class, 'show']);
-        Route::post('/polls/queue/store', [QueuedPollController::class, 'store']);
+        Route::prefix('polls')
+            ->group(function() {
+                Route::get('active-poll/{providerId}', [PollController::class, 'show']);
+                Route::prefix('queue')
+                    ->group(function() {
+                        Route::post('store', [QueuedPollController::class, 'store'])->name('queued-polls.store');
+                        Route::get('index/{providerId}', [QueuedPollController::class, 'index'])->name('queued-polls.index');
+                        Route::delete('delete/{queuedPoll}', [QueuedPollController::class, 'destroy'])->name('queued-polls.delete');
+                    });
+            });
     });
 
 Route::prefix('auth/twitch/oauth')->group(function() {

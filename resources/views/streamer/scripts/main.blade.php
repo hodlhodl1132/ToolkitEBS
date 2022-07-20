@@ -78,10 +78,24 @@
         Alpine.store('poll_settings', {
             settings: {}
         })
+        Alpine.store('poll_queue', {
+            queue: [],
+            push(poll) {
+                this.queue = $.merge(this.queue, [poll])
+            },
+        })
 
         Echo.private(`dashboard.${providerId}`)
             .listen('PollSettingsUpdate', (e) => {
                 Alpine.store('poll_settings').settings = e
-            })            
+            })
+            .listen('QueuedPollCreated', (e) => {
+                console.log(e, 'QueuedPollCreated')
+                if (e.id !== undefined) {
+                    Alpine.store('poll_queue').push(e)
+                }
+            })
+
+        console.log('Hello fellow developer or person who accidentally opened the console!')
     })
 </script>

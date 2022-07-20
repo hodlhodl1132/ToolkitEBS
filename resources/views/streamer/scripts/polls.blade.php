@@ -148,7 +148,7 @@
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
                 success: function (response) {
-                    window.SuccessToast('Poll created successfully')
+                    window.InfoToast('Poll created successfully')
                     $('.ui.modal').modal('hide')
                 }
             })

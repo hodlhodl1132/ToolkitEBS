@@ -59,6 +59,7 @@ class QueuedPollCreated implements ShouldBroadcast
             'length' => $this->queuedPoll->length,
             'delay' => $this->queuedPoll->delay,
             'validated' => $this->queuedPoll->validated,
+            'created_at' => $this->queuedPoll->created_at,
         ];
     }
 }
