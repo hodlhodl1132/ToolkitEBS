@@ -57,7 +57,7 @@ class QueuedPoll extends Model
 
     public function prunable()
     {
-        return static::where('created_at', '<=', now()->subHour(16));
+        return static::where('created_at', '<=', now()->subDays(9));
     }
 
     /**
