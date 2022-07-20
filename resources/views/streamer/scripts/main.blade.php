@@ -82,17 +82,45 @@
             queue: [],
             push(poll) {
                 this.queue = $.merge(this.queue, [poll])
+            }
+        })
+        Alpine.store('active_poll', {
+            poll: null,
+            store(poll) {
+                this.poll = poll
             },
+            remove() {
+                this.poll = null
+            }
         })
 
         Echo.private(`dashboard.${providerId}`)
+            .listen('PollCreated', (e) => {
+                window.InfoToast('A new poll is active')
+                Alpine.store('active_poll').store(e)
+            })
+            .listen('PollDeleted', (e) => {
+                window.InfoToast('The active poll has ended')
+                Alpine.store('active_poll').remove()
+            })
             .listen('PollSettingsUpdate', (e) => {
                 Alpine.store('poll_settings').settings = e
             })
             .listen('QueuedPollCreated', (e) => {
-                console.log(e, 'QueuedPollCreated')
                 if (e.id !== undefined) {
                     Alpine.store('poll_queue').push(e)
+                }
+            })
+            .listen('QueuedPollDeleted', (e) => {
+                window.AlertToast('A Poll has been deleted')
+                if (e.id !== undefined) {
+                    if (Alpine.store('poll_queue').queue.length === 1) {
+                        Alpine.store('poll_queue').queue = []
+                    }
+
+                    Alpine.store('poll_queue').queue = $.grep(Alpine.store('poll_queue').queue, (poll) => {
+                        return poll.id !== e.id
+                    })
                 }
             })
 

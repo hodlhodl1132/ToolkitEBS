@@ -1,16 +1,11 @@
-<div class="ui grid stackable padded">
-    <div class="twelve wide column">
-        <h3 class="ui header">{{ __("Poll Queue") }}</h3>
-    </div>
-    <div class="three wide column right floated">
+<div class="ui grid stackable">
+    <div class="two wide column">
         <div class="ui buttons">
-            <button class="ui icon basic button blue refresh-poll-queue" data-tooltip="Check for active polls">
-                <i class="refresh icon"></i>
-            </button>
+            <button id="open-polls-button" class="ui basic black button" data-tooltip="Create and queue a new poll">{{ __("Queue Poll") }}</button>
         </div>
     </div>
     <div id="poll-queue-container" class="sixteen wide column">
-        <table class="ui table">
+        <table class="ui striped table">
             <thead>
                 <tr>
                     <th>{{ __("Poll") }}</th>

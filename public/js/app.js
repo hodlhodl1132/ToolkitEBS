@@ -5154,10 +5154,10 @@ window.InfoToast = function (message) {
     close: true,
     gravity: "top",
     // `top` or `bottom`
-    position: 'right',
+    position: 'center',
     // `left`, `center` or `right`
     style: {
-      background: "#00bcd4"
+      background: "Alpine.store('countdown').stop = true"
     },
     stopOnFocus: true,
     // Prevents dismissing of toast on hover
@@ -5173,10 +5173,10 @@ window.AlertToast = function (message) {
     close: true,
     gravity: "top",
     // `top` or `bottom`
-    position: 'right',
+    position: 'center',
     // `left`, `center` or `right`
     style: {
-      background: "#ff9800"
+      background: "#FE9A76"
     },
     stopOnFocus: true,
     // Prevents dismissing of toast on hover

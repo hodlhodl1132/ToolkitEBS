@@ -19,11 +19,14 @@ $(document).ready(() => {
     }
 
     function updatePollQueue(pollQueue) {
-        console.log(pollQueue)
-        if (pollQueue.length === 0)
-            return
-
         $('#poll-queue-container tbody').html('')
+
+        if (pollQueue.length === 0) {
+            $('#poll-queue-container').css('display', 'none')
+            return
+        }
+
+        $('#poll-queue-container').css('display', 'block')
         
         pollQueue.forEach(element => {
             let pollOptions = element.options.map(option => {

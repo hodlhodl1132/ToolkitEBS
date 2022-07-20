@@ -54,9 +54,9 @@ window.InfoToast = (message) => {
                 duration: 3000,
                 close: true,
                 gravity: "top", // `top` or `bottom`
-                position: 'right', // `left`, `center` or `right`
+                position: 'center', // `left`, `center` or `right`
                 style: {
-                        background: "#00bcd4"
+                        background: "Alpine.store('countdown').stop = true"
                 },
                 stopOnFocus: true, // Prevents dismissing of toast on hover
                 onClick: function () {
@@ -71,9 +71,9 @@ window.AlertToast = (message) => {
                 duration: 3000,
                 close: true,
                 gravity: "top", // `top` or `bottom`
-                position: 'right', // `left`, `center` or `right`
+                position: 'center', // `left`, `center` or `right`
                 style: {
-                        background: "#ff9800"
+                        background: "#FE9A76"
                 },
                 stopOnFocus: true, // Prevents dismissing of toast on hover
                 onClick: function () {

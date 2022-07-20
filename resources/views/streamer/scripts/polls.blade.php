@@ -23,6 +23,26 @@
             },
         });
 
+        Alpine.store('countdown', {
+            label: "0:00",
+            start(end_time) {
+                let secondsLeft = end_time - Date.now() / 1000
+                if (secondsLeft <= 0) {
+                    this.label = "0:00"
+                    $('.countdown').addClass('red')
+                    $('.countdown').transition('flash')
+                } else {
+                    this.label = secondsToTime(secondsLeft)
+                    setTimeout(this.start.bind(this, end_time), 1000)
+                }
+            }
+        })
+
+        Alpine.effect(() => {
+            const activePoll = Alpine.store('active_poll').poll
+            updateActivePoll()
+        })
+
         $('#open-polls-button').on('click', function() {
             if (!Alpine.store('broadcaster_live').live)
             {
@@ -154,16 +174,6 @@
             })
         })
 
-        Alpine.store('active_poll', {
-            poll: null,
-            store(poll) {
-                this.poll = poll
-            },
-            remove() {
-                this.poll = null
-            }
-        })
-
         // Get active poll
         getActivePoll()
 
@@ -177,7 +187,7 @@
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
                 success: function (response) {
-                    updateActivePoll(response)
+                    Alpine.store('active_poll').store(response)
                 }
             })
         }
@@ -187,23 +197,26 @@
             getActivePoll()
         })
 
-        function updateActivePoll(response) {
+        function updateActivePoll() {
             $('#active-poll-container').empty()
-            if (response !== undefined) {
-                Alpine.store('active_poll').store(response)
+            if (Alpine.store('active_poll').poll !== undefined && Alpine.store('active_poll').poll !== null) {
                 createActivePollElement()
             } else {
                 // No active poll
                 Alpine.store('active_poll').remove()
-                let no_active_poll_message = 
-                '<h4 class="ui header red">' + '{{ __("No Active Poll") }}' + '</h4>'
-                $('#active-poll-container').append(no_active_poll_message)
+                let card =
+                    '<div class="ui card">' +
+                        '<div class="content">' +
+                            '<div class="header red">' + '{{ __("No Active Poll") }}' + '</div>' +
+                            '<div class="description">' + '{{ __("No poll is currently active.") }}' + '</div>' +
+                        '</div>' +
+                    '</div>'
+                $('#active-poll-container').append(card)
             }
         }
 
         function createActivePollElement() {
             let active_poll = Alpine.store('active_poll').poll
-            console.log(active_poll)
             if (active_poll !== null) {
                 let options_html = ''
                 active_poll.options.forEach(function(item) {
@@ -216,39 +229,37 @@
                 let countdown_statistic = 
                     '<div class="ui statistic countdown">' +
                         '<div class="value">' +
-                            '<span x-text="$store.countdown.label" x-init="$store.countdown.start()"></span>' +
+                            `<span x-text="$store.countdown.label" x-init="$store.countdown.start(${active_poll.end_time})"></span>` +
                         '</div>' +
                         '<div class="label">' +
                             '{{ __("Time Left") }}' +
                         '</div>' +
                     '</div>'
 
-                let active_poll_html = 
-                '<h4 class="ui header">' + active_poll.title + '</h4>' +
-                '<div class="ui list bulleted">' +
-                    options_html +
-                '</div>' +
-                countdown_statistic
+                let header = 
+                    '<div class="content">' +
+                        '<div class="header">' +
+                            active_poll.title +
+                        '</div>' +
+                    '</div>'
+                
+                let content = 
+                        '<div class="content">' +
+                            '<div class="ui list">' +
+                                options_html +
+                                countdown_statistic
+                            '</div>' +
+                        '</div>'
 
-                $('#active-poll-container').append(active_poll_html)
+                let active_poll_html = 
+                header +
+                content
+
+                let card = '<div class="card">' + active_poll_html + '</div>'
+
+                $('#active-poll-container').append(card)
             }
         }
-
-        Alpine.store('countdown', {
-            label: "",
-            start() {
-                const active_poll = Alpine.store('active_poll').poll
-                let secondsLeft = active_poll.end_time - Date.now() / 1000
-                if (secondsLeft <= 0) {
-                    this.label = "0:00"
-                    $('.countdown').addClass('red')
-                    $('.countdown').transition('flash')
-                } else {
-                    this.label = secondsToTime(secondsLeft)
-                    setTimeout(this.start.bind(this), 1000)
-                }
-            }
-        })
 
         function secondsToTime(secs) {
             let hours = Math.floor(secs / (60 * 60))

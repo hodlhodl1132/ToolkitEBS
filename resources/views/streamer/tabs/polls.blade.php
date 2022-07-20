@@ -1,19 +1,7 @@
 <h2 class="ui header">{{ __("Polls Dashboard") }}</h2>
 
-<div class="ui grid stackable padded">
-    <div class="thirteen wide column">
-    </div>
-    <div class="three wide column right floated">
-        <div class="ui buttons">
-            <button id="open-polls-button" class="ui basic black button" data-tooltip="Create and queue a new poll">{{ __("Queue Poll") }}</button>
-            <button class="ui icon basic button blue refresh-active-poll" data-tooltip="Check for active polls">
-                <i class="refresh icon"></i>
-            </button>
-        </div>
-    </div>
+<div class="ui cards" id="active-poll-container">
 
-    <div id="active-poll-container" class="six wide column">
-    </div>
 </div>
 
 @include('streamer.components.poll-queue')

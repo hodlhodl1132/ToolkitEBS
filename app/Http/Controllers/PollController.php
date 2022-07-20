@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\PollCreated;
+use App\Events\PollDeleted;
 use App\Library\Services\TwitchApi;
 use App\Models\Poll;
 use App\Models\Vote;
@@ -65,6 +67,8 @@ class PollController extends Controller
                 ]);
             }
 
+            PollCreated::dispatch($poll);
+
             Cache::forget('polls.'.$user->provider_id);
             Cache::put('polls.'.$user->provider_id, $poll, 120);
 
@@ -112,6 +116,8 @@ class PollController extends Controller
         if ($poll == null) {
             return response('', 205);
         }
+
+        PollDeleted::dispatch($poll->id, $poll->provider_id);
 
         $poll->delete();
         Cache::forget('polls.' . $user->provider_id);

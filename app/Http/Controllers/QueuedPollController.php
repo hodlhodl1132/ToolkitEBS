@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Events\QueuedPollCreated;
+use App\Events\QueuedPollDeleted;
 use App\Models\QueuedPoll;
 use Auth;
 use Exception;
@@ -145,7 +146,13 @@ class QueuedPollController extends Controller
                 ], 403);
             }
 
+            QueuedPollDeleted::dispatch($queuedPoll->id, $queuedPoll->provider_id);
+
             $queuedPoll->delete();
+
+            return response()->json([
+                'success' => 'Poll deleted successfully.',
+            ], 200);
         } catch (Exception $e) {
             Log::error($e->getMessage());
             return response()->json([
