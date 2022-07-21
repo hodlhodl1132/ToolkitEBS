@@ -178,6 +178,7 @@
                     <div class="eight wide column">
                         <h3 class="ui header">Event Polls</h3>
                         <p>Viewers can vote on the next Event! A huge list of supply drops, raids, funny situations, and more! With more events being added all the time.</p>
+                        <p>Polls can be manually or automatically created. The more polls you create, the more interaction your viewers will have.</p>
                     </div>
                     <div class="six wide right floated column">
                         <img src="{{ asset('images/polls_preview.jpg') }}">
