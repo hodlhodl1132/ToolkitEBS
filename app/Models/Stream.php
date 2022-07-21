@@ -54,5 +54,7 @@ class Stream extends Model
             }
             $activePoll->delete();
         }
+
+        $this->delete();
     }
 }
