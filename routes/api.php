@@ -27,7 +27,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware('twitchjwt')->post('/tokens/create', [PersonalWebTokenController::class, 'requestTokenFromTwitchJWT']);
 
-Route::middleware('pusherjwt')->prefix('pusher')->group(function() {
+Route::middleware(['pusherjwt', 'throttle:pusher'])->prefix('pusher')->group(function() {
     Route::post('channel-existence', [ChannelExistenceController::class, 'update']);
     Route::post('channel-presence', [ChannelPresenceController::class, 'update']);
 });
