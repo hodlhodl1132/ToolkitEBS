@@ -94,7 +94,7 @@
             }
         })
 
-        Echo.private(`dashboard.${providerId}`)
+        Echo.join(`dashboard.${providerId}`)
             .listen('PollCreated', (e) => {
                 window.InfoToast('A new poll is active')
                 Alpine.store('active_poll').store(e)

@@ -1,17 +1,17 @@
-<?php
+<?php 
 
 namespace App\Http\Controllers\Pusher;
 
 use App\Http\Controllers\Controller;
+use App\Models\Presence;
 use App\Rules\PusherChannel;
-use App\Models\Stream;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 use Illuminate\Validation\ValidationException;
+use Log;
+use Validator;
 
-class ChannelExistenceController extends Controller
+class ChannelPresenceController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -31,7 +31,7 @@ class ChannelExistenceController extends Controller
                 ],
                 'events.*.name' => [
                     'required',
-                    Rule::in(['channel_vacated', 'channel_occupied'])
+                    Rule::in(['member_added', 'member_removed'])
                 ]
             ]);
             $validator->validate();
@@ -53,18 +53,20 @@ class ChannelExistenceController extends Controller
     public function parseEvents(array $events)
     {
         foreach ($events as $index => $event) {
+            
             $channel_name = $event['channel'];
-            if (str_contains($channel_name, 'gameclient')) {
+            if (str_contains($channel_name, 'dashboard')) {
                 $channel_id = substr($event['channel'], 19);
-                $stream = Stream::where('channel_name', $channel_name)->first();
-                if ($stream == null && $event['name'] == 'channel_occupied') {
-
-                    $stream = new Stream();
-                    $stream->channel_name = $channel_name;
-                    $stream->channel_id = $channel_id;
-                    $stream->save();
-                } else if ($stream != null && $event['name'] == 'channel_vacated') {
-                    $stream->pruneStream();
+                $presence = Presence::where('provider_id', $channel_id)
+                    ->where('user_id', $event['user_id'])
+                    ->first();
+                if ($presence == null && $event['name'] == 'member_added') {
+                    $presence = new Presence();
+                    $presence->provider_id = $channel_id;
+                    $presence->user_id = $event['user_id'];
+                    $presence->save();
+                } else if ($presence != null && $event['name'] == 'member_removed') {
+                    $presence->delete();
                 }
             }
         }

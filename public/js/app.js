@@ -5124,7 +5124,22 @@ window.Echo = new laravel_echo__WEBPACK_IMPORTED_MODULE_2__["default"]({
   broadcaster: 'pusher',
   key: "290b2ad8d139f7d58165",
   cluster: "us3",
-  forceTls: true
+  forceTls: true,
+  authorizer: function authorizer(channel, options) {
+    return {
+      authorize: function authorize(socketId, callback) {
+        axios__WEBPACK_IMPORTED_MODULE_0___default().post('/broadcasting/auth', {
+          socket_id: socketId,
+          channel_name: channel.name
+        }).then(function (response) {
+          callback(false, response.data);
+        })["catch"](function (error) {
+          callback(true, error);
+          window.ErrorToast("We have detected a duplicate connection. Please refresh the page and try again.");
+        });
+      }
+    };
+  }
 });
 $('select.dropdown').dropdown();
 

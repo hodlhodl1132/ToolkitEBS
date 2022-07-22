@@ -50,7 +50,7 @@ class ViewerVoted implements ShouldBroadcast
     {
         return [
             new PrivateChannel('gameclient.' . $this->providerId),
-            new PrivateChannel('dashboard.' . $this->providerId)
+            new PresenceChannel('dashboard.' . $this->providerId)
         ];
     }
     

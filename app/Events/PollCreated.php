@@ -40,7 +40,7 @@ class PollCreated implements ShouldBroadcast
     public function broadcastOn()
     {
         return [
-            new PrivateChannel('dashboard.' . $this->poll->provider_id),
+            new PresenceChannel('dashboard.' . $this->poll->provider_id),
         ];
     }
 

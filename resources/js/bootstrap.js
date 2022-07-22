@@ -25,7 +25,24 @@ window.Echo = new Echo({
         broadcaster: 'pusher',
         key: process.env.MIX_PUSHER_APP_KEY,
         cluster: process.env.MIX_PUSHER_APP_CLUSTER,
-        forceTls: true
+        forceTls: true,
+        authorizer: (channel, options) => {
+                return {
+                authorize: (socketId, callback) => {
+                        axios.post('/broadcasting/auth', {
+                        socket_id: socketId,
+                        channel_name: channel.name
+                        })
+                        .then(response => {
+                                callback(false, response.data);
+                        })
+                        .catch(error => {
+                                callback(true, error);
+                                window.ErrorToast("We have detected a duplicate connection. Please refresh the page and try again.");
+                        });
+                }
+                };
+        },
 })
 
 $('select.dropdown')

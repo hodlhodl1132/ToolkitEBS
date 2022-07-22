@@ -6,6 +6,7 @@ use App\Http\Controllers\PersonalWebTokenController;
 use App\Http\Controllers\PollController;
 use App\Http\Controllers\PollSettingsController;
 use App\Http\Controllers\Pusher\ChannelExistenceController;
+use App\Http\Controllers\Pusher\ChannelPresenceController;
 use App\Http\Controllers\Pusher\ClientEventsController;
 use App\Http\Controllers\QueuedPollController;
 use App\Http\Controllers\StreamController;
@@ -28,7 +29,7 @@ Route::middleware('twitchjwt')->post('/tokens/create', [PersonalWebTokenControll
 
 Route::middleware('pusherjwt')->prefix('pusher')->group(function() {
     Route::post('channel-existence', [ChannelExistenceController::class, 'update']);
-    Route::post('client-events', [ClientEventsController::class, 'update']);
+    Route::post('channel-presence', [ChannelPresenceController::class, 'update']);
 });
 
 Route::middleware('twitchjwt')

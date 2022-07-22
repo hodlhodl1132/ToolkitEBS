@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Presence;
 use Illuminate\Support\Facades\Broadcast;
 use Illuminate\Support\Facades\Log;
 
@@ -19,9 +20,15 @@ Broadcast::channel('gameclient.{id}', function($user, $id) {
 });
 
 Broadcast::channel('dashboard.{id}', function($user, $id) {
-    if ($user->provider_id == $id) {
-        return true;
+    if ($user->provider_id == $id || $user->hasPermissionTo('settings.edit.' . $id)) {
+        $presence = Presence::where('provider_id', $id)
+            ->where('user_id', $user->id)
+            ->first();
+        if ($presence !== null) {
+            return false;
+        }
+        return ['name' => $user->name];
     }
-
-    return $user->hasPermissionTo('settings.edit.'.$id);
+    
+    return false;
 });

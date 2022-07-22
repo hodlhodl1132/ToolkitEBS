@@ -9,6 +9,7 @@ use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
+use Psy\VarDumper\Presenter;
 
 class PollDeleted implements ShouldBroadcast
 {
@@ -45,7 +46,7 @@ class PollDeleted implements ShouldBroadcast
     public function broadcastOn()
     {
         return [
-            new PrivateChannel('dashboard.' . $this->providerId),
+            new PresenceChannel('dashboard.' . $this->providerId),
         ];
     }
 }
