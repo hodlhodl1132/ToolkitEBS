@@ -18,4 +18,6 @@ class Presence extends Model
         'provider_id',
         'user_id'
     ];
+
+    public $timestamps = false;
 }

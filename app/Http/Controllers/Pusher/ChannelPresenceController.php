@@ -26,7 +26,7 @@ class ChannelPresenceController extends Controller
                 'events.*.channel' => [
                     'required_with:events.*.name',
                     'string', 
-                    'starts_with:private-',
+                    'starts_with:presence-',
                     new PusherChannel
                 ],
                 'events.*.name' => [
@@ -53,7 +53,6 @@ class ChannelPresenceController extends Controller
     public function parseEvents(array $events)
     {
         foreach ($events as $index => $event) {
-            
             $channel_name = $event['channel'];
             if (str_contains($channel_name, 'dashboard')) {
                 $channel_id = substr($event['channel'], 19);
