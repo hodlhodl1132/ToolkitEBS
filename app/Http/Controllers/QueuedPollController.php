@@ -37,7 +37,7 @@ class QueuedPollController extends Controller
      */
     public function store(HttpRequest $request)
     {
-        try {
+        try {            
             $validated = $request->validate([
                 'title' => 'max:100|string',
                 'provider_id' => 'required|integer',
@@ -54,6 +54,11 @@ class QueuedPollController extends Controller
 
             if (count($validated['options']) > 10) {
                 throw new Exception('Too many options');
+            }
+
+            $queuedPolls = QueuedPoll::where('provider_id', $validated['provider_id'])->get();
+            if (count($queuedPolls) >= 30) {
+                throw new Exception('You cannot queue more than 30 polls');
             }
 
             $queuedPoll = new QueuedPoll();
