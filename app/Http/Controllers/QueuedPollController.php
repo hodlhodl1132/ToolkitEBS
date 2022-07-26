@@ -48,7 +48,7 @@ class QueuedPollController extends Controller
             ]);
 
             $user = $request->user();
-            if (!$user->hasPermissionTo('settings.edit.'.$validated['provider_id'])) {
+            if ($user->id !== $validated['provider_id'] & !$user->hasPermissionTo('settings.edit.'.$validated['provider_id'])) {
                 throw new AccessDeniedHttpException('You do not have permission to create polls for this stream.');
             }
 
