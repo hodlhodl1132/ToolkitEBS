@@ -106,7 +106,7 @@ class QueuedPollController extends Controller
                 'validation_error' => 'nullable|string|max:255',
             ]);
 
-            if ($request->user()->id !== $queuedPoll->streamUser()->first()->id) {
+            if ($request->user()->provider_id !== $queuedPoll->provider_id) {
                 throw new AccessDeniedHttpException('You do not have permission to edit this poll.');
             }
 
