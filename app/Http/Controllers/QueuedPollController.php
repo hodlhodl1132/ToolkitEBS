@@ -22,7 +22,7 @@ class QueuedPollController extends Controller
     public function index(string $providerId)
     {
         $user = Auth::user();
-        if (!$user->hasPermissionTo('settings.edit.'.$providerId)) {
+        if ($user->provider_id !== $providerId & !$user->hasPermissionTo('settings.edit.'.$providerId)) {
             throw new AccessDeniedHttpException();
         }
 
