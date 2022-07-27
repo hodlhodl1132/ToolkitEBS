@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Events\QueuedPollCreated;
 use App\Events\QueuedPollDeleted;
+use App\Events\QueuedPollValidated;
 use App\Models\QueuedPoll;
 use Auth;
 use Exception;
@@ -113,6 +114,8 @@ class QueuedPollController extends Controller
             $queuedPoll->validated = $validated['validated'];
             $queuedPoll->validation_error = $validated['validation_error'];
             $queuedPoll->save();
+
+            QueuedPollValidated::dispatch($queuedPoll);
 
             return response()->json([
                 'success' => 'Poll validated successfully.',
