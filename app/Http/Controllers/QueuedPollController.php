@@ -22,7 +22,7 @@ class QueuedPollController extends Controller
     public function index(string $providerId)
     {
         $user = Auth::user();
-        if ($user->provider_id !== $providerId & !$user->hasPermissionTo('settings.edit.'.$providerId)) {
+        if ($user->provider_id !== $providerId && !$user->hasPermissionTo('settings.edit.'.$providerId)) {
             throw new AccessDeniedHttpException();
         }
 
@@ -48,7 +48,7 @@ class QueuedPollController extends Controller
             ]);
 
             $user = $request->user();
-            if ($user->provider_id !== $validated['provider_id'] & !$user->hasPermissionTo('settings.edit.'.$validated['provider_id'])) {
+            if ($user->provider_id !== $validated['provider_id'] && !$user->hasPermissionTo('settings.edit.'.$validated['provider_id'])) {
                 throw new AccessDeniedHttpException('You do not have permission to create polls for this stream.');
             }
 
@@ -145,7 +145,7 @@ class QueuedPollController extends Controller
     public function destroy(HttpRequest $request, QueuedPoll $queuedPoll) {
         try {
             $user = $request->user();
-            if (!$user->hasPermissionTo('settings.edit.' . $queuedPoll->provider_id)) {
+            if ($user->provider_id !== $queuedPoll->provider_id && !$user->hasPermissionTo('settings.edit.' . $queuedPoll->provider_id)) {
                 return response()->json([
                     'error' => 'You do not have permission to delete this poll.',
                 ], 403);
