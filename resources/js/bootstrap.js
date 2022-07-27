@@ -38,7 +38,7 @@ window.Echo = new Echo({
                         })
                         .catch(error => {
                                 callback(true, error);
-                                window.ErrorToast("We have detected a duplicate connection. Please refresh the page and try again.");
+                                window.ErrorToast("You may only have one connection at a time. Please close any existing connections and wait 60 seconds to try again.");
                         });
                 }
                 };
