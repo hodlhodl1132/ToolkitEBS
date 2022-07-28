@@ -5122,7 +5122,7 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 window.Pusher = (pusher_js__WEBPACK_IMPORTED_MODULE_3___default());
 window.Echo = new laravel_echo__WEBPACK_IMPORTED_MODULE_2__["default"]({
   broadcaster: 'pusher',
-  key: "290b2ad8d139f7d58165",
+  key: "81ab5b007933d2c8297e",
   cluster: "us3",
   forceTls: true,
   authorizer: function authorizer(channel, options) {
@@ -5135,7 +5135,7 @@ window.Echo = new laravel_echo__WEBPACK_IMPORTED_MODULE_2__["default"]({
           callback(false, response.data);
         })["catch"](function (error) {
           callback(true, error);
-          window.ErrorToast("We have detected a duplicate connection. Please refresh the page and try again.");
+          window.ErrorToast("You may only have one connection at a time. Please close any existing connections and wait 60 seconds to try again.");
         });
       }
     };

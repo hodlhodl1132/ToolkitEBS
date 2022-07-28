@@ -111,6 +111,9 @@
                     Alpine.store('poll_queue').push(e)
                 }
             })
+            .listen('QueuedPollValidated', (e) => {
+                console.log(e)
+            })
             .listen('QueuedPollDeleted', (e) => {
                 window.AlertToast('A Poll has been deleted')
                 if (e.id !== undefined) {
