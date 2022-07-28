@@ -14,7 +14,7 @@ class BroadcastServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        Broadcast::routes(['prefix' => 'api', 'middleware' => ['auth:sanctum', 'throttle:socketAuth']]);
+        Broadcast::routes(['prefix' => 'api', 'middleware' => ['auth:sanctum', 'throttle:gameclientSocket']]);
 
         require base_path('routes/channels.php');
     }

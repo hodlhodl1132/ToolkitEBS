@@ -39,7 +39,7 @@ Route::get('/login', function() {
     return view('auth.login');
 })->name('login');
 
-Broadcast::routes(['middleware' => 'throttle:socketAuth']);
+Broadcast::routes(['middleware' => 'throttle:dashboardSocket']);
 
 Route::middleware('auth')
     ->prefix('streamer')
