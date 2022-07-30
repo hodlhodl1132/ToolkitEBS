@@ -14,6 +14,7 @@
         <link rel="stylesheet" href="{{ asset('css/semantic.min.css') }}">
         <link rel="stylesheet" href="{{ asset('css/sweetalert2.min.css') }}">
         <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+        <link rel="stylesheet" href="{{ asset('css/toastify.css') }}"> 
 
         <!-- Scripts -->
         <script

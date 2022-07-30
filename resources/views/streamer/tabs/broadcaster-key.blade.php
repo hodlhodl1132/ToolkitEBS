@@ -18,7 +18,7 @@
         </p>
     </div>
 </div>
-<link rel="stylesheet" href="{{ asset('css/toastify.css') }}"> 
+
 <script>
     function copyToClipboard() {
         var val = $('input[name="broadcaster-key"]').val();
