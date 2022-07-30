@@ -160,7 +160,7 @@
                 type: 'POST',
                 url: '/streamer/polls/queue/store',
                 data: {
-                    'title': $('input[name="title"]').val(),
+                    'title': $('#queued_poll_title').val(),
                     'provider_id': $('input[name="dashboard_provider_id"]').val(),
                     'options': options,
                 },

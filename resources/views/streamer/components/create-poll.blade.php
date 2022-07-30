@@ -6,7 +6,7 @@
         <div class="two fields">
             <div class="field">
                 <label>{{ __('Title') }}</label>
-                <input type="text" placeholder="What event should happen next?">
+                <input type="text" id="queued_poll_title" name="title" placeholder="What event should happen next?">
             </div>
 
         </div>
