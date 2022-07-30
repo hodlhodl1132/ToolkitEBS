@@ -26,7 +26,8 @@ class PollSettingsController extends Controller
             $validator = Validator::make($request->all(), [
                 'provider_id' => 'required|integer|exists:users,provider_id',
                 'duration' => 'required|integer|min:1|max:5',
-                'interval' => 'required|integer|min:1|max:30'
+                'interval' => 'required|integer|min:1|max:30',
+                'automated_polls' => 'required|boolean',
             ]);
 
             $validator->validate();
@@ -58,15 +59,13 @@ class PollSettingsController extends Controller
 
             $pollSettings->duration = $validated['duration'];
             $pollSettings->interval = $validated['interval'];
+            $pollSettings->automated_polls = $validated['automated_polls'];
             $pollSettings->save();
 
             PollSettingsUpdate::dispatch($providerId, $pollSettings);
 
             return response()
-                ->json([
-                    'success' => true,
-                    'message' => 'Settings updated successfully'
-                ]);
+                ->json($pollSettings, 201);
 
         } catch (ValidationException $e) {
             Log::error($e->getMessage());

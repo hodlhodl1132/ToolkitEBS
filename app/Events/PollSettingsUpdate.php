@@ -63,7 +63,8 @@ class PollSettingsUpdate implements ShouldBroadcast
         return [
             'provider_id' => $this->providerId,
             'duration' => $this->pollSettings->duration,
-            'interval' => $this->pollSettings->interval
+            'interval' => $this->pollSettings->interval,
+            'automated_polls' => $this->pollSettings->automated_polls,
         ];
     }
 }

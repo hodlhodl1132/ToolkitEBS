@@ -18,6 +18,18 @@
                 <div class="field">
                     <label>
                         <h5 class="ui header">
+                            {{ __("Enable Automated Polls") }}
+                        </h5>
+                    </label>
+                    <div class="ui checkbox">
+                        <input type="hidden" name="automated_polls" value="0">
+                        <input type="checkbox" name="automated_polls" id="automated_polls" value="1">
+                        <label for="automated">{{ __("Enabled") }}</label>
+                    </div>
+                </div>
+                <div class="field">
+                    <label>
+                        <h5 class="ui header">
                             {{ __("Poll Duration:") }}
                             <span id="poll_duration_label"></span> Minutes
                         </h5>

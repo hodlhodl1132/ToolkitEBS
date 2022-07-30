@@ -17,7 +17,8 @@ class PollSettings extends Model
     protected $fillable = [
         'provider_id',
         'duration',
-        'interval'
+        'interval',
+        'automated_polls',
     ];
 
     /**
@@ -28,7 +29,8 @@ class PollSettings extends Model
     protected $attributes = [
         'provider_id' => 'default',
         'duration' => 3,
-        'interval' => 10
+        'interval' => 10,
+        'automated_polls' => false,
     ];
 
     /**
@@ -41,7 +43,8 @@ class PollSettings extends Model
         return [
             'provider_id' => $this->provider_id,
             'duration' => $this->duration,
-            'interval' => $this->interval
+            'interval' => $this->interval,
+            'automated_polls' => $this->automated_polls,
         ];
     }
 }

@@ -28,6 +28,16 @@ $(document).ready(() => {
         pollDurationSlider.val(pollSettings.duration)
         pollIntervalSlider.val(pollSettings.interval)
         InitializeSliders()
+        if (pollSettings.automated_polls == "1")
+        {
+            $('#automated_polls').prop('checked', true)
+            console.log('true')
+        }
+        else
+        {
+            $('#automated_polls').prop('checked', false)
+            console.log('false')
+        }
     }
 
     $('#poll-settings-form').submit(function(e) {
