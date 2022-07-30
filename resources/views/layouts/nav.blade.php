@@ -3,6 +3,7 @@
         <a href="{{ route('home') }}" class="header item">
             ToolkitExt
         </a>
+        <a href="{{ route('live') }}" class="item">Live</a>
         <a href="{{ route('documentation.index') }}" class="item">Documentation</a>
         <a href="{{ route('documentation.show', ['slug' => 'get_started', 'category_name' => 'setup']) }}" class="item">Get Started</a>
 

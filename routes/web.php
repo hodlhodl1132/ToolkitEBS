@@ -35,6 +35,11 @@ Route::get('/', function () {
     return view('welcome', compact('streams'));
 })->name('home');
 
+Route::get('/live', function() {
+    $streams = Stream::all();
+    return view('live-streams', compact('streams'));
+})->name('live');
+
 Route::get('/login', function() {
     return view('auth.login');
 })->name('login');

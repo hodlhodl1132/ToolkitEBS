@@ -136,6 +136,7 @@
                     <i class="sidebar icon"></i>
                     </a>
                     <a class="active item" href="{{ route('home') }}">Home</a>
+                    <a class="item" href="{{ route('live') }}">Live</a>
                     <a class="item" href="{{ route('documentation.index') }}">Documentation</a>
                     <a class="item" href="{{ route('documentation.show', ['slug' => 'get_started', 'category_name' => 'setup']) }}">Get Started</a>
                     <div class="right item">
