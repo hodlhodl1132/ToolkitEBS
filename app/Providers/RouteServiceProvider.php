@@ -52,7 +52,7 @@ class RouteServiceProvider extends ServiceProvider
             return Limit::perMinute(10)->by($request->user()?->id ?: $request->ip());
         });
         RateLimiter::for('dashboardSocket', function (Request $request) {
-            return Limit::perMinute(1)->by($request->ip());
+            return Limit::perMinute(3)->by($request->ip());
         });
         RateLimiter::for('gameclientSocket', function (Request $request) {
             return Limit::perMinute(5)->by($request->ip());
