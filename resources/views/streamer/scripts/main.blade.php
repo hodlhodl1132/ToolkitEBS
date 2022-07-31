@@ -24,18 +24,10 @@
             set(value) {
                 this.live = value
             },
-            start() {
-                $('.live-status').attr('x-text', '$store.broadcaster_live.get()')
-            }
         })
 
-        // query live streams every minute
+        // query live streams on page load
         getLiveStreams()
-        Alpine.store('broadcaster_live').start()
-
-        setInterval(() => {
-            getLiveStreams()
-        }, 60 * 1000)
 
         // query streams
         function getLiveStreams() {
@@ -49,13 +41,17 @@
                     provider_id: providerId
                 },
                 success: function (response) {
-                    updateDashboard(response)
+                    if (response.status !== undefined) {
+                        updateDashboard(true)
+                    } else {
+                        updateDashboard(false)
+                    }
                 }
             })
         }
 
-        function updateDashboard(response) {
-            if (response.status !== undefined) 
+        function updateDashboard(is_live) {
+            if (is_live) 
                 setOffline()
             else 
                 setOnline()
@@ -95,6 +91,11 @@
         })
 
         Echo.join(`dashboard.${providerId}`)
+            .listen('BroadcasterLiveUpdate', (e) => {
+                if (e.is_live !== undefined) {
+                    updateDashboard(e.is_live)
+                }
+            })
             .listen('PollCreated', (e) => {
                 window.InfoToast('A new poll is active')
                 Alpine.store('active_poll').store(e)
