@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Presence;
 use Illuminate\Support\Facades\Broadcast;
 use Illuminate\Support\Facades\Log;
 
@@ -14,8 +15,20 @@ use Illuminate\Support\Facades\Log;
 |
 */
 
-Broadcast::channel('private.{id}', function($user) {
-    Log::debug('trying to authorize');
-    Log::debug($user->id);
-    return ['id' => $user->provider_id, 'name' => $user->name];
+Broadcast::channel('gameclient.{id}', function($user, $id) {
+    return $user->provider_id == $id;
+});
+
+Broadcast::channel('dashboard.{id}', function($user, $id) {
+    if ($user->provider_id == $id || $user->hasPermissionTo('settings.edit.' . $id)) {
+        $presence = Presence::where('provider_id', $id)
+            ->where('user_id', $user->id)
+            ->first();
+        if ($presence !== null) {
+            return false;
+        }
+        return ['name' => $user->name];
+    }
+    
+    return false;
 });

@@ -1,4 +1,21 @@
 {
     "/js/app.js": "/js/app.js",
-    "/css/app.css": "/css/app.css"
+    "/css/app.css": "/css/app.css",
+    "/images/polls_preview.jpg": "/images/polls_preview.jpg",
+    "/js/tinymce/.npmignore": "/js/tinymce/.npmignore",
+    "/js/tinymce/CHANGELOG.md": "/js/tinymce/CHANGELOG.md",
+    "/js/tinymce/README.md": "/js/tinymce/README.md",
+    "/js/tinymce/bower.json": "/js/tinymce/bower.json",
+    "/js/tinymce/composer.json": "/js/tinymce/composer.json",
+    "/js/tinymce/license.txt": "/js/tinymce/license.txt",
+    "/js/tinymce/package.json": "/js/tinymce/package.json",
+    "/js/tinymce/tinymce.d.ts": "/js/tinymce/tinymce.d.ts",
+    "/js/tinymce/tinymce.js": "/js/tinymce/tinymce.js",
+    "/js/tinymce/tinymce.min.js": "/js/tinymce/tinymce.min.js",
+    "/css/semantic.min.css": "/css/semantic.min.css",
+    "/js/sweetalert2.min.js": "/js/sweetalert2.min.js",
+    "/css/sweetalert2.min.css": "/css/sweetalert2.min.css",
+    "/css/jquery-ui.min.css": "/css/jquery-ui.min.css",
+    "/js/jquery-ui.min.js": "/js/jquery-ui.min.js",
+    "/css/toastify.css": "/css/toastify.css"
 }

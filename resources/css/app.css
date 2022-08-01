@@ -1,3 +1,65 @@
-@import 'tailwindcss/base';
+/* @import 'tailwindcss/base';
 @import 'tailwindcss/components';
-@import 'tailwindcss/utilities';
+@import 'tailwindcss/utilities'; */
+
+/* @import 'semantic-ui-css'; */
+
+.ui.inverted.menu .item {
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+header.container {
+    margin-top: 5em;
+    margin-bottom: 1em;
+}
+.ui.breadcrumb {
+    margin-bottom: 20px;
+}
+main.ui.container {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+.permissions-container {
+    margin-top: 20px;
+}
+
+.ui.vertical.footer.segment {
+    padding: 5em 0em;
+    margin-top: 3em;
+}
+
+#page-container {
+    position: relative;
+}
+
+@media only screen and (min-width: 768px) {
+
+    #page-container {
+        min-height: 100vh;
+    }
+
+}
+
+@media only screen and (max-width: 767px) {
+
+    #page-container {
+        min-height: 50vh;
+    }
+
+}
+
+#live-button {
+    animation: livebutton 3s ease-in-out infinite;
+}
+
+@keyframes livebutton {
+    0% {
+        color: rgba(219, 40, 40, 1);
+    }
+    50% {
+        color: rgba(219, 40, 40, 0);
+    }
+    100% {
+        color: rgba(219, 40, 40, 1);
+    }
+}

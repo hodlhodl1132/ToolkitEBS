@@ -186,6 +186,10 @@ return [
          * Package Service Providers...
          */
 
+        \SocialiteProviders\Manager\ServiceProvider::class,
+        Spatie\Permission\PermissionServiceProvider::class,
+        Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
+
         /*
          * Application Service Providers...
          */
@@ -195,7 +199,8 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\HorizonServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
-        App\Providers\JWTFactoryProvider::class
+        App\Providers\JWTFactoryProvider::class,
+        App\Providers\GoogleStorageClientProvider::class,
     ],
 
     /*

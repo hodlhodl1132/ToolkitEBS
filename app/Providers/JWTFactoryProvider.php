@@ -33,7 +33,7 @@ class JWTFactoryProvider extends ServiceProvider
      */
     public function boot()
     {
-        $secret = base64_decode( env('TWITCH_CLIENT_SECRET') );
+        $secret = base64_decode( env('TWITCH_CLIENT_SECRET', 'secret') );
         $this->jwt = new JWT($secret, 'HS256');
     }
 

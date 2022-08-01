@@ -5,6 +5,9 @@ namespace App\Console;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 use App\Jobs\Heartbeat;
+use App\Library\Services\TwitchApi;
+use App\Models\Stream;
+use Illuminate\Support\Facades\Log;
 
 class Kernel extends ConsoleKernel
 {
@@ -16,8 +19,8 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        // $schedule->command('inspire')->hourly();
-        $schedule->job('sanctum:prune-expired --hours=24')->everyMinute();
+        $schedule->command('sanctum:prune-expired --hours=24')->everyFifteenMinutes();
+        $schedule->command('stream:refresh')->everyFiveMinutes();
     }
 
     /**

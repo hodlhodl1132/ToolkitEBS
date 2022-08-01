@@ -14,35 +14,25 @@ use Laravel\Sanctum\PersonalAccessToken;
 
 class PersonalWebTokenController extends Controller
 {
-
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
+    public function requestToken(Request $request)
     {
-        //
+        /**
+         * @var \App\Models\User $user
+         */
+        $user = Auth::user();
+        $user->tokens()->delete();
+        $token = $user->createToken('auth_token');
+
+        return ['token' => $token->plainTextToken . '.' . $user->provider_id];
     }
 
     /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function create(Request $request)
-    {
-
-    }
-
-    /**
-     * Display the specified resource.
+     * Create a person web token
      *
      * @param  string provider_id
      * @return \Illuminate\Http\Response
      */
-    public function show(Request $request)
+    public function requestTokenFromTwitchJWT(Request $request)
     {
         $secret = base64_decode(env('TWITCH_CLIENT_SECRET'));
         $jwt = new JWT($secret, 'HS256');
@@ -64,38 +54,14 @@ class PersonalWebTokenController extends Controller
             $user->save();
         }
 
-        Log::debug("User Found: " . ($user == null ? "false" : "true"));
+        $user->tokens()->delete();
 
         $personalAccessToken = $user->createToken('auth_token')->plainTextToken;
-        Log::debug("token created");
-        Log::debug($personalAccessToken);
 
         return response()
             ->json([
-                'token' => $personalAccessToken
+                'token' => $personalAccessToken,
+                'user_id' => $payload['user_id']
             ]);
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\PersonalAccessToken  $personalAccessToken
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, PersonalAccessToken $personalAccessToken)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\PersonalAccessToken  $personalAccessToken
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(PersonalAccessToken $personalAccessToken)
-    {
-        //
     }
 }

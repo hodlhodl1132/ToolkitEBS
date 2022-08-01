@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use App\Models\PersonalAccessToken;
+use Illuminate\Pagination\Paginator;
 use Laravel\Sanctum\Sanctum;
 
 class AppServiceProvider extends ServiceProvider
@@ -25,6 +26,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-
+        Paginator::defaultView('components.pagination');
     }
 }

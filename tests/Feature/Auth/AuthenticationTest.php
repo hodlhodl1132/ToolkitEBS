@@ -5,6 +5,9 @@ namespace Tests\Feature\Auth;
 use App\Models\User;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Mockery;
+use Socialite;
+use Str;
 use Tests\TestCase;
 
 class AuthenticationTest extends TestCase
@@ -20,26 +23,32 @@ class AuthenticationTest extends TestCase
 
     public function test_users_can_authenticate_using_the_login_screen()
     {
-        $user = User::factory()->create();
+        $abstractUser =  Mockery::mock(Laravel\Socialite\Two\User::class);
+        $abstractUser
+            ->shouldReceive('getId')
+            ->andReturn(Str::random(10))
+            ->shouldReceive('getName')
+            ->andReturn('John Doe')
+            ->shouldReceive('getEmail')
+            ->andReturn(Str::random(10).'@example.com')
+            ->shouldReceive('getToken')
+            ->andReturn(Str::random(10))
+            ->shouldReceive('getRefreshToken')
+            ->andReturn(Str::random(10))
+            ->shouldReceive('scopes')
+            ->andReturn(['moderation:read']);
 
-        $response = $this->post('/login', [
-            'email' => $user->email,
-            'password' => 'password',
-        ]);
+        Socialite::shouldReceive('driver')
+            ->with('twitch')
+            ->andReturn($abstractUser);
 
-        $this->assertAuthenticated();
-        $response->assertRedirect(RouteServiceProvider::HOME);
-    }
+        $redirectResponse = $this->get('/auth/twitch/oauth/redirect')
+            ->assertRedirectContains('id.twitch.tv/oauth2/authorize')
+            ->assertRedirectContains(env('TWITCH_CLIENT_ID'))
+            ->assertRedirectContains('moderation%3Aread');
 
-    public function test_users_can_not_authenticate_with_invalid_password()
-    {
-        $user = User::factory()->create();
+        $this->get($redirectResponse->headers->get('Location'))
+            ->assertRedirectContains('auth/twitch/oauth/authorized');
 
-        $this->post('/login', [
-            'email' => $user->email,
-            'password' => 'wrong-password',
-        ]);
-
-        $this->assertGuest();
     }
 }
