@@ -43,10 +43,20 @@ $(document).ready(() => {
                 second: 'numeric',
                 hour12: false
             }).format(date)
+
+            let display_validation_error = !element.validated && element.validation_error !== null
+            let validation_error_tooltip = null
+            let validation_label = `<div class="ui label red">Error</div>`
+            if (display_validation_error) {
+                validation_error_tooltip = `data-tooltip="${element.validation_error}"`
+            }
             
             $('#poll-queue-container tbody').append(`
                     <tr>
-                        <td>${element.title}</td>
+                        <td ${display_validation_error ? validation_error_tooltip : ""}>
+                            ${display_validation_error ? validation_label : ""}
+                            ${element.title}
+                        </td>
                         <td>${element.length} minute(s)</td>
                         <td>${pollOptions}</td>
                         <td>${dateString}</td>
