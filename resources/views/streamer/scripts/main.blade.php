@@ -112,7 +112,14 @@
                 }
             })
             .listen('QueuedPollValidated', (e) => {
-                console.log(e)
+                if (e.id !== undefined) {
+                    Alpine.store('poll_queue').queue = $.map(Alpine.store('poll_queue').queue, (poll) => {
+                        if (poll.id === e.id) {
+                            poll = e
+                        }
+                        return poll
+                    })
+                }
             })
             .listen('QueuedPollDeleted', (e) => {
                 window.AlertToast('A Poll has been deleted')
