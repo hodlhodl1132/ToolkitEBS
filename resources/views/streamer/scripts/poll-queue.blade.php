@@ -45,16 +45,17 @@ $(document).ready(() => {
             }).format(date)
 
             let display_validation_error = !element.validated && element.validation_error !== null
-            let validation_error_tooltip = null
-            let validation_label = `<div class="ui label red">Error</div>`
+            let validation_error_tooltip = ""
+            let validation_label = ""
             if (display_validation_error) {
+                validation_label = `<div class="ui label red">Error</div>`
                 validation_error_tooltip = `data-tooltip="${element.validation_error}"`
             }
             
             $('#poll-queue-container tbody').append(`
                     <tr>
-                        <td ${display_validation_error ? validation_error_tooltip : ""}>
-                            ${display_validation_error ? validation_label : ""}
+                        <td ${validation_error_tooltip}>
+                            ${validation_label}
                             ${element.title}
                         </td>
                         <td>${element.length} minute(s)</td>
