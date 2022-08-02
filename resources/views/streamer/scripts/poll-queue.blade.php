@@ -50,7 +50,8 @@ $(document).ready(() => {
             if (display_validation_error) {
                 validation_label = `<div class="ui label red">Error</div>`
                 if (element.validation_error !== null) {
-                    validation_error_tooltip = `data-tooltip="${element.validation_error.replace('"', '&quot;')}"`
+                    let val_error = element.validation_error.replace(/["']/g, "&quot;")
+                    validation_error_tooltip = `data-tooltip="${val_error}"`
                 }
             }
             
