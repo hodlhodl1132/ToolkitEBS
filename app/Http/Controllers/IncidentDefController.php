@@ -53,7 +53,7 @@ class IncidentDefController extends Controller
          /**
           * Prevent users from updating incident defs that are not part of their mod pack
           */
-        if (count($validated) > 250) {
+        if (count($validated) > 500) {
             return response()->json(['error' => 'Too many incident definitions'], 400);
         }
 
@@ -65,7 +65,7 @@ class IncidentDefController extends Controller
         /**
          * Prevent users from uploading more than 500 incident definitions
          */
-         if (count($validated) + count($currentIncidentDefs) > 500) {
+         if (count($validated) + count($currentIncidentDefs) > 1000) {
              return response()->json(['error' => 'Too many incident definitions'], 400);
          }
 
