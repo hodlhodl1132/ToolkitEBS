@@ -112,13 +112,8 @@
                 }
             })
             .listen('QueuedPollValidated', (e) => {
-                if (e.id !== undefined) {
-                    Alpine.store('poll_queue').queue = $.map(Alpine.store('poll_queue').queue, (poll) => {
-                        if (poll.id === e.id) {
-                            poll = e
-                        }
-                        return poll
-                    })
+                if (e.id !== undefined && e.validated === 0 && e.validation_error !== undefined) {
+                    window.ErrorToast(e.validation_error + ": " + e.title)
                 }
             })
             .listen('QueuedPollDeleted', (e) => {
