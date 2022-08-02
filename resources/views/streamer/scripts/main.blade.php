@@ -113,7 +113,7 @@
             })
             .listen('QueuedPollValidated', (e) => {
                 if (e.id !== undefined && e.validated === 0 && e.validation_error !== undefined) {
-                    window.ErrorToast(e.validation_error + ": " + e.title)
+                    window.ErrorToast(e.validation_error)
                 }
             })
             .listen('QueuedPollDeleted', (e) => {
