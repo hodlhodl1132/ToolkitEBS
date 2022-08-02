@@ -49,7 +49,7 @@ $(document).ready(() => {
             let validation_label = ""
             if (display_validation_error) {
                 validation_label = `<div class="ui label red">Error</div>`
-                validation_error_tooltip = `data-tooltip="${element.validation_error}"`
+                validation_error_tooltip = `data-tooltip="${element.validation_error.replace('"', '&quot;')}"`
             }
             
             $('#poll-queue-container tbody').append(`
