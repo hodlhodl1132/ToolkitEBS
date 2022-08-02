@@ -44,13 +44,13 @@ $(document).ready(() => {
                 hour12: false
             }).format(date)
 
-            let display_validation_error = !element.validated && element.validation_error !== null && element.validation_error !== ''
+            let display_validation_error = !element.validated && element.validation_error !== undefined && element.validation_error !== ''
             let validation_error_tooltip = ""
             let validation_label = ""
             console.log(display_validation_error, 'display_validation_error', element.validation_error, element.validated)
             if (display_validation_error) {
                 validation_label = `<div class="ui label red">Error</div>`
-                if (element.validation_error !== null && element.validation_error !== '') {
+                if (element.validation_error !== undefined && element.validation_error !== '') {
                     let val_error = element.validation_error.replace(/["']/g, "&quot;")
                     validation_error_tooltip = `data-tooltip="${val_error}"`
                 }
