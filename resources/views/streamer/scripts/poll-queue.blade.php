@@ -44,22 +44,33 @@ $(document).ready(() => {
                 hour12: false
             }).format(date)
 
-            let display_validation_error = !element.validated && element.validation_error !== undefined && element.validation_error !== ''
-            let validation_error_tooltip = ""
-            let validation_label = ""
-            console.log(display_validation_error, 'display_validation_error', element.validation_error, element.validated)
-            if (display_validation_error) {
-                validation_label = `<div class="ui label red">Error</div>`
-                if (element.validation_error !== undefined && element.validation_error !== '') {
-                    let val_error = element.validation_error.replace(/["']/g, "&quot;")
-                    validation_error_tooltip = `data-tooltip="${val_error}"`
-                }
+            let validation_success = element.validated && (element.validation_error === undefined || element.validation_error === null)
+            let validation_waiting = !element.validated && (element.validation_error === undefined || element.validation_error === null)
+            let validation_failed = !element.validated && element.validation_error !== undefined && element.validation_error !== null
+
+            let tooltip = ""
+            let label = ""
+            
+            if (validation_success) {
+                tooltip = "Queued"
+                label = `<div class="ui label blue">Queued</div>`
+            }
+
+            if (validation_waiting) {
+                tooltip = "Processing"
+                label = `<div class="ui label yellow">Processing</div>`
+            }
+
+            if (validation_failed) {
+                console.log(element.validation_error)
+                tooltip = element.validation_error.replace(/["']/g, "&quot;")
+                label = `<div class="ui label red">Error</div>`
             }
             
             $('#poll-queue-container tbody').append(`
                     <tr>
-                        <td ${validation_error_tooltip}>
-                            ${validation_label}
+                        <td data-tooltip="${tooltip}">
+                            ${label}
                             ${element.title}
                         </td>
                         <td>${element.length} minute(s)</td>
