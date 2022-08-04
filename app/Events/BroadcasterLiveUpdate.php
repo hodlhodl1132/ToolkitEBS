@@ -17,22 +17,22 @@ class BroadcasterLiveUpdate implements ShouldBroadcast
     /**
      * The provider id
      */
-    public $providerId;
+    public $provider_id;
 
     /**
      * Is the provider online?
      */
-    public $isOnline;
+    public $isLive;
 
     /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct(string $provider_id, bool $is_live)
+    public function __construct(string $provider_id, bool $isLive)
     {
         $this->provider_id = $provider_id;
-        $this->is_live = $is_live;
+        $this->isLive = $isLive;
     }
 
     /**
@@ -56,7 +56,7 @@ class BroadcasterLiveUpdate implements ShouldBroadcast
     {
         return [
             'provider_id' => $this->provider_id,
-            'is_live' => $this->is_live,
+            'is_live' => $this->isLive,
         ];
     }
 }

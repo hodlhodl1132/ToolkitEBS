@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Pusher;
 
+use App\Events\BroadcasterLiveUpdate;
 use App\Http\Controllers\Controller;
 use App\Rules\PusherChannel;
 use App\Models\Stream;
@@ -55,7 +56,7 @@ class ChannelExistenceController extends Controller
         foreach ($events as $index => $event) {
             $channel_name = $event['channel'];
             if (str_contains($channel_name, 'gameclient')) {
-                $channel_id = substr($event['channel'], 19);
+                $channel_id = substr($event['channel'], 20);
                 $stream = Stream::where('channel_name', $channel_name)->first();
                 if ($stream == null && $event['name'] == 'channel_occupied') {
 
@@ -63,8 +64,11 @@ class ChannelExistenceController extends Controller
                     $stream->channel_name = $channel_name;
                     $stream->channel_id = $channel_id;
                     $stream->save();
+
+                    BroadcasterLiveUpdate::dispatch($stream->channel_id, true);
                 } else if ($stream != null && $event['name'] == 'channel_vacated') {
                     $stream->pruneStream();
+                    BroadcasterLiveUpdate::dispatch($stream->channel_id, false);
                 }
             }
         }
