@@ -43,10 +43,36 @@ $(document).ready(() => {
                 second: 'numeric',
                 hour12: false
             }).format(date)
+
+            let validation_success = element.validated && (element.validation_error === undefined || element.validation_error === null)
+            let validation_waiting = !element.validated && (element.validation_error === undefined || element.validation_error === null)
+            let validation_failed = !element.validated && element.validation_error !== undefined && element.validation_error !== null
+
+            let tooltip = ""
+            let label = ""
+            
+            if (validation_success) {
+                tooltip = "Queued"
+                label = `<div class="ui label blue">Queued</div>`
+            }
+
+            if (validation_waiting) {
+                tooltip = "Processing"
+                label = `<div class="ui label yellow">Processing</div>`
+            }
+
+            if (validation_failed) {
+                console.log(element.validation_error)
+                tooltip = element.validation_error.replace(/["']/g, "&quot;")
+                label = `<div class="ui label red">Error</div>`
+            }
             
             $('#poll-queue-container tbody').append(`
                     <tr>
-                        <td>${element.title}</td>
+                        <td data-tooltip="${tooltip}">
+                            ${label}
+                            ${element.title}
+                        </td>
                         <td>${element.length} minute(s)</td>
                         <td>${pollOptions}</td>
                         <td>${dateString}</td>

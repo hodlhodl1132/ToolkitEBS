@@ -133,7 +133,7 @@ class QueuedPollController extends Controller
         } catch (Exception $e) {
             Log::error($e->getMessage());
             return response()->json([
-                'error' => 'There was an error validating the poll',
+                'error' => 'There was a critical error validating the poll',
             ], 500);
         }
     }
