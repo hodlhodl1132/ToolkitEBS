@@ -27,10 +27,19 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware('twitchjwt')->post('/tokens/create', [PersonalWebTokenController::class, 'requestTokenFromTwitchJWT']);
 
-Route::middleware(['pusherjwt', 'throttle:pusher'])->prefix('pusher')->group(function() {
+
+Route::middleware(['pusherjwt', 'throttle:pusher'])->prefix('pusher')->group(function () {
     Route::post('channel-existence', [ChannelExistenceController::class, 'update']);
     Route::post('channel-presence', [ChannelPresenceController::class, 'update']);
 });
+
+if (env('APP_ENV') === 'debug') {
+    Route::prefix('pusher')->group(function () {
+        Route::post('channel-existence', [ChannelExistenceController::class, 'update']);
+        Route::post('channel-presence', [ChannelPresenceController::class, 'update']);
+    });
+}
+
 
 Route::middleware('twitchjwt')
     ->prefix('viewer')

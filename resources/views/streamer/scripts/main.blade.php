@@ -24,18 +24,10 @@
             set(value) {
                 this.live = value
             },
-            start() {
-                $('.live-status').attr('x-text', '$store.broadcaster_live.get()')
-            }
         })
 
-        // query live streams every minute
+        // query live streams on page load
         getLiveStreams()
-        Alpine.store('broadcaster_live').start()
-
-        setInterval(() => {
-            getLiveStreams()
-        }, 60 * 1000)
 
         // query streams
         function getLiveStreams() {
@@ -49,28 +41,18 @@
                     provider_id: providerId
                 },
                 success: function (response) {
-                    updateDashboard(response)
+                    console.log(response)
+                    if (response.is_live !== undefined) {
+                        updateDashboard(response.is_live)
+                    }
                 }
             })
         }
 
-        function updateDashboard(response) {
-            if (response.status !== undefined) 
-                setOffline()
-            else 
-                setOnline()
-        }
-
-        const event = new Event('broadcaster_live')
-
-        function setOffline() {
-            Alpine.store('broadcaster_live').set(false)
-            $('#live-button').css('display', 'none')
-        }
-
-        function setOnline() {
-            Alpine.store('broadcaster_live').set(true)
-            $('#live-button').css('display', 'inline-block')
+        function updateDashboard(is_live) {
+            Alpine.store('broadcaster_live').set(is_live)
+            $('#live-status').html(is_live ? "Live" : "Offline")
+            $('#live-button').css('display', is_live ? 'inline-block' : 'none')
         }
 
         // Global store
@@ -95,6 +77,11 @@
         })
 
         Echo.join(`dashboard.${providerId}`)
+            .listen('BroadcasterLiveUpdate', (e) => {
+                if (e.is_live !== undefined) {
+                    updateDashboard(e.is_live)
+                }
+            })
             .listen('PollCreated', (e) => {
                 window.InfoToast('A new poll is active')
                 Alpine.store('active_poll').store(e)
