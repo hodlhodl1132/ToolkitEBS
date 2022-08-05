@@ -59,9 +59,9 @@ class StreamController extends Controller
         $stream = Stream::where('channel_id', $providerId)->first();
 
         if ($stream !== null) {
-            return $stream;
+            return ['is_live' => true];
         } else {
-            return ['status' => 'offline'];
+            return ['is_live' => false];
         }
     }
 

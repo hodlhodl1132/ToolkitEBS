@@ -41,32 +41,18 @@
                     provider_id: providerId
                 },
                 success: function (response) {
-                    if (response.status !== undefined) {
-                        updateDashboard(true)
-                    } else {
-                        updateDashboard(false)
+                    console.log(response)
+                    if (response.is_live !== undefined) {
+                        updateDashboard(response.is_live)
                     }
                 }
             })
         }
 
         function updateDashboard(is_live) {
-            if (is_live) 
-                setOffline()
-            else 
-                setOnline()
-        }
-
-        const event = new Event('broadcaster_live')
-
-        function setOffline() {
-            Alpine.store('broadcaster_live').set(false)
-            $('#live-button').css('display', 'none')
-        }
-
-        function setOnline() {
-            Alpine.store('broadcaster_live').set(true)
-            $('#live-button').css('display', 'inline-block')
+            Alpine.store('broadcaster_live').set(is_live)
+            $('#live-status').html(is_live ? "Live" : "Offline")
+            $('#live-button').css('display', is_live ? 'inline-block' : 'none')
         }
 
         // Global store
