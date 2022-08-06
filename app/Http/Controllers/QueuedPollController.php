@@ -40,7 +40,7 @@ class QueuedPollController extends Controller
     {
         try {            
             $validated = $request->validate([
-                'title' => 'max:100|string',
+                'title' => 'max:100|string|nullable',
                 'provider_id' => 'required|integer',
                 'options' => 'required|array|size:2',
                 'options.*.def_name' => 'required|string|max:64',
