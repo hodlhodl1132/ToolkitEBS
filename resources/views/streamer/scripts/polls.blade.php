@@ -43,17 +43,20 @@
             updateActivePoll()
         })
 
+        $('#poll-form').hide()
+        $('#close-polls-button').click(() => {
+            $('#poll-form').hide()
+            $('#open-polls-button').show()
+        })
+
         $('#open-polls-button').on('click', function() {
             if (!Alpine.store('broadcaster_live').live)
             {
                 window.ErrorToast('You must be live to open a poll.')
                 return;
             }
-            $('.ui.modal')
-                .modal({
-                    closable: true,
-                })
-                .modal('show')
+            $('#poll-form').show()
+            $('#open-polls-button').hide()
 
             if (Alpine.store('incident_defs').items.length === 0) {
                 $.ajax({

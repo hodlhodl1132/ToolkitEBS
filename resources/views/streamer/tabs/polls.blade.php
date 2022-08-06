@@ -4,6 +4,10 @@
 
 </div>
 
+<div id="poll-creation">
+    @include('streamer.components.create-poll')
+</div>
+
 @include('streamer.components.poll-queue')
 
 <h3 class="ui header">{{ __("Poll Settings") }}</h3>
@@ -57,11 +61,6 @@
 @include('streamer.scripts.poll-settings')
 @include('streamer.scripts.poll-queue')
 
-</div>
-
-<div class="ui longer modal scrolling">
-    <i class="close icon"></i>
-    @include('streamer.components.create-poll')
 </div>
 
 {{-- Scripts / Styles --}}

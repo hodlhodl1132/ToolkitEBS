@@ -1,7 +1,4 @@
-<div class="header">{{ __('Create Poll') }}</div>
-
-<div id="poll-form" class="scrolling content">
-
+<div id="poll-form" class="ui raised segment teal">
     <form id="poll-details" class="ui form">
         <div class="two fields">
             <div class="field">
@@ -27,23 +24,23 @@
 
     <div id="incident-cards" class="ui cards">
     </div>
-</div>
 
-<div class="actions">
     <button class="ui button blue" id="submit-poll-button">{{ __('Submit Poll') }}</button>
+    <button id="close-polls-button" class="ui button">Close</button>
 </div>
-
 
 <style>
 #poll-form {
     padding: 20px;
     min-height: 40vh;
+    margin-top: 20px;
 }
 #poll-details {
     margin-bottom: 3em;
 }
 #incident-cards {
     margin-top: 1em;
+    margin-bottom: 1em;
 }
 .configure-incident-button:hover,
 .remove-incident-button:hover {
