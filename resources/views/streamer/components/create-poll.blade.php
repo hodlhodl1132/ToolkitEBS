@@ -5,6 +5,14 @@
                 <label>{{ __('Title') }}</label>
                 <input type="text" id="queued_poll_title" name="title" placeholder="What event should happen next?">
             </div>
+            <div class="field">
+                <label>{{ __('Poll Duration') }}</label>
+                <input
+                 max="5"
+                 min="1"
+                 step="1"
+                 type="range" id="queued_poll_duration" name="duration">
+            </div>
 
         </div>
     </form>
@@ -56,3 +64,12 @@
     margin-top: 1em;
 }
 </style>
+<script>
+    $(document).ready(function() {
+        $('input[type="range"]').rangeslider(
+            {
+                polyfill: false
+            }
+        );
+    })
+</script>

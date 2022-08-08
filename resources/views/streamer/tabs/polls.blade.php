@@ -66,6 +66,7 @@
 {{-- Scripts / Styles --}}
 
 <link rel="stylesheet" href="{{ asset('css/jquery-ui.min.css') }}">
+<link rel="stylesheet" href="{{ asset('css/rangeslider.css') }}">
 <style>
     #poll_duration_slider {
         margin-top: 1em;
@@ -75,4 +76,5 @@
     }
 </style>
 <script src="{{ asset('js/jquery-ui.min.js') }}" defer></script>
+<script src="{{ asset('js/rangeslider.min.js') }}"></script>
 @include('streamer.scripts.polls')

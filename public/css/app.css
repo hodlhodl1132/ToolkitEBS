@@ -80,3 +80,21 @@ main.ui.container {
         color: rgba(219, 40, 40, 1);
     }
 }
+
+.rangeslider__fill {
+    background: rgb(22, 120, 194)!important;
+}
+
+.rangeslider--horizontal .rangeslider__handle {
+    top: -2px!important;
+}
+
+.rangeslider__handle {
+    width: 25px!important;
+    height: 25px!important;
+}
+
+.rangeslider__handle:after {
+    width: 12px!important;
+    height: 12px!important;
+}
