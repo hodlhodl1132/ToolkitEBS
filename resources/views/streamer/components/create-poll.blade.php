@@ -22,7 +22,7 @@
     <div class="ui form">
         <div class="field">
             <label>{{ __('Add Poll Options') }}</label>
-            <div id="incident-dropdown" class="ui floating labeled icon dropdown basic button">
+            <div id="incident-dropdown" class="ui floating labeled search select icon dropdown basic button">
                 <i class="plus icon"></i>
                 <span class="text">{{ __('Available Options') }}</span>
                 <div class="menu incident-menu">
