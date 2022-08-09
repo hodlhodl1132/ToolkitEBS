@@ -39,8 +39,14 @@
                         </h5>
                     </label>
                     <label><small>Time Given to Viewers for Voting</small></label>
-                    <input type="hidden" name="duration">
-                    <div id="poll_duration_slider"></div>
+                    <input
+                     max="5"
+                     min="1"
+                     step="1"
+                     value="2"
+                     type="range"
+                     id="poll_duration"
+                     name="duration">
                 </div>
                 <div class="field">
                     <label>
@@ -50,8 +56,14 @@
                         </h5>
                     </label>
                     <label><small>Time Between New Polls</small></label>
-                    <input type="hidden" name="interval">
-                    <div id="poll_interval_slider"></div>
+                    <input
+                     max="30"
+                     min="1"
+                     step="1"
+                     value="2"
+                     type="range"
+                     id="poll_interval"
+                     name="interval">
                 </div>
                 <button class="ui primary button" tabindex="0">{{ __('Save Settings') }}</button>
             </form>

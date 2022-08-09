@@ -6,11 +6,12 @@
                 <input type="text" id="queued_poll_title" name="title" placeholder="What event should happen next?">
             </div>
             <div class="field">
-                <label>{{ __('Poll Duration') }}</label>
+                <label>{{ __('Poll Duration') }} <span id="queued_poll_duration_label"></span></label>
                 <input
                  max="5"
                  min="1"
                  step="1"
+                 value="2"
                  type="range" id="queued_poll_duration" name="duration">
             </div>
 
@@ -66,9 +67,15 @@
 </style>
 <script>
     $(document).ready(function() {
-        $('input[type="range"]').rangeslider(
+        $('#queued_poll_duration').rangeslider(
             {
-                polyfill: false
+                polyfill: false,
+                onInit: function() {
+                    $('#queued_poll_duration_label').text(2 + " Minutes");
+                },
+                onSlide: function(position, value) {
+                    $('#queued_poll_duration_label').text(value + " Minutes");
+                }
             }
         );
     })
