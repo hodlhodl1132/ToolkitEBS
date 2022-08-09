@@ -42,6 +42,7 @@ class QueuedPollController extends Controller
             $validated = $request->validate([
                 'title' => 'max:100|string|nullable',
                 'provider_id' => 'required|integer',
+                'duration' => 'required|integer|max:5|min:1',
                 'options' => 'required|array|size:2',
                 'options.*.def_name' => 'required|string|max:64',
                 'options.*.mod_id' => 'required_with:options.*.def_name|string|max:128',
@@ -65,7 +66,7 @@ class QueuedPollController extends Controller
             $queuedPoll = new QueuedPoll();
             $queuedPoll->title = $validated['title'] ?? 'What event should happen next?';
             $queuedPoll->options = $validated['options'];
-            $queuedPoll->length = 2;
+            $queuedPoll->length = $validated['duration'];
             $queuedPoll->created_by_id = $user->id;
             $queuedPoll->provider_id = $validated['provider_id'];
             $queuedPoll->save();

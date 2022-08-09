@@ -165,6 +165,7 @@
                 data: {
                     'title': $('#queued_poll_title').val(),
                     'provider_id': $('input[name="dashboard_provider_id"]').val(),
+                    'duration': $('#queued_poll_duration').val(),
                     'options': options,
                 },
                 headers: {
