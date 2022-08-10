@@ -17,7 +17,7 @@
 <div class="ui raised segment teal">
     <h3 class="ui header">{{ __("Poll Settings") }}</h3>
     <div class="ui grid">
-        <div class="six wide column">
+        <div class="ten wide column">
             <div id="poll-settings-form-loader" class="ui text loader hidden">{{ __("Loading") }}</div>
             <div class="ui form">
                 <form id="poll-settings-form" method="POST" action="{{ route('dashboard.savesettings') }}">
