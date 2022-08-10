@@ -56,7 +56,7 @@ class ChannelExistenceController extends Controller
         foreach ($events as $index => $event) {
             $channel_name = $event['channel'];
             if (str_contains($channel_name, 'gameclient')) {
-                $channel_id = substr($event['channel'], 20);
+                $channel_id = substr($event['channel'], 19);
                 $stream = Stream::where('channel_name', $channel_name)->first();
                 if ($stream == null && $event['name'] == 'channel_occupied') {
 
