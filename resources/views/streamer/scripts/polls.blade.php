@@ -44,10 +44,6 @@
         })
 
         $('#poll-form').hide()
-        $('#close-polls-button').click(() => {
-            $('#poll-form').hide()
-            $('#open-polls-button').show()
-        })
 
         $('#open-polls-button').on('click', function() {
             if (!Alpine.store('broadcaster_live').live)
@@ -73,17 +69,23 @@
                                 '<div class="item" data-value="' + [key] + '">' + incident_defs[key].label + '</div>'
                             )
                         })
-                        $('.ui.dropdown').dropdown({
-                            onChange: function(value, text, $selectedItem) {
-                                addPollOption(value, text, $selectedItem)
-                            }
-                        })
+                        $('.ui.dropdown').dropdown()
                     }
                 })
             }
         })
 
-        function addPollOption(value, text, $selectedItem) {
+        let selected_poll_option = $('#selected_poll_option')
+
+        $('#add_poll_option').on('click', function() {
+            if (selected_poll_option.val() === '') {
+                window.ErrorToast('You must select an incident to add to the poll.')
+                return;
+            }
+            addPollOption(selected_poll_option.val())
+        })
+
+        function addPollOption(value) {
 
             if (Alpine.store('incident_defs').length >= 2) {
                 

@@ -23,10 +23,19 @@
     <div class="ui form">
         <div class="field">
             <label>{{ __('Add Poll Options') }}</label>
-            <div id="incident-dropdown" class="ui floating labeled search select icon dropdown basic button">
-                <i class="plus icon"></i>
-                <span class="text">{{ __('Available Options') }}</span>
-                <div class="menu incident-menu">
+            <div class="three fields">
+                <div class="field">
+                    <div id="incident-dropdown" class="ui fluid search selection dropdown">
+                        <input id="selected_poll_option" type="hidden" name="poll_option">
+                        <span class="text">{{ __('Select') }}</span>
+                        <div class="menu incident-menu">
+                        </div>
+                    </div>
+                </div>
+                <div class="field">
+                <button id="add_poll_option" class="ui teal icon button">
+                    <i class="plus icon"></i>
+                </button>
                 </div>
             </div>
         </div>
@@ -36,7 +45,6 @@
     </div>
 
     <button class="ui button blue" id="submit-poll-button">{{ __('Submit Poll') }}</button>
-    <button id="close-polls-button" class="ui button">Close</button>
 </div>
 
 <style>
