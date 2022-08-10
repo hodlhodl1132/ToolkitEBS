@@ -1,4 +1,5 @@
 <div id="poll-form" class="ui raised segment teal">
+    <h3 class="ui header">{{ __("Create Poll") }}</h3>
     <form id="poll-details" class="ui form">
         <div class="two fields">
             <div class="field">
