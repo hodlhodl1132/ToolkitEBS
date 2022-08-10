@@ -23,10 +23,6 @@ $(document).ready(() => {
             retrievePollSettings()
             return
         }
-        pollDurationLabel.html(pollSettings.duration)
-        pollIntervalLabel.text(pollSettings.interval)
-        pollDurationSlider.val(pollSettings.duration)
-        pollIntervalSlider.val(pollSettings.interval)
         InitializeSliders()
         if (pollSettings.automated_polls == "1")
         {
@@ -75,26 +71,28 @@ $(document).ready(() => {
 
     // Initialize poll settings sliders
     function InitializeSliders() {
-        $( "#poll_duration_slider" ).slider({
-            range: "min",
-            min: 1,
-            max: 5,
-            value: pollDurationSlider.val(),
-            slide: function( event, ui ) {
-                pollDurationLabel.text(ui.value)
-                pollDurationSlider.val(ui.value)
+        $('#poll_duration').rangeslider({
+            polyfill: false,
+            onInit: function() {
+                let pollDuration = Alpine.store('poll_settings').settings.duration
+                pollDurationLabel.html(pollDuration)
+                pollDurationSlider.val(pollDuration)
+            },
+            onSlide: function(position, value) {
+                pollDurationLabel.html(value)
             }
-        });
-        $( "#poll_interval_slider" ).slider({
-            range: "min",
-            min: 1,
-            max: 30,
-            value: pollIntervalSlider.val(),
-            slide: function( event, ui ) {
-                pollIntervalLabel.text(ui.value)
-                pollIntervalSlider.val(ui.value)
+        })
+        $('#poll_interval').rangeslider({
+            polyfill: false,
+            onInit: function() {
+                let pollInterval = Alpine.store('poll_settings').settings.interval
+                pollIntervalLabel.html(pollInterval)
+                pollIntervalSlider.val(pollInterval)
+            },
+            onSlide: function(position, value) {
+                pollIntervalLabel.html(value)
             }
-        });
+        })
     }
 })
 </script>
