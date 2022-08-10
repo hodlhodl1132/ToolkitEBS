@@ -5146,7 +5146,7 @@ $('select.dropdown').dropdown();
 window.ErrorToast = function (message) {
   Toastify({
     text: message,
-    duration: 3000 * 24,
+    duration: 6000,
     close: true,
     gravity: "top",
     // `top` or `bottom`
